@@ -1,0 +1,47 @@
+---
+title: "New release of `osrm`"
+author: "Timothée Giraud"
+date: "2022-11-04"
+categories: [osrm]
+image: "osrm.png"
+draft: false
+bibliography: references.bib
+---
+
+A [major update of the `osrm` package](https://CRAN.R-project.org/package=osrm) has been deployed on CRAN two weeks ago. In this article I'll describe the changes introduced by this update and explain its context: the submission of a paper [@giraud2022] about the package in [Journal of Open Source Software](https://joss.theoj.org/) (JOSS).
+
+## What has changed
+
+This major release introduces a number of changes to the package API, some of them are [breaking changes](https://en.wiktionary.org/wiki/breaking_change).
+
+### `sp` support
+
+Users will no longer have the possibility to use an `sp` object as input or output in `osrm` functions. Most of *#rspatial* users and package developers have moved from the old `sp`/`rgeos`/`rgdal` trilogy toward the `sf` package.
+
+### Refactoring of the request handling process
+
+The way requests are sent to the OSRM server (local/remote/demo) has been refactored in order to get more informative messages. Indeed, an important share of the issues posted on the [`osrm` GitHub repo](https://github.com/riatelab/osrm/issues) has been about cryptic or non helpful error messages sent by the package or the server. So in this release OSRM server errors are more explicit and better transmitted to the user.
+
+### Dependencies
+
+OSRM request are received as json files to the package. Former versions of the package used `jsonlite`. Following a suggestion by [Nick Young](https://github.com/neon-ninja) I've replaced this package by a much more efficient package (for large files), [`RcppSimdJson`](https://CRAN.R-project.org/package=RcppSimdJson).\
+The construction of isochrones as polygons was based on an ad-hoc code supported by [`isoband`](https://CRAN.R-project.org/package=isoband). This piece of code was replicated in 2 other packages ([`tanaka`](https://CRAN.R-project.org/package=tanaka) and [`potential`](https://CRAN.R-project.org/package=potential)). I've decided to create the [`mapiso`](https://CRAN.R-project.org/package=mapiso) package to avoid an unnecessary maintenance burden and fortify the underlying code.
+
+{{< tweet rgeomatic 1546864134662356992 >}}
+
+### Input types
+
+Input type checking has been largely improved. This improvement have lead to a modification of the set of valid input of functions. Most functions accept data.frame, matrix, sfc or sf objects. The way identifier are handled has also been improved (use of row.names or indexes if row.names are not relevant, e.g. for sfc objects or some matrices).
+
+See the [NEWS file](https://raw.githubusercontent.com/riatelab/osrm/master/NEWS) for the complete list of changes.
+
+## The paper in JOSS
+
+*From [JOSS documentation](https://joss.readthedocs.io/en/latest/submitting.html)*:\
+JOSS publishes articles about research software. JOSS submissions must be open source and have an obvious research application. After submission an editor will carry out an initial check of your submission, and proceed to assign a handling editor. The handling editor will assign two or more JOSS reviewers, and the review will be carried out in the JOSS reviews repository. Authors will respond to reviewer-raised issues on the submission repository's issue tracker.
+
+
+The review process of the paper happens in the open. You can have a look at it [here](https://github.com/openjournals/joss-reviews/issues/4574).  
+Submitting a paper to JOSS assure you to have your software inspected by a set of competent people and I can say that this process help me to make the package more ergonomic and reliable.
+
+If you want more detailed information on JOSS, a paper by @smith2018 describes the motivation, design, and progress of the journal.

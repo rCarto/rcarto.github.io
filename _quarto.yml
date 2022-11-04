@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: docs
+website:
+  title: "R Geomatic"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/rCarto
+      - icon: twitter
+        href: https://twitter.com/rgeomatic
+      - text:  "{{< fa brands mastodon >}}"
+        href: https://fosstodon.org/@rcarto
+format:
+  html:
+    theme: 
+      light: flatly
+      dark: darkly
+    css: styles.css
+
+
+

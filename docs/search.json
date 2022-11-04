@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "posts/osrm_up/index.html",
+    "href": "posts/osrm_up/index.html",
+    "title": "New release of osrm",
+    "section": "",
+    "text": "A major update of the osrm package has been deployed on CRAN two weeks ago. In this article I’ll describe the changes introduced by this update and explain its context: the submission of a paper (Giraud 2022) about the package in Journal of Open Source Software (JOSS)."
+  },
+  {
+    "objectID": "posts/osrm_up/index.html#what-has-changed",
+    "href": "posts/osrm_up/index.html#what-has-changed",
+    "title": "New release of osrm",
+    "section": "What has changed",
+    "text": "What has changed\nThis major release introduces a number of changes to the package API, some of them are breaking changes.\n\nsp support\nUsers will no longer have the possibility to use an sp object as input or output in osrm functions. Most of #rspatial users and package developers have moved from the old sp/rgeos/rgdal trilogy toward the sf package.\n\n\nRefactoring of the request handling process\nThe way requests are sent to the OSRM server (local/remote/demo) has been refactored in order to get more informative messages. Indeed, an important share of the issues posted on the osrm GitHub repo has been about cryptic or non helpful error messages sent by the package or the server. So in this release OSRM server errors are more explicit and better transmitted to the user.\n\n\nDependencies\nOSRM request are received as json files to the package. Former versions of the package used jsonlite. Following a suggestion by Nick Young I’ve replaced this package by a much more efficient package (for large files), RcppSimdJson.\nThe construction of isochrones as polygons was based on an ad-hoc code supported by isoband. This piece of code was replicated in 2 other packages (tanaka and potential). I’ve decided to create the mapiso package to avoid an unnecessary maintenance burden and fortify the underlying code.\n\n\n\nInput types\nInput type checking has been largely improved. This improvement have lead to a modification of the set of valid input of functions. Most functions accept data.frame, matrix, sfc or sf objects. The way identifier are handled has also been improved (use of row.names or indexes if row.names are not relevant, e.g. for sfc objects or some matrices).\nSee the NEWS file for the complete list of changes."
+  },
+  {
+    "objectID": "posts/osrm_up/index.html#the-paper-in-joss",
+    "href": "posts/osrm_up/index.html#the-paper-in-joss",
+    "title": "New release of osrm",
+    "section": "The paper in JOSS",
+    "text": "The paper in JOSS\nFrom JOSS documentation:\nJOSS publishes articles about research software. JOSS submissions must be open source and have an obvious research application. After submission an editor will carry out an initial check of your submission, and proceed to assign a handling editor. The handling editor will assign two or more JOSS reviewers, and the review will be carried out in the JOSS reviews repository. Authors will respond to reviewer-raised issues on the submission repository’s issue tracker.\nThe review process of the paper happens in the open. You can have a look at it here.\nSubmitting a paper to JOSS assure you to have your software inspected by a set of competent people and I can say that this process help me to make the package more ergonomic and reliable.\nIf you want more detailed information on JOSS, a paper by Smith et al. (2018) describes the motivation, design, and progress of the journal."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This blog aims to share and disseminate several spatial data science projects done thanks to the R software. This initiative is part of the broader framework of the development of free software, open data and reproducible research. Various of my works make use of resources (data, scripts, documents …) that may be interesting to broadcast to the community of engineers and researchers in spatial data science."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Blog posts",
+    "section": "",
+    "text": "New release of osrm\n\n\n\n\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\nNo matching items"
+  }
+]

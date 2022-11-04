@@ -1,0 +1,20 @@
+---
+title: "About"
+image: avatar.png
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      href: https://twitter.com/rgeomatic
+    - text:  "{{< fa brands mastodon >}}"
+      href: https://fosstodon.org/@rcarto
+    - icon: github
+      href: https://github.com/rCarto
+    - text:  "{{< fa brands orcid >}}"
+      href: https://orcid.org/0000-0002-1932-3323
+title-block-banner: false
+
+---
+
+
+This blog aims to share and disseminate several spatial data science projects done thanks to the R software. This initiative is part of the broader framework of the development of free software, open data and reproducible research. Various of my works make use of resources (data, scripts, documents …) that may be interesting to broadcast to the community of engineers and researchers in spatial data science.
