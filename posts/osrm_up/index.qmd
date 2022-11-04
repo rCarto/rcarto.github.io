@@ -8,7 +8,10 @@ draft: false
 bibliography: references.bib
 ---
 
-A [major update of the `osrm` package](https://CRAN.R-project.org/package=osrm) has been deployed on CRAN two weeks ago. In this article I'll describe the changes introduced by this update and explain its context: the submission of a paper [@giraud2022] about the package in [Journal of Open Source Software](https://joss.theoj.org/) (JOSS).
+
+[`osrm`](https://CRAN.R-project.org/package=osrm) is an interface between R and the [Open Source Routing Machine](https://github.com/Project-OSRM/osrm-backend) (OSRM) API. OSRM [@luxen-vetter-2011] is a routing service based on OpenStreetMap (OSM) data. This package enables the computation of routes, trips, isochrones and travel distances matrices (travel times and kilometric distances) based on the OSM road network.
+
+A major update of `osrm` has been deployed on CRAN two weeks ago. In this article I'll describe the changes introduced by this update and explain its context: the submission of a paper [@giraud2022] about the package in [Journal of Open Source Software](https://joss.theoj.org/) (JOSS).
 
 ## What has changed
 
@@ -36,6 +39,9 @@ Input type checking has been largely improved. This improvement have lead to a m
 See the [NEWS file](https://raw.githubusercontent.com/riatelab/osrm/master/NEWS) for the complete list of changes.
 
 ## The paper in JOSS
+
+[![](2022-11-04_12-42.png)](https://joss.theoj.org/papers/10.21105/joss.04574)
+
 
 *From [JOSS documentation](https://joss.readthedocs.io/en/latest/submitting.html)*:\
 JOSS publishes articles about research software. JOSS submissions must be open source and have an obvious research application. After submission an editor will carry out an initial check of your submission, and proceed to assign a handling editor. The handling editor will assign two or more JOSS reviewers, and the review will be carried out in the JOSS reviews repository. Authors will respond to reviewer-raised issues on the submission repository's issue tracker.

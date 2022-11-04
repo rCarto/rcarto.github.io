@@ -4,7 +4,7 @@
     "href": "posts/osrm_up/index.html",
     "title": "New release of osrm",
     "section": "",
-    "text": "A major update of the osrm package has been deployed on CRAN two weeks ago. In this article I’ll describe the changes introduced by this update and explain its context: the submission of a paper (Giraud 2022) about the package in Journal of Open Source Software (JOSS)."
+    "text": "osrm is an interface between R and the Open Source Routing Machine (OSRM) API. OSRM (Luxen and Vetter 2011) is a routing service based on OpenStreetMap (OSM) data. This package enables the computation of routes, trips, isochrones and travel distances matrices (travel times and kilometric distances) based on the OSM road network.\nA major update of osrm has been deployed on CRAN two weeks ago. In this article I’ll describe the changes introduced by this update and explain its context: the submission of a paper (Giraud 2022) about the package in Journal of Open Source Software (JOSS)."
   },
   {
     "objectID": "posts/osrm_up/index.html#what-has-changed",
@@ -18,7 +18,7 @@
     "href": "posts/osrm_up/index.html#the-paper-in-joss",
     "title": "New release of osrm",
     "section": "The paper in JOSS",
-    "text": "The paper in JOSS\nFrom JOSS documentation:\nJOSS publishes articles about research software. JOSS submissions must be open source and have an obvious research application. After submission an editor will carry out an initial check of your submission, and proceed to assign a handling editor. The handling editor will assign two or more JOSS reviewers, and the review will be carried out in the JOSS reviews repository. Authors will respond to reviewer-raised issues on the submission repository’s issue tracker.\nThe review process of the paper happens in the open. You can have a look at it here.\nSubmitting a paper to JOSS assure you to have your software inspected by a set of competent people and I can say that this process help me to make the package more ergonomic and reliable.\nIf you want more detailed information on JOSS, a paper by Smith et al. (2018) describes the motivation, design, and progress of the journal."
+    "text": "The paper in JOSS\n\n\n\n\n\nFrom JOSS documentation:\nJOSS publishes articles about research software. JOSS submissions must be open source and have an obvious research application. After submission an editor will carry out an initial check of your submission, and proceed to assign a handling editor. The handling editor will assign two or more JOSS reviewers, and the review will be carried out in the JOSS reviews repository. Authors will respond to reviewer-raised issues on the submission repository’s issue tracker.\nThe review process of the paper happens in the open. You can have a look at it here.\nSubmitting a paper to JOSS assure you to have your software inspected by a set of competent people and I can say that this process help me to make the package more ergonomic and reliable.\nIf you want more detailed information on JOSS, a paper by Smith et al. (2018) describes the motivation, design, and progress of the journal."
   },
   {
     "objectID": "about.html",
