@@ -12,4 +12,3 @@ title-block-banner: false
 ---
 
 <a rel="me" href="https://fosstodon.org/@rcarto"></a>
-
