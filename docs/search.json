@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "posts/mapsf_v0.6.1/index.html",
+    "href": "posts/mapsf_v0.6.1/index.html",
+    "title": "New release of mapsf",
+    "section": "",
+    "text": "The R spatial ecosystem is rich, dynamic and mature and several packages allow to import, process and represent spatial data. The mapsf package (Giraud 2022) relies on this ecosystem to integrate the creation of quality thematic maps in R workflows. mapsf uses sf objects to produce base graphics.\nA minor update of mapsf has been deployed on CRAN. In this article I’ll describe the changes introduced by this update. mapsf has noticeably gained a new function, mf_get_ratio(), that helps to create map figures with suitable width / height ratios. Most of the other changes are bug fixes and small improvements."
+  },
+  {
+    "objectID": "posts/mapsf_v0.6.1/index.html#new-features",
+    "href": "posts/mapsf_v0.6.1/index.html#new-features",
+    "title": "New release of mapsf",
+    "section": "New features",
+    "text": "New features\n\nmf_get_ratio()\nmf_get_ratio() can be used to create map figures with a suitable width / height ratio in reports (*.Rmd, *.qmd).\nIt uses the width / height ratio of a spatial object bounding box to find a matching ratio for the map.\nThe following quarto example uses the default figure output settings (7 x 5 inches):\n\n```{r}\nlibrary(mapsf)\nmtq <- mf_get_mtq()\nmf_theme(\"darkula\")\nmf_map(mtq)\n```\n\n\n\n\nThe width / height ratio of this figure is not optimal, it produces a lot of unused space on the sides of the map. It is not easy to find a correct ratio without manually fiddling with the fig-width and fig-height values and this can be exhausting.\nmf_get_ratio() helps with this task:\n\nmf_get_ratio(x = mtq, height = 5, theme = \"darkula\")\n\n[1] 4.3 5.0\n\n\nWe can use these values to obtain a much more satisfactory figure:\n\n```{r}\n#| fig-width: 4.3\n#| fig-height: 5\nmf_theme(\"darkula\")\nmf_map(mtq)\n```\n\n\n\n\nThe mf_init() function can be used to expand the map space in any direction thanks to its expandBB argument.\nLets say we want to produce a figure that uses the ink theme, with a height of 5 inches and some space left on the right of the map.\n\nmf_get_ratio(\n  x = mtq, \n  height = 5, \n  theme = \"ink\", \n  expandBB = c(0, 0, 0, .5)\n)\n\n[1] 5.95 5.00\n\n\n\n```{r}\n#| fig-width: 5.95\n#| fig-height: 5\nmf_init(x = mtq, expandBB = c(0, 0, 0, .5), theme = \"ink\")\nmf_map(mtq, add = TRUE)\nmf_title(\"Martinique\")\n```\n\n\n\n\n\n\nMaps of proportional and colored lines\nIt is now possible to create maps that combine proportional lines and colors using the prop_typo map type.\n\nmf_theme(\"default\")\nmtq <- mf_get_mtq()\n# import the csv file embedded in mapsf\nmob <- read.csv(system.file(\"csv/mob.csv\", package = \"mapsf\"))\n# Select links from Fort-de-France (97209))\nmob_97209 <- mob[mob$i == 97209, ]\n# create an sf object of links\nmob_links <- mf_get_links(x = mtq, df = mob_97209)\n# initiate a map with some space on the right\nmf_init(mtq, expandBB = c(0,0,0,.5))\nmf_map(mtq, add = TRUE)\nmf_map(\n  x = mob_links,\n  var = c(\"fij\", \"sj\"),\n  type = \"prop_typo\",\n  lwd_max = 30,\n  leg_pos = c(\"topright\", \"right\"),\n  leg_title = c(\"Nb. of commuters\", \n                \"Municipality status\")\n)\n# map layout\nmf_layout(\n  title = \"Commuting from Fort-de-France\",\n  credits = paste0(\n    \"Sources: Insee and IGN, 2018\\n\",\n    \"mapsf \", packageVersion(\"mapsf\")\n  ),\n  arrow = FALSE\n)"
+  },
+  {
+    "objectID": "posts/mapsf_v0.6.1/index.html#bug-fixes-and-improvements",
+    "href": "posts/mapsf_v0.6.1/index.html#bug-fixes-and-improvements",
+    "title": "New release of mapsf",
+    "section": "Bug fixes and improvements",
+    "text": "Bug fixes and improvements\n\nMessages are now displayed when users map proportional symbols based on a variable that contained either NA, 0, Inf or negative values.\n\n\nlibrary(mapsf)\n# import sample dataset\nmtq <- mf_get_mtq()\n# introduce NA, 0, Inf and negative values\nmtq[1:8, \"POP\"] <- c(0, 0, NA, NA, Inf, -Inf, -10000, -20000)\n# display basemap\nmf_map(mtq)\nmf_map(x = mtq, var = \"POP\", type = \"prop\")\n\n2 'NA' values are not plotted on the map.\n\n\n2 '0' values are not plotted on the map.\n\n\n2 'Infinite' values are not plotted on the map.\n\n\nNegative values have been transformed into positive values.\n\n\n\n\n\n\nmf_get_breaks() is a function that helps to classify continuous variables using various methods, including the ones from classInt::classIntervals (Bivand 2022). A control has been added for Inf values and the geom method now outputs an error when all values are not strictly positive.\nIt is now possible to create maps with only one proportional symbol. This can be useful when maps are generated iterating over multiple territories: some of them may have only one point to plot (see issue #45).\n\n\nopar <- par(mfrow = c(1,2))\nmtq <- mf_get_mtq()\nmf_map(mtq[8:9,])\nmf_map(x = mtq[8:9, ], var = \"POP\", type = \"prop\", \n       val_max = 85000, leg_pos = \"bottomleft\")\nmf_map(mtq[10,])\nmf_map(x = mtq[10, ], var = \"POP\", type = \"prop\", \n       val_max = 85000)\npar(opar)\n\n\n\n\nSee the NEWS file for the complete list of changes."
+  },
+  {
     "objectID": "posts/osrm_v4.0.0/index.html",
     "href": "posts/osrm_v4.0.0/index.html",
     "title": "New release of osrm",
@@ -25,13 +46,13 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "This blog aims to share and disseminate several spatial data science projects done thanks to the R software. This initiative is part of the broader framework of the development of free software, open data and reproducible research. Various of my works make use of resources (data, scripts, documents …) that may be interesting to broadcast to the community of engineers and researchers in spatial data science."
+    "text": "I use this blog to share information on R spatial packages I maintain."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Blog posts",
     "section": "",
-    "text": "New release of osrm\n\n\n\n\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\nNo matching items"
+    "text": "New release of mapsf\n\n\n\n\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n  \n\n\n\n\nNew release of osrm\n\n\n\n\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\nNo matching items"
   }
 ]

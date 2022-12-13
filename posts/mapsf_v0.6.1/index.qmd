@@ -1,10 +1,10 @@
 ---
 title: "New release of `mapsf`"
 author: "Timothée Giraud"
-date: "2022-12-12"
+date: "2022-12-13"
 categories: [mapsf]
 image: "mapsf.png"
-draft: true
+draft: false
 bibliography: references.bib
 ---
 
