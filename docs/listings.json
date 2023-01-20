@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/cartography_v3.1.3/index.html",
       "/posts/mapsf_v0.6.1/index.html",
       "/posts/osrm_v4.0.0/index.html"
     ]

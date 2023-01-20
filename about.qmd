@@ -4,8 +4,6 @@ image: avatar.png
 about:
   template: solana
   links:
-    - icon: twitter
-      href: https://twitter.com/rgeomatic  
     - text:  "{{< fa brands mastodon >}}"
       href: https://fosstodon.org/@rcarto  
     - icon: github

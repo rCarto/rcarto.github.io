@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "posts/cartography_v3.1.3/index.html",
+    "href": "posts/cartography_v3.1.3/index.html",
+    "title": "New release of cartography",
+    "section": "",
+    "text": "A new version of cartography has been released on CRAN this week. cartography is a thematic mapping package for R that has entered in maintenance mode on March 2021.\nThis release has been triggered by the upcoming retirement (archiving) of rgdal, rgeos and maptools (see R-spatial evolution: retirement of rgdal, rgeos and maptools and Progress on R-spatial evolution, Dec 2022).\nSo, this release does not import any of these packages anymore and this is done at the cost of losing one function: getTiles(). The purpose of getTiles() was to download and compose raster tiles from a large number of providers.\nFortunately, the maptiles package can be used to replace this function. It has the same features and is more robust.\nFor the same kind of reasons, smoothLayer() function has been deprecated. This function is using the SpatialPosition package to compute potentials. Potentials computations are now offered by the potential package.\n\n\n\n\n\n\nKey messages for cartography users\n\n\n\n\nConsider switching from cartography to mapsf. mapsf is the successor of cartography, it offers the same core features, it is friendlier, lighter and more robust.\n\nUse maptiles instead of getTiles(). It offers the same features using a modern packages.\nUse potential instead of smoothLayer(). It offers more features using modern packages.\n\n  \n\n\nSee the NEWS file for the complete list of changes."
+  },
+  {
     "objectID": "posts/mapsf_v0.6.1/index.html",
     "href": "posts/mapsf_v0.6.1/index.html",
     "title": "New release of mapsf",
@@ -53,6 +60,6 @@
     "href": "index.html",
     "title": "Blog posts",
     "section": "",
-    "text": "New release of mapsf\n\n\n\n\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n  \n\n\n\n\nNew release of osrm\n\n\n\n\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\nNo matching items"
+    "text": "New release of cartography\n\n\n\n\n\n\n\ncartography\n\n\n\n\n\n\n\n\n\n\n\nJan 20, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n  \n\n\n\n\nNew release of mapsf\n\n\n\n\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n  \n\n\n\n\nNew release of osrm\n\n\n\n\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\nNo matching items"
   }
 ]

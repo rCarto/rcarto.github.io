@@ -1,0 +1,42 @@
+---
+title: "New release of `cartography`"
+author: "Timothée Giraud"
+date: "2023-01-20"
+categories: [cartography]
+image: "cartography.png"
+draft: false
+bibliography: references.bib
+---
+
+A new version of `cartography` has been [released on CRAN](https://CRAN.R-project.org/package=cartography) this week. `cartography` is a thematic mapping package for R that has entered in maintenance mode on March 2021. 
+
+This release has been triggered by the upcoming retirement (archiving) of `rgdal`, `rgeos` and `maptools` (see [R-spatial evolution: retirement of rgdal, rgeos and maptools](https://r-spatial.org/r/2022/04/12/evolution.html) and [Progress on R-spatial evolution, Dec 2022](https://r-spatial.org/r/2022/12/14/evolution2.html)).  
+So, this release does not import any of these packages anymore and this is done at the cost of losing one function: `getTiles()`.
+The purpose of `getTiles()` was to download and compose raster tiles from a large number of providers.   
+Fortunately, the [`maptiles`](https://github.com/riatelab/maptiles) package can be used to replace this function. It has the same features and is more robust.
+
+For the same kind of reasons, `smoothLayer()` function has been deprecated. This function is using the `SpatialPosition` package to compute potentials. Potentials computations are now offered by the `potential` package. 
+
+
+::: {.callout-tip}
+## Key messages for `cartography` users
+* Consider switching from `cartography` to `mapsf`. `mapsf` is the successor of `cartography`, it offers the same core features, it is friendlier, lighter and more robust.  
+* Use `maptiles` instead of `getTiles()`. It offers the same features using a modern packages. 
+* Use `potential` instead of `smoothLayer()`. It offers more features using modern packages.  
+
+[![](mapsf.png){width=120px}](https://riatelab.github.io/mapsf) 
+[![](maptiles.png){width=120px}](https://github.com/riatelab/maptiles) 
+[![](potential.png){width=120px}](https://riatelab.github.io/potential) 
+
+:::
+
+
+
+**See the [NEWS file](https://raw.githubusercontent.com/riatelab/cartography/master/NEWS) for the complete list of changes.**
+
+
+
+
+
+
+
