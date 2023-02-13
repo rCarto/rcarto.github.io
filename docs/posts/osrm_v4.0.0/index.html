@@ -117,6 +117,11 @@ div.csl-indent {
     <a class="nav-link" href="https://fosstodon.org/@rcarto">
  <span class="menu-text"><i class="fa-brands fa-mastodon" aria-label="mastodon"></i></span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../index.xml"><i class="bi bi-rss" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
 </ul>
               <div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
@@ -183,7 +188,6 @@ div.csl-indent {
 <h3 class="anchored" data-anchor-id="dependencies">Dependencies</h3>
 <p>OSRM request are received as json files to the package. Former versions of the package used <code>jsonlite</code>. Following a suggestion by <a href="https://github.com/neon-ninja">Nick Young</a> I’ve replaced this package by a much more efficient package (for large files), <a href="https://CRAN.R-project.org/package=RcppSimdJson"><code>RcppSimdJson</code></a>.<br>
 The construction of isochrones as polygons was based on an ad-hoc code supported by <a href="https://CRAN.R-project.org/package=isoband"><code>isoband</code></a>. This piece of code was replicated in 2 other packages (<a href="https://CRAN.R-project.org/package=tanaka"><code>tanaka</code></a> and <a href="https://CRAN.R-project.org/package=potential"><code>potential</code></a>). I’ve decided to create the <a href="https://CRAN.R-project.org/package=mapiso"><code>mapiso</code></a> package to avoid an unnecessary maintenance burden and fortify the underlying code.</p>
-<p></p><div id="tweet-98896"></div><script>tweet={"url":"https:\/\/twitter.com\/rgeomatic\/status\/1546864134662356992","author_name":"@rcarto@fosstodon.org","author_url":"https:\/\/twitter.com\/rgeomatic","html":"\u003Cblockquote class=\"twitter-tweet\" align=\"center\"\u003E\u003Cp lang=\"en\" dir=\"ltr\"\u003ENew package \u007Bmapiso\u007D\uD83D\uDCE6! \u003Cbr\u003EIt eases the transformation of regularly spaced grids into contour polygons. Grids can be defined by data.frames, \u007Bsf\u007D objects or SpatRasters from \u007Bterra\u007D.\u003Cbr\u003E\u007Bmapiso\u007D is a wrapper around \u007Bisoband\u007D by \u003Ca href=\"https:\/\/twitter.com\/ClausWilke?ref_src=twsrc%5Etfw\"\u003E@ClausWilke\u003C\/a\u003E.\u003Ca href=\"https:\/\/t.co\/B9j14ldIKZ\"\u003Ehttps:\/\/t.co\/B9j14ldIKZ\u003C\/a\u003E\u003Ca href=\"https:\/\/twitter.com\/hashtag\/rspatial?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#rspatial\u003C\/a\u003E \u003Ca href=\"https:\/\/twitter.com\/hashtag\/RStats?src=hash&amp;ref_src=twsrc%5Etfw\"\u003E#RStats\u003C\/a\u003E \u003Ca href=\"https:\/\/t.co\/dXtDHsI5ce\"\u003Epic.twitter.com\/dXtDHsI5ce\u003C\/a\u003E\u003C\/p\u003E&mdash; @rcarto@fosstodon.org (@rgeomatic) \u003Ca href=\"https:\/\/twitter.com\/rgeomatic\/status\/1546864134662356992?ref_src=twsrc%5Etfw\"\u003EJuly 12, 2022\u003C\/a\u003E\u003C\/blockquote\u003E\n\u003Cscript async src=\"https:\/\/platform.twitter.com\/widgets.js\" charset=\"utf-8\"\u003E\u003C\/script\u003E\n","width":550,"height":null,"type":"rich","cache_age":"3153600000","provider_name":"Twitter","provider_url":"https:\/\/twitter.com","version":"1.0"};document.getElementById("tweet-98896").innerHTML = tweet["html"];</script><p></p>
 </section>
 <section id="input-types" class="level3">
 <h3 class="anchored" data-anchor-id="input-types">Input types</h3>
@@ -471,5 +475,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<script src="https://platform.twitter.com/widgets.js"></script>
 </body></html>

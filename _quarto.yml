@@ -3,6 +3,8 @@ project:
   output-dir: docs
 website:
   title: "R Geomatic"
+  site-url: https://rcarto.github.io/
+  description: "Information on R spatial packages maintained by @rcarto."
   navbar:
     right:
       - about.qmd
@@ -10,6 +12,8 @@ website:
         href: https://github.com/rCarto
       - text:  "{{< fa brands mastodon >}}"
         href: https://fosstodon.org/@rcarto
+      - icon: rss
+        href: index.xml
 format:
   html:
     theme: 

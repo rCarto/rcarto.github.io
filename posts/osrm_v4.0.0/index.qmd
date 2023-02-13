@@ -30,8 +30,6 @@ The way requests are sent to the OSRM server (local/remote/demo) has been refact
 OSRM request are received as json files to the package. Former versions of the package used `jsonlite`. Following a suggestion by [Nick Young](https://github.com/neon-ninja) I've replaced this package by a much more efficient package (for large files), [`RcppSimdJson`](https://CRAN.R-project.org/package=RcppSimdJson).\
 The construction of isochrones as polygons was based on an ad-hoc code supported by [`isoband`](https://CRAN.R-project.org/package=isoband). This piece of code was replicated in 2 other packages ([`tanaka`](https://CRAN.R-project.org/package=tanaka) and [`potential`](https://CRAN.R-project.org/package=potential)). I've decided to create the [`mapiso`](https://CRAN.R-project.org/package=mapiso) package to avoid an unnecessary maintenance burden and fortify the underlying code.
 
-{{< tweet rgeomatic 1546864134662356992 >}}
-
 ### Input types
 
 Input type checking has been largely improved. This improvement have lead to a modification of the set of valid input of functions. Most functions accept data.frame, matrix, sfc or sf objects. The way identifier are handled has also been improved (use of row.names or indexes if row.names are not relevant, e.g. for sfc objects or some matrices).
