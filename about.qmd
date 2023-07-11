@@ -15,4 +15,4 @@ title-block-banner: false
 ---
 
 
-I use this blog to share information on R spatial packages I maintain.
+Information on R spatial packages maintained by Timothée Giraud.

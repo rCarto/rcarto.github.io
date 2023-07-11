@@ -1,0 +1,125 @@
+---
+title: "New release of `mapsf`"
+author: "Timothée Giraud"
+date: "2023-07-11"
+categories: [mapsf]
+image: "grat.png"
+draft: false
+bibliography: references.bib
+---
+
+A minor update of `mapsf` has been deployed on CRAN. In this article I'll describe the changes introduced by this update. 
+
+
+## New features
+
+### `expandBB`
+
+An `expandBB` argument has been introduced in `mf_map()`. This argument allows to add some space around a map. 
+
+The following code displays a map with some extra space on the right side of the figure. This can be useful to add legends or annotations. 
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.05
+#| warning: false
+#| message: false
+library(mapsf)
+library(sf)
+nc_raw <- st_read(system.file("shape/nc.shp", package="sf"), quiet = TRUE)
+nc <- st_transform(nc_raw, "EPSG:32019")
+th <- mf_theme("candy", mar = c(0, 0, 0, 0), bg = "ivory")
+mf_map(nc, expandBB = c(0, 0, 0, .3), width = 3.5)
+# mf_get_ratio(nc[1,], expandBB = c(0,0.5,0,0), width = 3.5)
+
+```
+
+This addition makes the `mf_init()` function virtually useless. These two script produce the same output.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.11
+par(mfrow = c(1,2))
+# with mf_init()
+mf_init(nc[1, ],  expandBB = c(0, .5, 0, 0))
+mf_map(nc, add = TRUE)
+mf_map(nc[1, ], col = "red", add = TRUE)
+# without mf_init()
+mf_map(nc[1, ], col = NA, border = NA, expandBB = c(0, .5, 0, 0))
+mf_map(nc, add = TRUE)
+mf_map(nc[1, ], col = "red", add = TRUE)
+```
+
+This argument has also been added to `mf_raster()`.
+
+
+### `mf_graticule()`
+
+A new `mf_graticule()` function has been added to the package. 
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.73
+mf_map(nc, expandBB = c(0, .05, .1, 0))
+mf_graticule(nc, add = TRUE)
+```
+
+Graticules labels can be added on the four sides of the map.
+
+```{r}
+#| fig-width: 7
+#| fig-height: 2.84
+mf_map(nc, expandBB = c(.1, .05, .1, .05))
+mf_graticule(nc, 
+             pos = c("bottom", "left", "top", "right"), 
+             lty = 2, 
+             lwd = 2, 
+             add = TRUE)
+```
+
+
+::: {.callout-warning}
+From [`st_graticule()`](https://r-spatial.github.io/sf/reference/st_graticule.html#use-of-graticules):  
+In cartographic visualization, the use of graticules is not advised, unless the graphical output will be used for measurement or navigation, or the direction of North is important for the interpretation of the content, or the content is intended to display distortions and artifacts created by projection. Unnecessary use of graticules only adds visual clutter but little relevant information. Use of coastlines, administrative boundaries or place names permits most viewers of the output to orient themselves better than a graticule.
+:::
+
+
+## Fixes
+
+### Pipe
+
+The pipe compatibility of `mapsf` has been enhanced and it now works on most use cases.
+
+```{r}
+#| fig-width: 4
+#| fig-height: 4.68
+mf_get_mtq() |>
+  mf_map(col = "ivory4") |>
+  mf_map("POP", "prop") |>
+  mf_graticule(label = FALSE, lwd = .2)
+
+```
+
+### Themes
+
+The graphic theme feature has been refactored. The current theme parameters are now accessible via R options (with the **mapsf.** prefix).
+
+```{r}
+(mf_theme("green"))
+getOption("mapsf.bg")
+getOption("mapsf.fg")
+getOption("mapsf.pos")
+# etc
+```
+
+The current theme is applied to all maps and there is no need to use the `theme` argument in `mf_export()` or `mf_init()` anymore. 
+
+
+## Next steps
+
+The next release of `mapsf` will use the [`maplegend`](https://github.com/riatelab/maplegend) package (not on CRAN yet) for plotting legends. This will allow to plot horizontal legends ([#19](https://github.com/riatelab/mapsf/issues/19)) and continuous legends for rasters ([#22](https://github.com/riatelab/mapsf/issues/22)).
+
+
+-----
+
+**See the [NEWS file](https://raw.githubusercontent.com/riatelab/mapsf/master/NEWS) for the complete list of changes.**
