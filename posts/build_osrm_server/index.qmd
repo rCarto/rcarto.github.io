@@ -1,9 +1,9 @@
 ---
 title: "How to Build an European-Wide OSRM Server on a Desktop Computer"
 author: "Timothée Giraud"
-date: "2023-07-27"
+date: "2023-10-09"
 categories: [osrm]
-image: "grat.png"
+image: "map.png"
 draft: true
 bibliography: references.bib
 ---
@@ -11,11 +11,11 @@ bibliography: references.bib
 
 ## OSRM 
 
-[Open Source Routing Machine](https://github.com/Project-OSRM/osrm-backend), or OSRM [@luxen-vetter-2011], is a routing service based on OpenStreetMap (OSM) data. OSRM can be use to find the fastest route between points, to compute time or distance matrices between set of points or to solve the Traveling Salesman Problem.
+[Open Source Routing Machine](https://github.com/Project-OSRM/osrm-backend), or OSRM [@luxen-vetter-2011], is a routing software based on OpenStreetMap (OSM) data. OSRM can be use to find the fastest route between points, to compute time or distance matrices between set of points or to solve the [traveling salesman problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem).
 
 
-As the maintainer of the R package `osrm` [@giraud2022] I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project's [README](https://github.com/Project-OSRM/osrm-backend#using-docker) file. These instructions may not be detailed enough to build an OSRM instance on a large area.   
-OSRM use **a lot** of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:  
+As maintainer of the `osrm` R package [@giraud2022] I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project's [README](https://github.com/Project-OSRM/osrm-backend#using-docker) file. These instructions may not be detailed enough to build an OSRM instance on a large area.   
+OSRM needs **a lot** of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:  
 ```sh 
 [warn] Please provide more memory or consider using a larger swapfile
 ```
@@ -23,14 +23,14 @@ In this post I'll explain how to build and European-wide OSRM instance on a desk
 
 
 ::: {.callout-note}
-This post implies some linux/CLI knowledge from its reader. I will not explain how to install Docker nor how to use a terminal. 
+This post implies some Linux/CLI/Docker knowledge from its reader. 
 :::
 
 
 
 ## Hardware
 
-I use my personal laptop computer which has a 1To SSD hard drive and this config:
+I use my personal laptop computer which has a 1To SSD hard drive and the following config:
 
 <pre><span style="color:#C01C28"><b>OS</b></span>: Debian GNU/Linux 12 (bookworm) x86_64 
 <span style="color:#C01C28"><b>Host</b></span>: HP EliteBook 840 G8 Notebook PC 
@@ -53,11 +53,11 @@ sudo sysctl vm.swappiness=20
 ## Download the OSM road network
 
 The [Geofabrik website](https://www.geofabrik.de/) provides [OSM database extracts](https://download.geofabrik.de/) that can be used as input for OSRM. 
-In our case we have downloaded **osm.pbf** file for Europe (27.1 GB).
+In our case we have downloaded the **osm.pbf** file for Europe (27.1 GB).
 
 ## Build the dataset for OSRM
 
-The **eurpope-latest.osm.pbf** file needs to be processed to be used by OSRM. This is done in three steps. 
+The **europe-latest.osm.pbf** file needs to be processed to be used by OSRM. This is done in three steps. 
 
 1. Extract (~5h30)
 ```sh
@@ -85,15 +85,36 @@ docker run --rm -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-b
 
 ## Example of use
 
-This OSRM instance will actually be used in the framework of an European research program (GRANULAR, add links). In this project we'll need to request a very large number of distances and route througout Europe. 
-I built a small R package (not on CRAN) relying on `osrm` to take send queries in a prallel fashion. 
+This OSRM instance will actually be used in the framework of an European research program ([Granular](https://www.ruralgranular.eu/)). In this project we'll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.  
+I built a small R package relying on `osrm` to send queries in a parallel fashion and create "All roads lead to ..." maps. The `cobweb` package is not bulletproof and it is not on CRAN.  
 
-Here is a small demo of the package
-
-....
+Here is a small demo:
 
 
+```{r}
+#| eval: false
+# remotes::install_github("rCarto/cobweb")
+library(cobweb)
+library(tictoc)
+tic()
+cobweb(city = "Mainz, Germany", nroad = 3000, ncl = 8, url = "http://172.17.201.151:5000/", filename = "test.png")
+toc()
+```
+
+![map.png](map.png)
 
 
+## Another experiment
 
 
+step1
+2023-10-05 14:55
+2023-10-07 22:48
+
+step 2 
+2023-10-09 09:06
+2023-10-09 11:44
+
+step 3 
+2023-10-09 12h26
+2023-10-09 13h24

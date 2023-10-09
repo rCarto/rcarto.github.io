@@ -12,13 +12,10 @@ website:
         href: https://github.com/rCarto
       - text:  "{{< fa brands mastodon >}}"
         href: https://fosstodon.org\@rcarto
-      - icon: rss
-        href: index.xml
 format:
   html:
     theme: 
-      light: [flatly, light.scss]
-      dark: [dark, light.scss]
-    embed-resources: false
+      light: flatly
+    embed-resources: true
     self-contained-math: true
     
