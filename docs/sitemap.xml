@@ -2,26 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rcarto.github.io/index.html</loc>
-    <lastmod>2023-10-09T15:01:35.628Z</lastmod>
+    <lastmod>2023-10-11T09:04:09.584Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/mapsf_v0.7.0/index.html</loc>
-    <lastmod>2023-10-09T15:01:33.660Z</lastmod>
+    <lastmod>2023-10-11T09:04:06.640Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/build_osrm_server/index.html</loc>
+    <lastmod>2023-10-11T09:04:03.716Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/cartography_v3.1.3/index.html</loc>
-    <lastmod>2023-10-09T15:01:29.352Z</lastmod>
+    <lastmod>2023-10-11T09:04:00.664Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/mapsf_v0.6.1/index.html</loc>
-    <lastmod>2023-10-09T15:01:30.464Z</lastmod>
+    <lastmod>2023-10-11T09:04:02.156Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/osrm_v4.0.0/index.html</loc>
-    <lastmod>2023-10-09T15:01:32.488Z</lastmod>
+    <lastmod>2023-10-11T09:04:05.144Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/about.html</loc>
-    <lastmod>2023-10-09T15:01:34.412Z</lastmod>
+    <lastmod>2023-10-11T09:04:07.708Z</lastmod>
   </url>
 </urlset>
