@@ -37,58 +37,58 @@
   {
     "objectID": "posts/build_osrm_server/index.html",
     "href": "posts/build_osrm_server/index.html",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "",
-    "text": "Open Source Routing Machine, or OSRM (Luxen and Vetter 2011), is a routing software based on OpenStreetMap (OSM) data. OSRM can be used to find the fastest route between points, to compute time or distance matrices between set of points or to solve the traveling salesman problem.\nAs maintainer of the osrm R package (Giraud 2022) I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project’s README file. These instructions may not be detailed enough to build an OSRM instance on a large area.\nOSRM needs a lot of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:\nThis problem is addressed in this issue on the OSRM GitHub repository. The suggested solution is to rent a temporary server. This is not the only solution, a modern computer with a rather classical hardware configuration can actually do the job.\nIn this post I’ll explain how to build and European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server."
+    "text": "Open Source Routing Machine, or OSRM (Luxen and Vetter 2011), is a routing software based on OpenStreetMap (OSM) data. OSRM can be used to find the fastest route between points, to compute time or distance matrices between set of points or to solve the traveling salesman problem.\nAs maintainer of the osrm R package (Giraud 2022) I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project’s README file. These instructions may not be detailed enough to build an OSRM instance on a large area.\nOSRM needs a lot of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:\nThis problem is addressed in this issue on the OSRM GitHub repository. The suggested solution is to rent a temporary server. This is not the only solution, a modern computer with a rather classical hardware configuration can actually do the job.\nIn this post I’ll explain how to build a European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server."
   },
   {
     "objectID": "posts/build_osrm_server/index.html#hardware",
     "href": "posts/build_osrm_server/index.html#hardware",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Hardware",
     "text": "Hardware\nI use my personal laptop computer which has a 1 TB SSD hard drive and the following config:\nOS: Debian GNU/Linux 12 (bookworm) x86_64 \nHost: HP EliteBook 840 G8 Notebook PC \nKernel: 6.1.0-10-amd64 \nCPU: 11th Gen Intel i7-1185G7 (8) @ 4.800GHz \nMemory: 31.04GB"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#add-some-extra-memory",
     "href": "posts/build_osrm_server/index.html#add-some-extra-memory",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Add some extra memory",
     "text": "Add some extra memory\nThe preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The swap memory is used when a program consume the totality of the available RAM memory. Consequently we need to extend the swap memory of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.\n# preallocate space to a file named swap.swap\nsudo fallocate -l 200G swap.swap\n# change file access permissions\nsudo chmod 600 swap.swap\n# set the file as a swap area\nsudo mkswap swap.swap\n# start swapping to the file\nsudo swapon swap.swap\n# modify the swapiness\nsudo sysctl vm.swappiness=20"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#download-the-osm-road-network",
     "href": "posts/build_osrm_server/index.html#download-the-osm-road-network",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Download the OSM road network",
     "text": "Download the OSM road network\nThe Geofabrik website provides OSM database extracts that can be used as input for OSRM. In our case we have downloaded the osm.pbf file for Europe (27.1 GB)."
   },
   {
     "objectID": "posts/build_osrm_server/index.html#build-the-dataset-for-osrm",
     "href": "posts/build_osrm_server/index.html#build-the-dataset-for-osrm",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Build the dataset for OSRM",
     "text": "Build the dataset for OSRM\nThe europe-latest.osm.pbf file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.\n\nExtract (~5h30)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf\n\nPartition (~1h20)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm\n\nCustomize (~0h10)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#run-the-instance",
     "href": "posts/build_osrm_server/index.html#run-the-instance",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Run the instance",
     "text": "Run the instance\nThis is the command I use to run this freshly built OSRM instance:\ndocker run --rm -t -i -p 5000:5000 -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed --algorithm mld --max-table-size 50000000 /data/europe-latest.osrm"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#another-experiment",
     "href": "posts/build_osrm_server/index.html#another-experiment",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Another experiment",
     "text": "Another experiment\nI’ve conducted the same operation on a laptop with lower capacities:\nOS: Debian GNU/Linux 12 (bookworm) x86_64 \nHost: HP EliteBook Folio 1040 G3 \nKernel: 6.1.0-12-amd64 \nCPU: Intel i7-6600U (4) @ 3.400GHz \nMemory: 15.50GB \nThe dataset build for OSRM took much longer but was ultimately successful:\n\nExtract ~56h\nPartition ~2h40\nCustomize ~1h"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#example-of-use",
     "href": "posts/build_osrm_server/index.html#example-of-use",
-    "title": "How to Build an European-Wide OSRM Server on a Desktop Computer",
+    "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Example of use",
-    "text": "Example of use\nThis OSRM instance will actually be used in the framework of an European research program (Granular). In this project we’ll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.\nI’ve built a small R package relying on osrm to send queries in a parallel fashion and create “All roads lead to…” maps. The cobweb package is not bulletproof and it is not on CRAN.\nHere is a small demo:\n\n# remotes::install_github(\"rCarto/cobweb\")\nlibrary(cobweb)\ncobweb(city = \"Mainz, Germany\", \n       nroad = 3000, ncl = 8, \n       url = \"http://0.0.0.0:5000/\")\n\n\n\n\nAll Roads Lead to Mainz!"
+    "text": "Example of use\nThis OSRM instance will actually be used in the framework of a European research program (Granular). In this project we’ll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.\nI’ve built a small R package relying on osrm to send queries in a parallel fashion and create “All roads lead to…” maps. The cobweb package is not bulletproof and it is not on CRAN.\nHere is a small demo:\n\n# remotes::install_github(\"rCarto/cobweb\")\nlibrary(cobweb)\ncobweb(city = \"Mainz, Germany\", \n       nroad = 3000, ncl = 8, \n       url = \"http://0.0.0.0:5000/\")\n\n\n\n\nAll Roads Lead to Mainz!"
   },
   {
     "objectID": "posts/cartography_v3.1.3/index.html",
