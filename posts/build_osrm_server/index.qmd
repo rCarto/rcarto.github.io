@@ -1,5 +1,5 @@
 ---
-title: "How to Build an European-Wide OSRM Server on a Desktop Computer"
+title: "How to Build a European-Wide OSRM Server on a Desktop Computer"
 author: "Timothée Giraud"
 date: "2023-10-09"
 categories: [osrm]
@@ -18,7 +18,7 @@ OSRM needs **a lot** of RAM to prepare the road network for requests and using o
 ```
 This problem is addressed in [this issue](https://github.com/Project-OSRM/osrm-backend/issues/6146) on the OSRM GitHub repository. The suggested solution is to rent a temporary server. This is not the only solution, a modern computer with a rather classical hardware configuration can actually do the job. 
 
-In this post I'll explain how to build and European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server. 
+In this post I'll explain how to build a European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server. 
 
 
 ::: {.callout-note}
@@ -114,7 +114,7 @@ The dataset build for OSRM took much longer but was ultimately successful:
 
 ## Example of use
 
-This OSRM instance will actually be used in the framework of an European research program ([Granular](https://www.ruralgranular.eu/)). In this project we'll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.  
+This OSRM instance will actually be used in the framework of a European research program ([Granular](https://www.ruralgranular.eu/)). In this project we'll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.  
 I've built a small R package relying on `osrm` to send queries in a parallel fashion and create "All roads lead to..." maps. The [`cobweb` package](https://github.com/rcarto/cobweb) is not bulletproof and it is not on CRAN.  
 
 Here is a small demo:
