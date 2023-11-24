@@ -3,7 +3,7 @@ project:
   output-dir: docs
 website:
   title: "R Geomatic"
-  site-url: https://rcarto.github.io/
+  site-url: "https://rcarto.github.io/"
   description: "Information on R spatial packages maintained by Timothée Giraud."
   navbar:
     right:
@@ -12,6 +12,8 @@ website:
         href: https://github.com/rCarto
       - text:  "{{< fa brands mastodon >}}"
         href: https://fosstodon.org\@rcarto
+      # - icon: rss
+      #   href: index.xml
 format:
   html:
     theme: 

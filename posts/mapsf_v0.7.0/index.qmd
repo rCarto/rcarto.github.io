@@ -122,4 +122,4 @@ The next release of `mapsf` will use the [`maplegend`](https://github.com/riatel
 
 -----
 
-**See the [NEWS file](https://raw.githubusercontent.com/riatelab/mapsf/master/NEWS) for the complete list of changes.**
+**See the [NEWS file](https://raw.githubusercontent.com/riatelab/mapsf/master/NEWS.md) for the complete list of changes.**
