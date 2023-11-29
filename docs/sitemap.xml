@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rcarto.github.io/index.html</loc>
-    <lastmod>2023-11-24T11:08:40.292Z</lastmod>
+    <lastmod>2023-11-29T14:54:55.229Z</lastmod>
   </url>
   <url>
-    <loc>https://rcarto.github.io/posts/mapsf_v0.7.0/index.html</loc>
-    <lastmod>2023-11-24T11:08:37.772Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rcarto.github.io/posts/osrm_v4.0.0/index.html</loc>
-    <lastmod>2023-11-24T11:08:35.196Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rcarto.github.io/posts/mapsf_v0.6.1/index.html</loc>
-    <lastmod>2023-11-24T11:08:32.776Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rcarto.github.io/posts/cartography_v3.1.3/index.html</loc>
-    <lastmod>2023-11-24T11:08:31.420Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rcarto.github.io/posts/build_osrm_server/index.html</loc>
-    <lastmod>2023-11-24T11:08:34.092Z</lastmod>
+    <loc>https://rcarto.github.io/posts/linemap_0.3.0/index.html</loc>
+    <lastmod>2023-11-29T14:54:52.769Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/mapsf_v0.8.0/index.html</loc>
-    <lastmod>2023-11-24T11:08:36.524Z</lastmod>
+    <lastmod>2023-11-29T14:54:50.449Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/build_osrm_server/index.html</loc>
+    <lastmod>2023-11-29T14:54:48.273Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/cartography_v3.1.3/index.html</loc>
+    <lastmod>2023-11-29T14:54:45.901Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/mapsf_v0.6.1/index.html</loc>
+    <lastmod>2023-11-29T14:54:47.101Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/osrm_v4.0.0/index.html</loc>
+    <lastmod>2023-11-29T14:54:49.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/mapsf_v0.7.0/index.html</loc>
+    <lastmod>2023-11-29T14:54:51.573Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/about.html</loc>
-    <lastmod>2023-11-24T11:08:38.728Z</lastmod>
+    <lastmod>2023-11-29T14:54:53.717Z</lastmod>
   </url>
 </urlset>
