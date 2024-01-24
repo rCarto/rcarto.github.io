@@ -90,9 +90,9 @@ docker run --rm -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-b
 
 
 
-## Another experiment
+## Other experiments
 
-I've conducted the same operation on a laptop with lower capacities: 
+### A laptop with lower capacities: 
 
 <pre><span style="color:#C01C28"><b>OS</b></span>: Debian GNU/Linux 12 (bookworm) x86_64 
 <span style="color:#C01C28"><b>Host</b></span>: HP EliteBook Folio 1040 G3 
@@ -100,13 +100,22 @@ I've conducted the same operation on a laptop with lower capacities:
 <span style="color:#C01C28"><b>CPU</b></span>: Intel i7-6600U (4) @ 3.400GHz 
 <span style="color:#C01C28"><b>Memory</b></span>: 15.50GB </pre>
 
-The dataset build for OSRM took much longer but was ultimately successful:
-
 1. Extract ~56h 
 2. Partition ~2h40
 3. Customize ~1h
 
 
+### A server with higher capacities:
+
+<pre><span style="color:#C01C28"><b>OS</b></span>: Ubuntu 22.04.3 LTS (Jammy Jellyfish) x86_64 
+<span style="color:#C01C28"><b>Host</b></span>: ASUS 
+<span style="color:#C01C28"><b>Kernel</b></span>: Linux 5.15.0-91-generic 
+<span style="color:#C01C28"><b>CPU</b></span>: AMD Ryzen 7 7700 8-Core Processor (16) @ 5.388GHz 
+<span style="color:#C01C28"><b>Memory</b></span>: 62GB </pre>
+
+1. Extract 1h06 
+2. Partition 0h34
+3. Customize 0h02
 
 
 
