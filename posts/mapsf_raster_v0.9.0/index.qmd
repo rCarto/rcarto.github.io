@@ -1,0 +1,206 @@
+---
+title: "Raster maps with `mapsf`"
+author: "Timothée Giraud"
+date: "2024-01-29"
+categories: [mapsf]
+image: "front.png"
+draft: true
+# resources: 
+#   - clc_46.*
+#   - elev_46.*
+#   - dep.gpkg
+---
+
+`mapsf` focuses on creating thematic maps based on vector data (maps are generated from `sf` objects). However, it is also possible to map raster data thanks to the `mf_raster()` function. 
+
+The latest update of `mapsf` (v0.9.0) expands the mapping capabilities for raster data. Emulating the functionality of `terra` (and leveraging its plotting function internally), `mf_raster()` now provides three types of maps: "classes," "continuous," and "interval."
+
+## Classes
+
+This type of raster map is suitable for rasters containing qualitative data (categories).   
+In this example we display a map of Corine Land Cover classes over the Lot region in France. 
+
+```{r}
+#| include: false 
+# library(terra)
+# library(mapsf)
+# clc <- rast("/home/tim/Documents/prj/geodata/data/CLC2018_Lot.tif")
+# clc_df_raw <- read.csv("/home/tim/Téléchargements/clc-nomenclature-c_1.csv")
+# clc_df <- data.frame(ID = clc_df_raw$code_clc_niveau_3, CLC2018 = clc_df_raw$libelle_en, col = rgb(red = clc_df_raw$rouge, green = clc_df_raw$vert, blue = clc_df_raw$bleu, maxColorValue = 255))
+# clc <- as.factor(clc)
+# df_ref <- levels(clc)[[1]]
+# 
+# 
+# clc_df$CLC2018[3] <- "Industrial or commercial units\nand public facilities" 
+# clc_df$CLC2018[18] <- "Pastures, meadows and other\npermanent grasslands under agricultural use" 
+# clc_df$CLC2018[21] <- "Land principally occupied by agriculture,\nwith significant areas of natural vegetation"
+# 
+# clc_df = merge(df_ref[,1, drop = F], clc_df, by = "ID", all.x = T)
+# 
+# levels(clc) <- clc_df[c("ID", "CLC2018")]
+# 
+# writeRaster(x, "/home/tim/Documents/prj/rcarto.github.io/posts/mapsf_raster_v0.9.0//clc_46.tif")
+# 
+# sf::st_write(dep, "/home/tim/Documents/prj/rcarto.github.io/posts/mapsf_raster_v0.9.0/dep.gpkg", layer = "dep")
+
+# dep <- sf::st_read("/home/tim/Documents/prj/rcarto.github.io/posts/mapsf_raster_v0.9.0/dep.gpkg", layer = "dep")
+# clc <- terra::rast("/home/tim/Documents/prj/rcarto.github.io/posts/mapsf_raster_v0.9.0/clc_46.tif")
+# elev <- terra::rast("/home/tim/Documents/prj/rcarto.github.io/posts/mapsf_raster_v0.9.0/elev_46.tif")
+```
+
+
+```{r}
+#| fig-height: 5.6
+#| fig-width: 8.5
+#| eval: true
+library(mapsf)
+# import raster
+clc <- terra::rast("clc_46.tif")
+# import vector (Lot region polygon)
+dep <- sf::st_read("dep.gpkg", "dep", quiet = TRUE) 
+
+# define a color palette
+clc_pal <- c("#E6004D", "#FF0000", "#CC4DF2", "#CC0000", "#E6CCE6", "#A600CC", 
+             "#FFE6FF", "#FFFFA8", "#E68000", "#F2A64D", "#E6E64D", "#FFE64D", 
+             "#E6CC4D", "#80FF00", "#00A600", "#4DFF00", "#CCF24D", "#A6FF80", 
+             "#A6E64D", "#A6F200", "#00CCF2", "#80F2E6")
+
+# map the raster
+mf_raster(clc, pal = clc_pal, expandBB = c(0, 0.5, 0.01, 0),
+          leg_title = "", leg_size = .7, leg_box_cex = c(.6, .85), leg_pos = "topleft")
+
+# add region borders 
+mf_map(dep, col = NA, lwd = 2, add = TRUE)
+
+# add map layout elements
+mf_title("CORINE Land Cover - Lot region - 2018", tab = FALSE, pos = "center") 
+mf_credits("T. Giraud, 2024 | EEA 2018")
+mf_arrow(pos = "topright")
+mf_scale(10)
+```
+
+
+
+
+## Continuous
+
+This type of map is appropriate for numeric rasters.   
+In the following example we display elevation maps of the Lot region.
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+# import raster
+elev <- terra::rast("elev_46.tif")
+
+# map the raster
+mf_raster(elev, leg_pos = "topleft")
+
+# add layout elements
+mf_title("Elevation - Lot region") 
+mf_credits("SRTM 90m DEM Digital Elevation Database, 2018")
+mf_arrow(pos = "topright")
+mf_scale(5)
+```
+
+The colors are set using a palette name or a vector of colors to map the continuous values.  
+See `?hcl.colors()` examples to check palette names and colors.
+
+```{r}
+#| fig-width: 5
+#| fig-height: 4
+#| layout-ncol: 2
+# select a palette with a palette name
+mf_raster(elev, pal = "Rocket", expandBB = c(0,0,0,.3))
+# define a palette with colors (from red to black)
+mf_raster(elev, pal = c("#fe5234", "#000000"), expandBB = c(0,0,0,.3))
+```
+
+
+It is also possible to give break values and corresponding colors. Breaks are inflection points of the color scale. 
+
+```{r}
+#| fig-width: 8.5
+#| fig-height: 8.19
+library(terra)
+# set a cartographic theme
+mf_theme("green", bg = "black")
+
+# map the raster
+mf_raster(elev, breaks = c(67, 150, 550, 776), 
+          pal = c("white", "khaki", "darkgreen", "black"),
+          leg_val_rnd = 0, leg_pos = "topleft", leg_box_cex = c(.65, 1),
+          leg_title = "Elevation (m)", leg_horiz = TRUE, leg_frame = TRUE, 
+          leg_frame_border = NA, leg_bg = "grey20")
+
+# add an inset 
+mf_inset_on(x = "worldmap", pos = "bottomright", cex = .2)
+mf_worldmap(x = elev)
+mf_inset_off()
+
+# add layout elements
+mf_title("Elevation - Lot region", tab = FALSE, pos = "center") 
+mf_credits("T. Giraud, 2024 | SRTM 90m DEM Digital Elevation Database, 2018", 
+           bg = "#000000CC")
+mf_arrow(pos = "topright")
+mf_scale(5)
+
+# add annotations
+max_elev_coord <- xyFromCell(elev, where.max(elev)[2])[1,]
+mf_annotation(x = max_elev_coord, "Highest Point", 
+              col_arrow = "white", col_txt = "white", 
+              pos = "bottomleft", halo = TRUE, cex = 1.2)
+
+```
+
+## Interval
+
+This type of map is also appropriate for numeric rasters. The numeric values are classified using one the methods provided by `mf_get_breaks()`.
+
+```{r}
+#| fig-width: 8.5
+#| fig-height: 8.19
+# set a cartographic theme
+mf_theme("default")
+
+# map the raster
+mf_raster(elev, type = "interval", 
+          breaks = "q6", pal = "Turku", rev = TRUE,
+          leg_val_rnd = 1, leg_pos = "topleft", leg_title = "Elevation (m)")
+
+# add layout elements
+mf_title("Elevation - Lot region", tab = FALSE, pos = "center") 
+mf_credits("SRTM 90m DEM Digital Elevation Database, 2018", 
+           pos = "rightbottom")
+mf_arrow(pos = "topright")
+mf_scale(5, pos = "bottomleft")
+```
+
+## Multi band
+
+
+The last kind of map that `mf_raster()` can take care of is color composite maps using three bands. 
+
+```{r}
+#| fig-width: 5.125
+#| fig-height: 4.896
+#| eval: true
+library(maptiles)
+dep <- sf::st_transform(dep, "EPSG:3857")
+# get an OpenStreetMap image on the region
+(osm <- get_tiles(x = dep, provider = "OpenStreetMap", crop = TRUE, zoom = 9))
+
+# set them margins
+mf_theme(mar = c(0,0,0,0))
+
+# display the map
+mf_raster(osm)
+mf_map(dep, add = TRUE, col = NA, lwd = 3)
+
+# add attribution
+mf_credits(get_credit("OpenStreetMap"))
+```
+
+
+
+
