@@ -4,6 +4,7 @@ project:
 website:
   title: "R Geomatic"
   site-url: "https://rcarto.github.io/"
+  favicon: "avatar.png"
   description: "Information on R spatial packages maintained by Timothée Giraud."
   navbar:
     right:
@@ -12,12 +13,14 @@ website:
         href: https://github.com/rCarto
       - text:  "{{< fa brands mastodon >}}"
         href: https://fosstodon.org/@rcarto
-      # - icon: rss
-      #   href: index.xml
+      - icon: rss
+        href: index.xml
 format:
   html:
-    theme: 
-      light: flatly
-    embed-resources: true
+    mainfont: "system-ui"
+    monofont: "monospace"
+    fontfamily: "system-ui"
+    embed-resources: false
     self-contained-math: true
+    html-math-method: plain
     
