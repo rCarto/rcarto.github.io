@@ -1,0 +1,204 @@
+---
+title: "New release of `mapsf`"
+author: "Timothée Giraud"
+date: "2024-11-05"
+categories: [mapsf]
+image: "front.png"
+draft: false
+bibliography: references.bib
+resources:
+  - com.gpkg
+
+---
+
+An update of `mapsf` has been deployed on CRAN.   
+The package now includes two new functions: `mf_get_borders()` and `mf_get_pencil()`. The first function extracts borders between polygons which can be used to create discontinuities maps. The second one transforms polygons into lines, simulating a pencil drawing pattern.  
+Other changes are bug fixes and minor improvements.
+
+
+The dataset used in the following examples concerns apartment rental prices in 2023 (<small>[source](https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2023/#/resources/43618998-3b37-4a69-bb25-f321f1a93ed1)</small>).  
+<small>Download the dataset:</small> [{{< fa download >}}](com.gpkg)
+
+
+
+```{r}
+#| eval: false
+#| echo: false
+library(sf)
+library(mapsf)
+com_raw <- st_read("/home/tim/Téléchargements/ADMIN-EXPRESS-COG-CARTO_3-2__SHP_LAMB93_FXX_2024-02-22/ADMIN-EXPRESS-COG-CARTO/1_DONNEES_LIVRAISON_2024-03-00169/ADECOGC_3-2_SHP_LAMB93_FXX-ED2024-02-22/COMMUNE.shp")
+ardt <- st_read("/home/tim/Téléchargements/ADMIN-EXPRESS-COG-CARTO_3-2__SHP_LAMB93_FXX_2024-02-22/ADMIN-EXPRESS-COG-CARTO/1_DONNEES_LIVRAISON_2024-03-00169/ADECOGC_3-2_SHP_LAMB93_FXX-ED2024-02-22/ARRONDISSEMENT_MUNICIPAL.shp")
+loyers <- read.csv("https://www.data.gouv.fr/fr/datasets/r/43618998-3b37-4a69-bb25-f321f1a93ed1", sep = ";")
+ardt <- ardt[ardt$INSEE_COM %in% 75056, c("INSEE_ARM", "NOM") ]
+names(ardt)[1] <- "INSEE_COM"
+com <- rbind(com_raw[com_raw$INSEE_REG %in% 11 & !com_raw$INSEE_COM %in% 75056, c("INSEE_COM", "NOM") ], ardt)
+com <- com[substr(com$INSEE_COM,1,2) %in% c("75","93", "94", "92"),]
+ll <- loyers[,c("INSEE_C", "loypredm2")]
+ll$loypredm2 <- gsub(",", ".", ll$loypredm2)
+ll$loypredm2 <- round(as.numeric(ll$loypredm2),1)
+com <- merge(com, ll, by.x = "INSEE_COM", by.y = "INSEE_C", all.x = T)
+com
+st_write(com, "com.gpkg", layer = "communes")
+```
+
+## New features
+
+
+### Discontinuities maps with `mf_get_borders()`
+
+Discontinuities maps display the variation of a phenomenon between contiguous administrative units. This kind of representation does not focus on homogeneous zones, but rather on spatial breaks. On the map, discontinuity intensity is expressed by the thickness of the borders.
+
+The first step to building these maps is to extract borders between units. The second step is to compute a discontinuity measure (either a ratio or an absolute difference). The third step is to display it on a map using a variations in line width. Combining these discontinuities with a choropleth representation helps to understand the discontinuity direction (which one of two regions has the higher value).
+
+`mf_get_borders()` is used to build the spatial object of borders between units. Each resulting border is described by the datasets of its two neighboring units in order to compute the discontinuity measures.
+
+
+```{r}
+#| fig-width: 8
+#| fig-height: 8.8
+#| message: false
+library(sf)
+library(mapsf)
+
+# import dataset 
+com <- st_read(dsn = "com.gpkg", layer = "communes", quiet = TRUE)
+
+# get borders
+com_bo <- mf_get_borders(com) 
+
+# compute the gap between prices
+com_bo$diff <- abs(com_bo$loypredm2 - com_bo$loypredm2.1)
+
+# set a cartographic theme
+mf_theme(x = "darkula",
+         mar = c(.5, .5, 2, .5),
+         inner = FALSE,
+         pos = "center",
+         tab = FALSE)
+
+# display a choropleth map of the rent price / m²
+mf_map(x = com, var = "loypredm2", type = "choro",
+       breaks = "ckmeans", nbreaks = 6, pal = "Emrld", rev = T,
+       border = "grey90", lwd = .2,
+       leg_title = "Rent price\nindicator\n(€ per m²)",
+       leg_val_cex = .8, leg_val_rnd = 1, leg_pos = "topleft")
+
+# display discontinuities
+mf_map(x = com_bo[com_bo$diff >= 2, ], var = "diff", type = "grad",
+       breaks = c(2, 4, 6, 8, 8.9), lwd = c(1, 4, 10, 14), col = "red",
+       leg_title = "Price gap\n(€ per m²)",
+       leg_val_rnd = 1, leg_pos = "topleft", leg_adj = c(8, 0),
+       leg_val_cex = .8)
+
+# Layout elements
+mf_arrow("topright")
+mf_credits(
+  txt = paste(
+    'Timothée Giraud, 2024\n',
+    'ADMIN EXPRESS COG CARTO - IGN, 2024\n',
+    '"Carte des loyers" - Ministère de la Transition écologique, 2023'
+  )
+)
+mf_title("Discontinuities in rental price levels in Paris")
+mf_annotation(x = com_bo[order(com_bo$diff, decreasing = TRUE), ][1, ],
+              txt = paste0("The largest gap is between\nParis XVII (29.2€/m²) and\n", 
+                           "Saint-Ouen (20.3€/m²)"),
+              halo = TRUE, s = 2, col_arrow = "white", col_txt = "white",
+              pos = "topright")
+mf_scale(5)
+```
+
+
+### Colored pencil maps with `mf_get_pencil()`
+
+`mf_get_pencil()` transforms POLYGONS or MULTIPOLYGONS geometries in MULTILINESTRINGS geometries. This function creates a layer that mimicks a pencil drawing pattern. The following code details how to use the function:
+
+```{r}
+#| fig-width: 7
+#| fig-height: 7.46
+# transform the POLYGON layer in a MULTILINESTRING layer
+comx <- mf_get_pencil(com, size = 250)
+
+# set a cartographic theme
+mf_theme("candy")
+
+# display the map as a choropleth map
+mf_map(x = comx, var = "loypredm2", type = "choro",
+       breaks = "ckmeans", nbreaks = 6, pal = "Mako",
+       leg_title = "Rent price\nindicator\n(€ per m²)",
+       leg_val_cex = .8, leg_val_rnd = 1, leg_pos = "topleft")
+mf_map(com, add = T, col = NA, border = getOption("mapsf.fg"))
+
+# Layout elements
+mf_arrow("topright")
+mf_credits(
+  txt = paste(
+    'Timothée Giraud, 2024\n',
+    'ADMIN EXPRESS COG CARTO - IGN, 2024\n',
+    '"Carte des loyers" - Ministère de la Transition écologique, 2023'
+  )
+)
+mf_title("Rental price levels in Paris")
+mf_scale(5)
+```
+
+
+
+## Bug fixes and improvements
+
+### 2 lines titles
+A fix has made it easier to create titles on two lines. 
+```{r}
+#| fig-width: 3.5
+#| fig-height: 3.7
+# set a suitable cartographic thme
+mf_theme(bg = "grey90", fg = "black", 
+         mar = c(0,0,2.2,0), inner = FALSE, line = 2.2, cex = 1, pos = "left")
+mf_map(com)
+# display the title
+mf_title("This title is easlily\ndisplayed on 2 lines")
+```
+
+
+### A better north arrow
+
+The north arrow has been redesigned. It is now possible to change its size (cex), fine-tune its position (adj) or use a true north azimuth (align).  
+
+```{r}
+#| fig-width: 7
+#| fig-height: 7
+mf_theme("jsk")
+# use a projection that will produce a map where the north is not at the top
+com_usa <- st_transform(com, "EPSG:32119")
+mf_map(com_usa)
+mf_arrow(pos = "topleft", align = com_usa, cex = 2)
+mf_graticule(com_usa, pos = c("bottom", "left"),add = TRUE)
+mf_title(txt = "A better north arrow")
+```
+
+
+### New classification methods
+
+The "Q6" and "ckmeans" methods have been added to the `mf_get_breaks()` function. 
+
+* The "Q6" method has also been added, it's a variation of the "q6" method.
+* The "jenks", "fisher" and "ckmeans" methods are based on the same concept of natural breaks and produce similar groupings.  
+
+  - The "jenks" method produces class boundaries that fall on data points and is slow.
+  - The "fisher" method produces class boundaries placed more conveniently between data points, and is faster than the "jenks" method.
+  - The "ckmeans" method produces the exact same class boundaries as the "fisher" method, but is much faster. It uses the optimal univariate k-means method from the `Ckmeans.1d.dp` package [@Wang2011Ckmeans]. If the "ckmeans" method is selected but the `Ckmeans.1d.dp` package is not installed then the "fisher" method is used.
+  
+  The relative speeds of these three methods may vary depending on the number of data points and the number of classes.
+
+:::{.callout-tip collapse="true" title='"fisher" vs. "ckmeans"'}
+Jenks isn't even included due to the prohibitive amount of time it would take.
+```{r}
+x <- runif(5000)
+library(microbenchmark)
+microbenchmark(fisher  = mf_get_breaks(x, 8, "fisher", largeN = 5000), 
+               ckmeans = mf_get_breaks(x, 8, "ckmeans"))
+identical(mf_get_breaks(x, 8, "fisher", largeN = 5000), 
+          mf_get_breaks(x, 8, "ckmeans"))
+```
+:::
+
