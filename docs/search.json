@@ -102,14 +102,14 @@
     "href": "posts/build_osrm_server/index.html#build-the-dataset-for-osrm",
     "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Build the dataset for OSRM",
-    "text": "Build the dataset for OSRM\nThe europe-latest.osm.pbf file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.\n\nExtract (~5h30)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf\n\nPartition (~1h20)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm\n\nCustomize (~0h10)\n\ndocker run -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm"
+    "text": "Build the dataset for OSRM\nThe europe-latest.osm.pbf file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.\n\nExtract (~5h30)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf\n\nPartition (~1h20)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm\n\nCustomize (~0h10)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#run-the-instance",
     "href": "posts/build_osrm_server/index.html#run-the-instance",
     "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Run the instance",
-    "text": "Run the instance\nThis is the command I use to run this freshly built OSRM instance:\ndocker run --rm -t -i -p 5000:5000 -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed --algorithm mld --max-table-size 50000000 /data/europe-latest.osrm"
+    "text": "Run the instance\nThis is the command I use to run this freshly built OSRM instance:\ndocker run -t -i -p 5000:5000 -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed --algorithm mld --max-table-size 50000000 /data/europe-latest.osrm"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#other-experiments",

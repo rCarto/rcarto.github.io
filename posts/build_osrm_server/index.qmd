@@ -65,17 +65,17 @@ The **europe-latest.osm.pbf** file needs to be processed to be used by OSRM. Thi
 
 1. Extract (~5h30)
 ```sh
-docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf
+docker run --rm -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf
 ```
 
 2. Partition (~1h20)
 ```sh
-docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm
+docker run --rm -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm
 ```
 
 3. Customize (~0h10)
 ```sh
-docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm
+docker run --rm -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm
 ```
 
 
@@ -84,7 +84,7 @@ docker run -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-c
 This is the command I use to run this freshly built OSRM instance:
 
 ```sh
-docker run --rm -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed --algorithm mld --max-table-size 50000000 /data/europe-latest.osrm
+docker run -t -i -p 5000:5000 -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed --algorithm mld --max-table-size 50000000 /data/europe-latest.osrm
 ```
 
 

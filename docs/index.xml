@@ -9,7 +9,7 @@
 <link>https://rcarto.github.io/</link>
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
-<generator>quarto-1.5.49</generator>
+<generator>quarto-1.6.40</generator>
 <lastBuildDate>Mon, 04 Nov 2024 23:00:00 GMT</lastBuildDate>
 <item>
   <title>New release of mapsf</title>
@@ -2878,6 +2878,8 @@ font-style: inherit;">sudo</span> sysctl vm.swappiness=20</span></code></pre></d
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
+font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
+background-color: null;
 font-style: inherit;">-t</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-v</span> <span class="st" style="color: #20794D;
@@ -2896,6 +2898,8 @@ font-style: inherit;">-p</span> /opt/car.lua /data/europe-latest.osm.pbf</span><
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
+font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
+background-color: null;
 font-style: inherit;">-t</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-v</span> <span class="st" style="color: #20794D;
@@ -2911,6 +2915,8 @@ font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 o
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-t</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -2928,8 +2934,6 @@ font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 o
 <div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--rm</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-t</span> <span class="at" style="color: #657422;
 background-color: null;
