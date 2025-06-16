@@ -9,7 +9,7 @@
 <link>https://rcarto.github.io/</link>
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
-<generator>quarto-1.6.40</generator>
+<generator>quarto-1.7.31</generator>
 <lastBuildDate>Mon, 04 Nov 2024 23:00:00 GMT</lastBuildDate>
 <item>
   <title>New release of mapsf</title>
@@ -3554,18 +3554,22 @@ The following quarto example uses the default figure output settings (7 x 5 inch
 <div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb1-2"><span class="in" style="color: #5E5E5E;
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library(mapsf)</span></span>
-<span id="cb1-3"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">library</span>(mapsf)</span>
+<span id="cb1-3">mtq <span class="ot" style="color: #003B4F;
 background-color: null;
-font-style: inherit;">mtq &lt;- mf_get_mtq()</span></span>
-<span id="cb1-4"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_theme("darkula")</span></span>
-<span id="cb1-5"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">mf_get_mtq</span>()</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_map(mtq)</span></span>
+font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"darkula"</span>)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(mtq)</span>
 <span id="cb1-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
@@ -3602,18 +3606,20 @@ font-style: inherit;">"darkula"</span>)</span></code></pre></div>
 <div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb4-2"><span class="in" style="color: #5E5E5E;
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#| fig-width: 4.3</span></span>
-<span id="cb4-3"><span class="in" style="color: #5E5E5E;
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#| fig-height: 5</span></span>
-<span id="cb4-4"><span class="in" style="color: #5E5E5E;
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_theme("darkula")</span></span>
-<span id="cb4-5"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">mf_map(mtq)</span></span>
+font-style: inherit;">"darkula"</span>)</span>
+<span id="cb4-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(mtq)</span>
 <span id="cb4-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
@@ -3666,21 +3672,45 @@ font-style: inherit;">5</span>)</span>
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb7-2"><span class="in" style="color: #5E5E5E;
+<span id="cb7-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#| fig-width: 5.95</span></span>
-<span id="cb7-3"><span class="in" style="color: #5E5E5E;
+<span id="cb7-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#| fig-height: 5</span></span>
-<span id="cb7-4"><span class="in" style="color: #5E5E5E;
+<span id="cb7-4"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_init(x = mtq, expandBB = c(0, 0, 0, .5), theme = "ink")</span></span>
-<span id="cb7-5"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">mf_init</span>(<span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">mf_map(mtq, add = TRUE)</span></span>
-<span id="cb7-6"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">x =</span> mtq, <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">mf_title("Martinique")</span></span>
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">theme =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ink"</span>)</span>
+<span id="cb7-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(mtq, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb7-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Martinique"</span>)</span>
 <span id="cb7-7"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
