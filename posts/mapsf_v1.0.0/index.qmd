@@ -11,24 +11,17 @@ resources:
 
 ---
 
-A new major version of `mapsf` has been deployed on CRAN.   
-This new release introduces some new features and fixes and also few backward incompatible changes. In this post I'll show some of the new features of the package: 
+The first major version of `mapsf` has been deployed on CRAN.   
+This new release introduces many new features and fixes.
+In this post I'll show some of the new features of the package:
 
 - The new theming system
 - The updated display of map elements
 - The updated Cheat Sheet
 - A new way of designing color palettes
 
-
-
-
-
-### Dataset
 The dataset used in the following examples is about apartment rental prices in 2023 (<small>[source](https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2023/#/resources/43618998-3b37-4a69-bb25-f321f1a93ed1)</small>).  
 <small>Download the dataset:</small> [{{< fa download >}}](com.gpkg)
-```{r}
-com <- sf::st_read("com.gpkg", quiet = TRUE)
-```
 
 
 
@@ -46,6 +39,7 @@ The default theme is called "base".
 #| fig-width: 5
 #| fig-height: 5.58
 library(mapsf)
+com <- sf::st_read("com.gpkg", quiet = TRUE)
 mf_theme("base")
 mf_map(com)
 mf_title("New default theme")
@@ -57,7 +51,7 @@ mf_arrow()
 
 ### Builtin themes
 
-`mapsf` offers some builtin themes. It's possible to modify an existing theme or to start a theme from scratch. If you want to have a look at the 8 builtin themes you can go to the vignette about themes on `mapsf` website: [link](link)
+`mapsf` offers some builtin themes. It's possible to modify an existing theme or to start a theme from scratch. If you want to have a look at the 8 builtin themes you can go to the [vignette about themes on `mapsf` website](https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes)
 
 ```{r}
 #| fig-width: 4
@@ -74,7 +68,7 @@ mf_title('Modified sol_light theme')
 
 ### How to get back to the former default
 
-If you need to use the former (pre v1.0.0) default theme, use "default": 
+If you need to use the former (pre v1.0.0) default theme, use the "default" theme: 
 
 ```{r}
 #| fig-width: 3
@@ -89,7 +83,7 @@ mf_arrow()
 
 ## Better display of map elements
 
-In this new version, map elements are redrawn when the graphic device is resized. This behaviour is a great improvement for interactive map displays, particularly when using RStudio and Positron. 
+In this new version, map elements are redrawn when the graphic device is resized. This behaviour is a great improvement for interactive map displays, particularly when using RStudio or Positron. 
 
 ### Previous release
 {{< video previous.mp4 title='mapsf v0.12.0' >}}
@@ -100,48 +94,49 @@ In this new version, map elements are redrawn when the graphic device is resized
 
 ## Updated Cheat Sheet
 
-The cheat sheet has been updated to reflect the changes that has happened in the package. 
-
+The cheat sheet has been updated to reflect the changes that has happened in the package.   
+<small>Get the PDF file of the cheat sheet:</small> [{{< fa download >}}](https://raw.githubusercontent.com/riatelab/mapsf/master/vignettes/fig/mapsf_cheatsheet.pdf)
 
 ![](front.png)
+
+
+```{r}
+#| echo: false
+mf_theme(NULL)
+```
 
 
 ## Diverging color palettes
 
 `mf_get_pal()` has been modified to make it easier to create diverging color palettes based on a vector of break values. 
 
-In the first example, we create a vector of break values based on the mean and the standard deviation of the distribution. We use `central = FALSE` to have the mean as a break value. Then we use `mf_get_pal()` with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.
-```{r}
-bks_1 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = FALSE)
-pal_1 <- mf_get_pal(breaks = bks_1, mid = mean(com$loypredm2), 
-                    palette = c("Burg", "Teal"))
-```
+In the following examples, we use a [classification method based on the mean and the standard deviation](https://magrit.cnrs.fr/en/functionalities/classification.html#mean-and-standard-deviation) of a distribution. Using this method the mean value can be a class boundary (example 1) or a class center (example 2). 
 
-In the second example, we use the same method but this time the mean is in the middle of a central class (`central = TRUE`). The resulting palette has a neutral color for the central classe that contains the mean value.
-```{r}
-bks_2 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = TRUE)
-pal_2 <- mf_get_pal(breaks = bks_2, mid = mean(com$loypredm2), 
-                    palette = c("Burg", "Teal"))
-```
-
-
-
+### Use a class boundary
+The first step consist in creating the vector of break values. We use `central = FALSE` to have the mean as a break value. Then we use `mf_get_pal()` with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.
 ```{r}
 #| fig-width: 4
 #| fig-height: 4.532
-#| layout-ncol: 2
-mf_theme(x = "base", title_cex = 1, frame = "map")
+bks_1 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = FALSE)
+pal_1 <- mf_get_pal(breaks = bks_1, mid = mean(com$loypredm2), 
+                    palette = c("Burg", "Teal"))
 mf_map(com, "loypredm2", "choro", breaks = bks_1, pal = pal_1)
-mf_title("Diverging color palette")
-mf_map(com, "loypredm2", "choro", breaks = bks_2, pal = pal_2)
-mf_title("Diverging color palette with a neutral color")
+mf_title("Diverging color palette", cex = 1)
 ```
 
 
-::: {.callout-note title="Classification based on mean and standard deviation"}
-This method proposes to form classes based on the value of the standard deviation and the mean. This method of classification does not allow you to directly choose a number of classes, but allows you to choose the portion of the standard deviation which corresponds to the size of a class as well as the role of the mean (used as a class boundary or as a class center).  
-<small>[Magrit documentation](https://magrit.cnrs.fr/en/functionalities/classification.html#mean-and-standard-deviation)<small/>
-:::
+### Use a class center (or any value)
+In this second example, we use the same method but using a central class (`central = TRUE`). The resulting palette has a neutral color for the central classe that contains the mean value.
+```{r}
+#| fig-width: 4
+#| fig-height: 4.532
+bks_2 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = TRUE)
+pal_2 <- mf_get_pal(breaks = bks_2, mid = mean(com$loypredm2), 
+                    palette = c("Burg", "Teal"))
+mf_map(com, "loypredm2", "choro", breaks = bks_2, pal = pal_2)
+mf_title("Diverging color palette with a neutral color", cex = 1)
+```
+
 
 
 
