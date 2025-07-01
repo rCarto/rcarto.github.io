@@ -1,34 +1,40 @@
 ---
 title: "New release of `mapsf`: version 1.0.0"
 author: "Timothée Giraud"
-date: "2025-06-16"
+date: "2025-07-01"
 categories: [mapsf]
 image: "front.png"
-draft: true
+draft: false
 bibliography: references.bib
 resources:
   - com.gpkg
 
 ---
 
-The first major version of `mapsf` has been deployed on CRAN.   
-This new release introduces many new features and fixes.
-In this post I'll show some of the new features of the package:
+The first major version of `mapsf` has been deployed on CRAN!   
 
-- The new theming system
-- The updated display of map elements
-- The updated Cheat Sheet
-- A new way of designing color palettes
+The `mapsf` R package package helps you make different kinds of maps, like proportional symbols, choropleths, or typology maps. It also provides several functions for displaying layout elements that enhance the graphical presentation of maps (e.g., scale bar, north arrow, title, or labels).
+
+This post will show you some of the new features of the package:
+
+- [Revamped theming system](#themes)
+- [Improved display of map elements](#display)
+- [Updated Cheat Sheet](#cheat-sheet)
+- [Export to SVG and PNG file format](#export)
+- [Designing diverging color palettes](#palette)
+- [Breaking changes](#breaking)
 
 The dataset used in the following examples is about apartment rental prices in 2023 (<small>[source](https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2023/#/resources/43618998-3b37-4a69-bb25-f321f1a93ed1)</small>).  
 <small>Download the dataset:</small> [{{< fa download >}}](com.gpkg)
 
 
 
-## New cartographic themes
+## Revamped theming system {#themes}
 
-A new theming system has been introduced, it has lead to new default values and a new default map style.   
-**`mf_theme()`** sets a map theme. A theme is a set of graphical parameters that are applied to maps created with `mapsf`. These parameters are figure margins; frames; background, foreground and highlight colors; default sequential and qualitative palettes; title options (position, size, banner, etc.).  
+A new theming system has been introduced. This has led to new default values and a new default map style.   
+This new version lets you change more settings for the graphics, like choosing the default color palettes or using three colors instead of two. 
+**`mf_theme()`** sets the map theme, a set of graphical parameters that are applied to maps created with `mapsf`. 
+These settings include background, foreground, and highlight colors; margin sizes; frames; as well as default sequential and qualitative palettes. They also include title options, such as position, size, and banner settings.  
 Themes are persistent across maps produced by `mapsf` (e.g. they survive a `dev.off()` call). 
 
 
@@ -51,7 +57,7 @@ mf_arrow()
 
 ### Builtin themes
 
-`mapsf` offers some builtin themes. It's possible to modify an existing theme or to start a theme from scratch. If you want to have a look at the 8 builtin themes you can go to the [vignette about themes on `mapsf` website](https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes)
+`mapsf`  has some themes already included. You can modify an existing theme or start a new one. If you want to have a look at the 8 builtin themes you can go to the [vignette about themes on `mapsf` website](https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes).
 
 ```{r}
 #| fig-width: 4
@@ -66,10 +72,85 @@ mf_title('Modified sol_light theme')
 ```
 
 
-### How to get back to the former default
 
-If you need to use the former (pre v1.0.0) default theme, use the "default" theme: 
+## Improved display of map elements {#display}
 
+In this new version, map elements are redrawn when the graphic device is resized. This behavior is a great improvement for interactive map displays, especially when using RStudio or Positron. 
+
+### Previous release
+{{< video previous.mp4 title='mapsf v0.12.0' >}}
+
+### Current release
+{{< video current.mp4 title='mapsf v1.0.0' >}}
+
+
+## Updated Cheat Sheet {#cheat-sheet}
+
+We've updated the cheat sheet to reflect the changes made to the package.   
+<small>Get the PDF file of the cheat sheet:</small> [{{< fa download >}}](https://raw.githubusercontent.com/riatelab/mapsf/master/vignettes/fig/mapsf_cheatsheet.pdf)
+
+![](front.png)
+
+
+```{r}
+#| echo: false
+mf_theme(NULL)
+```
+
+## Export to SVG and PNG file format {#export}
+
+`mf_svg()` and `mf_png()` functions export maps in SVG and PNG formats, respectively. These two functions replace `mf_export()`. 
+
+**SVG export** is the perfect solution for editing maps with desktop vector graphics software, such as Inkscape. SVG is a vector graphics file format.  
+The default driver for building SVG files, `grDevices::svg()`, has limitations regarding speed, file size, editability, and font support. The `svglite` package aims to solve these issues. However, the `svglite` package is not lightweight in terms of dependencies, so it is not imported by `mapsf`, but rather suggested. However, we strongly recommend using it if you plan to edit the maps after exporting them.
+
+**PNG export** should be used for maps that do not require further modification. PNG is a raster graphics file format.
+
+The width-to-height ratio of the exported map matches that of a spatial object. If `width` is specified, then `height` is deduced from the width-to-height ratio of `x`. Alternatively, if `height` is specified, then `width` is deduced from the width-to-height ratio of `x`.
+This helps to produce maps without too much wasted space.
+
+You can find some examples of use in the [vignette about exports on `mapsf` website]( https://riatelab.github.io/mapsf/#/vignettes/how_to_export_maps).
+
+
+## Designing diverging color palettes {#palette}
+
+The `mf_get_pal()` function has been updated to make it simpler to create diverging color palettes based on a vector of break values. 
+
+In the following examples, we use a [classification method based on the mean and the standard deviation](https://magrit.cnrs.fr/en/functionalities/classification.html#mean-and-standard-deviation) of a distribution. Using this method the mean value can be a class boundary (example 1) or a class center (example 2). 
+
+### Use a class boundary
+The first step is to create the vector of break values. We use `central = FALSE` to have the mean as a break value. Then we use `mf_get_pal()` with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.
+```{r}
+#| fig-width: 4.1
+#| fig-height: 4.4
+bks_1 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = FALSE)
+pal_1 <- mf_get_pal(breaks = bks_1, mid = mean(com$loypredm2), 
+                    palette = c("Burg", "Teal"))
+mf_map(com, "loypredm2", "choro", breaks = bks_1, pal = pal_1)
+mf_title("Diverging color palette", cex = 1)
+```
+
+
+### Use a class center (or any value)
+In this second example, we use the same method, but we use a central class (`central = TRUE`). The resulting palette includes a neutral color for the central class that contains the mean value.
+```{r}
+#| fig-width: 4.1
+#| fig-height: 4.4
+bks_2 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = TRUE)
+pal_2 <- mf_get_pal(breaks = bks_2, mid = mean(com$loypredm2), 
+                    palette = c("Burg", "Teal"))
+mf_map(com, "loypredm2", "choro", breaks = bks_2, pal = pal_2)
+mf_title("Diverging color palette with a neutral color", cex = 1)
+```
+
+## Breaking changes {#breaking}
+
+### Withdrawn of deprecated functions and arguments
+All previously deprecated functions and arguments have been withdrawn from the package. The complete list of removed functions and arguments is available in the [changelog](https://riatelab.github.io/mapsf/#/NEWS?id=breaking-changes). 
+
+### New theme
+The new theme system uses new default values for colors, margins and other graphical parameters, so the default map produced with `mapsf` will not look the same.   
+If you need to use the old (pre v1.0.0) default theme, use the "default" theme: 
 ```{r}
 #| fig-width: 3
 #| fig-height: 3.374
@@ -81,65 +162,17 @@ mf_credits()
 mf_arrow()
 ```
 
-## Better display of map elements
+Note that `mf_theme()` arguments names have changed. "bg", "fg", "tab", "pos", "inner", "line", "cex" and "font" are deprecated arguments.  
+If old (deprecated) arguments are used, new ones are totally ignored and we try to keep the old theme behavior.
 
-In this new version, map elements are redrawn when the graphic device is resized. This behaviour is a great improvement for interactive map displays, particularly when using RStudio or Positron. 
+### Mapping points
 
-### Previous release
-{{< video previous.mp4 title='mapsf v0.12.0' >}}
+When plotting a base layer of points with `pch` set to a value between 21 and 25, we now use `col` for fill color and `border` for contour color whereas previous versions used `bg` for fill color and `col` for contour color.
 
-### Current release
-{{< video current.mp4 title='mapsf v1.0.0' >}}
-
-
-## Updated Cheat Sheet
-
-The cheat sheet has been updated to reflect the changes that has happened in the package.   
-<small>Get the PDF file of the cheat sheet:</small> [{{< fa download >}}](https://raw.githubusercontent.com/riatelab/mapsf/master/vignettes/fig/mapsf_cheatsheet.pdf)
-
-![](front.png)
-
-
-```{r}
-#| echo: false
-mf_theme(NULL)
-```
-
-
-## Diverging color palettes
-
-`mf_get_pal()` has been modified to make it easier to create diverging color palettes based on a vector of break values. 
-
-In the following examples, we use a [classification method based on the mean and the standard deviation](https://magrit.cnrs.fr/en/functionalities/classification.html#mean-and-standard-deviation) of a distribution. Using this method the mean value can be a class boundary (example 1) or a class center (example 2). 
-
-### Use a class boundary
-The first step consist in creating the vector of break values. We use `central = FALSE` to have the mean as a break value. Then we use `mf_get_pal()` with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.
-```{r}
-#| fig-width: 4
-#| fig-height: 4.532
-bks_1 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = FALSE)
-pal_1 <- mf_get_pal(breaks = bks_1, mid = mean(com$loypredm2), 
-                    palette = c("Burg", "Teal"))
-mf_map(com, "loypredm2", "choro", breaks = bks_1, pal = pal_1)
-mf_title("Diverging color palette", cex = 1)
-```
-
-
-### Use a class center (or any value)
-In this second example, we use the same method but using a central class (`central = TRUE`). The resulting palette has a neutral color for the central classe that contains the mean value.
-```{r}
-#| fig-width: 4
-#| fig-height: 4.532
-bks_2 <- mf_get_breaks(x = com$loypredm2, breaks = "msd", central = TRUE)
-pal_2 <- mf_get_pal(breaks = bks_2, mid = mean(com$loypredm2), 
-                    palette = c("Burg", "Teal"))
-mf_map(com, "loypredm2", "choro", breaks = bks_2, pal = pal_2)
-mf_title("Diverging color palette with a neutral color", cex = 1)
-```
 
 
 
 
 -------
 
-**See the [NEWS file](https://raw.githubusercontent.com/riatelab/mapsf/master/NEWS.md) for the complete list of changes.**
+**See the [NEWS file](https://riatelab.github.io/mapsf/#/NEWS) for the complete list of changes.**

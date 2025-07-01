@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Blog posts",
     "section": "",
-    "text": "New release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nNov 5, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nRaster maps with mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJan 31, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nlinemap update\n\n\n\nlinemap\n\n\n\n\n\n\n\n\n\nNov 29, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nmapsf update and maplegend introduction\n\n\n\nmapsf\n\nmaplegend\n\n\n\n\n\n\n\n\n\nNov 24, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nHow to Build a European-Wide OSRM Server on a Desktop Computer\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nOct 9, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 11, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of cartography\n\n\n\ncartography\n\n\n\n\n\n\n\n\n\nJan 20, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of osrm\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\nNo matching items"
+    "text": "New release of mapsf: version 1.0.0\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 1, 2025\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nNov 5, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nRaster maps with mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJan 31, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nlinemap update\n\n\n\nlinemap\n\n\n\n\n\n\n\n\n\nNov 29, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nmapsf update and maplegend introduction\n\n\n\nmapsf\n\nmaplegend\n\n\n\n\n\n\n\n\n\nNov 24, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nHow to Build a European-Wide OSRM Server on a Desktop Computer\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nOct 9, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 11, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of cartography\n\n\n\ncartography\n\n\n\n\n\n\n\n\n\nJan 20, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of osrm\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/mapsf_raster_v0.9.0/index.html",
@@ -229,5 +229,54 @@
     "title": "About",
     "section": "",
     "text": "Information on R spatial packages maintained by Timothée Giraud."
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html",
+    "href": "posts/mapsf_v1.0.0/index.html",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "",
+    "text": "The first major version of mapsf has been deployed on CRAN!\nThe mapsf R package package helps you make different kinds of maps, like proportional symbols, choropleths, or typology maps. It also provides several functions for displaying layout elements that enhance the graphical presentation of maps (e.g., scale bar, north arrow, title, or labels).\nThis post will show you some of the new features of the package:\nThe dataset used in the following examples is about apartment rental prices in 2023 (source).\nDownload the dataset:"
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#themes",
+    "href": "posts/mapsf_v1.0.0/index.html#themes",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Revamped theming system",
+    "text": "Revamped theming system\nA new theming system has been introduced. This has led to new default values and a new default map style.\nThis new version lets you change more settings for the graphics, like choosing the default color palettes or using three colors instead of two. mf_theme() sets the map theme, a set of graphical parameters that are applied to maps created with mapsf. These settings include background, foreground, and highlight colors; margin sizes; frames; as well as default sequential and qualitative palettes. They also include title options, such as position, size, and banner settings.\nThemes are persistent across maps produced by mapsf (e.g. they survive a dev.off() call).\n\nThe default theme\nThe default theme is called “base”.\n\nlibrary(mapsf)\ncom &lt;- sf::st_read(\"com.gpkg\", quiet = TRUE)\nmf_theme(\"base\")\nmf_map(com)\nmf_title(\"New default theme\")\nmf_scale()\nmf_credits()\nmf_arrow()\n\n\n\n\n\n\n\n\n\n\nBuiltin themes\nmapsf has some themes already included. You can modify an existing theme or start a new one. If you want to have a look at the 8 builtin themes you can go to the vignette about themes on mapsf website.\nmf_theme(\"sol_light\")\nmf_map(com, 'loypredm2', 'choro', breaks = \"ckmeans\", nbreaks = 4)\nmf_title('sol_light theme')\nmf_theme(\"sol_light\", highlight = \"brown\", title_banner = TRUE, pal_seq = \"Teal\")\nmf_map(com, 'loypredm2', 'choro', breaks = \"ckmeans\", nbreaks = 4)\nmf_title('Modified sol_light theme')"
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#display",
+    "href": "posts/mapsf_v1.0.0/index.html#display",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Improved display of map elements",
+    "text": "Improved display of map elements\nIn this new version, map elements are redrawn when the graphic device is resized. This behavior is a great improvement for interactive map displays, especially when using RStudio or Positron.\n\nPrevious release\n\n\n\nCurrent release"
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#cheat-sheet",
+    "href": "posts/mapsf_v1.0.0/index.html#cheat-sheet",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Updated Cheat Sheet",
+    "text": "Updated Cheat Sheet\nWe’ve updated the cheat sheet to reflect the changes made to the package.\nGet the PDF file of the cheat sheet:"
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#export",
+    "href": "posts/mapsf_v1.0.0/index.html#export",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Export to SVG and PNG file format",
+    "text": "Export to SVG and PNG file format\nmf_svg() and mf_png() functions export maps in SVG and PNG formats, respectively. These two functions replace mf_export().\nSVG export is the perfect solution for editing maps with desktop vector graphics software, such as Inkscape. SVG is a vector graphics file format.\nThe default driver for building SVG files, grDevices::svg(), has limitations regarding speed, file size, editability, and font support. The svglite package aims to solve these issues. However, the svglite package is not lightweight in terms of dependencies, so it is not imported by mapsf, but rather suggested. However, we strongly recommend using it if you plan to edit the maps after exporting them.\nPNG export should be used for maps that do not require further modification. PNG is a raster graphics file format.\nThe width-to-height ratio of the exported map matches that of a spatial object. If width is specified, then height is deduced from the width-to-height ratio of x. Alternatively, if height is specified, then width is deduced from the width-to-height ratio of x. This helps to produce maps without too much wasted space.\nYou can find some examples of use in the vignette about exports on mapsf website."
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#palette",
+    "href": "posts/mapsf_v1.0.0/index.html#palette",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Designing diverging color palettes",
+    "text": "Designing diverging color palettes\nThe mf_get_pal() function has been updated to make it simpler to create diverging color palettes based on a vector of break values.\nIn the following examples, we use a classification method based on the mean and the standard deviation of a distribution. Using this method the mean value can be a class boundary (example 1) or a class center (example 2).\n\nUse a class boundary\nThe first step is to create the vector of break values. We use central = FALSE to have the mean as a break value. Then we use mf_get_pal() with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.\n\nbks_1 &lt;- mf_get_breaks(x = com$loypredm2, breaks = \"msd\", central = FALSE)\npal_1 &lt;- mf_get_pal(breaks = bks_1, mid = mean(com$loypredm2), \n                    palette = c(\"Burg\", \"Teal\"))\nmf_map(com, \"loypredm2\", \"choro\", breaks = bks_1, pal = pal_1)\nmf_title(\"Diverging color palette\", cex = 1)\n\n\n\n\n\n\n\n\n\n\nUse a class center (or any value)\nIn this second example, we use the same method, but we use a central class (central = TRUE). The resulting palette includes a neutral color for the central class that contains the mean value.\n\nbks_2 &lt;- mf_get_breaks(x = com$loypredm2, breaks = \"msd\", central = TRUE)\npal_2 &lt;- mf_get_pal(breaks = bks_2, mid = mean(com$loypredm2), \n                    palette = c(\"Burg\", \"Teal\"))\nmf_map(com, \"loypredm2\", \"choro\", breaks = bks_2, pal = pal_2)\nmf_title(\"Diverging color palette with a neutral color\", cex = 1)"
+  },
+  {
+    "objectID": "posts/mapsf_v1.0.0/index.html#breaking",
+    "href": "posts/mapsf_v1.0.0/index.html#breaking",
+    "title": "New release of mapsf: version 1.0.0",
+    "section": "Breaking changes",
+    "text": "Breaking changes\n\nWithdrawn of deprecated functions and arguments\nAll previously deprecated functions and arguments have been withdrawn from the package. The complete list of removed functions and arguments is available in the changelog.\n\n\nNew theme\nThe new theme system uses new default values for colors, margins and other graphical parameters, so the default map produced with mapsf will not look the same.\nIf you need to use the old (pre v1.0.0) default theme, use the “default” theme:\n\nmf_theme(x = \"default\")\nmf_map(com)\nmf_title(\"Former default theme\")\nmf_scale()\nmf_credits()\nmf_arrow()\n\n\n\n\n\n\n\n\nNote that mf_theme() arguments names have changed. “bg”, “fg”, “tab”, “pos”, “inner”, “line”, “cex” and “font” are deprecated arguments.\nIf old (deprecated) arguments are used, new ones are totally ignored and we try to keep the old theme behavior.\n\n\nMapping points\nWhen plotting a base layer of points with pch set to a value between 21 and 25, we now use col for fill color and border for contour color whereas previous versions used bg for fill color and col for contour color.\n\nSee the NEWS file for the complete list of changes."
   }
 ]

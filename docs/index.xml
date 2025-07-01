@@ -10,7 +10,400 @@
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
 <generator>quarto-1.7.31</generator>
-<lastBuildDate>Mon, 04 Nov 2024 23:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 30 Jun 2025 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>New release of mapsf: version 1.0.0</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <link>https://rcarto.github.io/posts/mapsf_v1.0.0/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>The first major version of <code>mapsf</code> has been deployed on CRAN!</p>
+<p>The <code>mapsf</code> R package package helps you make different kinds of maps, like proportional symbols, choropleths, or typology maps. It also provides several functions for displaying layout elements that enhance the graphical presentation of maps (e.g., scale bar, north arrow, title, or labels).</p>
+<p>This post will show you some of the new features of the package:</p>
+<ul>
+<li>Revamped theming system</li>
+<li>Improved display of map elements</li>
+<li>Updated Cheat Sheet</li>
+<li>Export to SVG and PNG file format</li>
+<li>Designing diverging color palettes</li>
+<li>Breaking changes</li>
+</ul>
+<p>The dataset used in the following examples is about apartment rental prices in 2023 (<small><a href="https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2023/#/resources/43618998-3b37-4a69-bb25-f321f1a93ed1">source</a></small>).<br>
+<small>Download the dataset:</small> <a href="com.gpkg"><i class="fa-solid fa-download" aria-label="download"></i></a></p>
+<section id="themes" class="level2">
+<h2 class="anchored" data-anchor-id="themes">Revamped theming system</h2>
+<p>A new theming system has been introduced. This has led to new default values and a new default map style.<br>
+This new version lets you change more settings for the graphics, like choosing the default color palettes or using three colors instead of two. <strong><code>mf_theme()</code></strong> sets the map theme, a set of graphical parameters that are applied to maps created with <code>mapsf</code>. These settings include background, foreground, and highlight colors; margin sizes; frames; as well as default sequential and qualitative palettes. They also include title options, such as position, size, and banner settings.<br>
+Themes are persistent across maps produced by <code>mapsf</code> (e.g.&nbsp;they survive a <code>dev.off()</code> call).</p>
+<section id="the-default-theme" class="level3">
+<h3 class="anchored" data-anchor-id="the-default-theme">The default theme</h3>
+<p>The default theme is called “base”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mapsf)</span>
+<span id="cb1-2">com <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> sf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_read</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"com.gpkg"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quiet =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"base"</span>)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"New default theme"</span>)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_scale</span>()</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_credits</span>()</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_arrow</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="builtin-themes" class="level3">
+<h3 class="anchored" data-anchor-id="builtin-themes">Builtin themes</h3>
+<p><code>mapsf</code> has some themes already included. You can modify an existing theme or start a new one. If you want to have a look at the 8 builtin themes you can go to the <a href="https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes">vignette about themes on <code>mapsf</code> website</a>.</p>
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sol_light"</span>)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loypredm2'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'choro'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ckmeans"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nbreaks =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sol_light theme'</span>)</span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sol_light"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">highlight =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"brown"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title_banner =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal_seq =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>)</span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'loypredm2'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'choro'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ckmeans"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nbreaks =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>)</span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Modified sol_light theme'</span>)</span></code></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="384"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="384"></p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="display" class="level2">
+<h2 class="anchored" data-anchor-id="display">Improved display of map elements</h2>
+<p>In this new version, map elements are redrawn when the graphic device is resized. This behavior is a great improvement for interactive map displays, especially when using RStudio or Positron.</p>
+<section id="previous-release" class="level3">
+<h3 class="anchored" data-anchor-id="previous-release">Previous release</h3>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v0.12.0"><source src="previous.mp4"></video></div>
+</section>
+<section id="current-release" class="level3">
+<h3 class="anchored" data-anchor-id="current-release">Current release</h3>
+<div class="quarto-video"><video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v1.0.0"><source src="current.mp4"></video></div>
+</section>
+</section>
+<section id="cheat-sheet" class="level2">
+<h2 class="anchored" data-anchor-id="cheat-sheet">Updated Cheat Sheet</h2>
+<p>We’ve updated the cheat sheet to reflect the changes made to the package.<br>
+<small>Get the PDF file of the cheat sheet:</small> <a href="https://raw.githubusercontent.com/riatelab/mapsf/master/vignettes/fig/mapsf_cheatsheet.pdf"><i class="fa-solid fa-download" aria-label="download"></i></a></p>
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/front.png" class="img-fluid"></p>
+</section>
+<section id="export" class="level2">
+<h2 class="anchored" data-anchor-id="export">Export to SVG and PNG file format</h2>
+<p><code>mf_svg()</code> and <code>mf_png()</code> functions export maps in SVG and PNG formats, respectively. These two functions replace <code>mf_export()</code>.</p>
+<p><strong>SVG export</strong> is the perfect solution for editing maps with desktop vector graphics software, such as Inkscape. SVG is a vector graphics file format.<br>
+The default driver for building SVG files, <code>grDevices::svg()</code>, has limitations regarding speed, file size, editability, and font support. The <code>svglite</code> package aims to solve these issues. However, the <code>svglite</code> package is not lightweight in terms of dependencies, so it is not imported by <code>mapsf</code>, but rather suggested. However, we strongly recommend using it if you plan to edit the maps after exporting them.</p>
+<p><strong>PNG export</strong> should be used for maps that do not require further modification. PNG is a raster graphics file format.</p>
+<p>The width-to-height ratio of the exported map matches that of a spatial object. If <code>width</code> is specified, then <code>height</code> is deduced from the width-to-height ratio of <code>x</code>. Alternatively, if <code>height</code> is specified, then <code>width</code> is deduced from the width-to-height ratio of <code>x</code>. This helps to produce maps without too much wasted space.</p>
+<p>You can find some examples of use in the <a href="https://riatelab.github.io/mapsf/#/vignettes/how_to_export_maps">vignette about exports on <code>mapsf</code> website</a>.</p>
+</section>
+<section id="palette" class="level2">
+<h2 class="anchored" data-anchor-id="palette">Designing diverging color palettes</h2>
+<p>The <code>mf_get_pal()</code> function has been updated to make it simpler to create diverging color palettes based on a vector of break values.</p>
+<p>In the following examples, we use a <a href="https://magrit.cnrs.fr/en/functionalities/classification.html#mean-and-standard-deviation">classification method based on the mean and the standard deviation</a> of a distribution. Using this method the mean value can be a class boundary (example 1) or a class center (example 2).</p>
+<section id="use-a-class-boundary" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-class-boundary">Use a class boundary</h3>
+<p>The first step is to create the vector of break values. We use <code>central = FALSE</code> to have the mean as a break value. Then we use <code>mf_get_pal()</code> with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">bks_1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_breaks</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"msd"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">central =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb3-2">pal_1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_pal</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> bks_1, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mid =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mean</span>(com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2), </span>
+<span id="cb3-3">                    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">palette =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Burg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>))</span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"loypredm2"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> bks_1, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> pal_1)</span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Diverging color palette"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="393"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="use-a-class-center-or-any-value" class="level3">
+<h3 class="anchored" data-anchor-id="use-a-class-center-or-any-value">Use a class center (or any value)</h3>
+<p>In this second example, we use the same method, but we use a central class (<code>central = TRUE</code>). The resulting palette includes a neutral color for the central class that contains the mean value.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">bks_2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_breaks</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"msd"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">central =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb4-2">pal_2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_pal</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> bks_2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mid =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mean</span>(com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2), </span>
+<span id="cb4-3">                    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">palette =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Burg"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>))</span>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"loypredm2"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> bks_2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> pal_2)</span>
+<span id="cb4-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Diverging color palette with a neutral color"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="393"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="breaking" class="level2">
+<h2 class="anchored" data-anchor-id="breaking">Breaking changes</h2>
+<section id="withdrawn-of-deprecated-functions-and-arguments" class="level3">
+<h3 class="anchored" data-anchor-id="withdrawn-of-deprecated-functions-and-arguments">Withdrawn of deprecated functions and arguments</h3>
+<p>All previously deprecated functions and arguments have been withdrawn from the package. The complete list of removed functions and arguments is available in the <a href="https://riatelab.github.io/mapsf/#/NEWS?id=breaking-changes">changelog</a>.</p>
+</section>
+<section id="new-theme" class="level3">
+<h3 class="anchored" data-anchor-id="new-theme">New theme</h3>
+<p>The new theme system uses new default values for colors, margins and other graphical parameters, so the default map produced with <code>mapsf</code> will not look the same.<br>
+If you need to use the old (pre v1.0.0) default theme, use the “default” theme:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"default"</span>)</span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com)</span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Former default theme"</span>)</span>
+<span id="cb5-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_scale</span>()</span>
+<span id="cb5-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_credits</span>()</span>
+<span id="cb5-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_arrow</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.0.0/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="288"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that <code>mf_theme()</code> arguments names have changed. “bg”, “fg”, “tab”, “pos”, “inner”, “line”, “cex” and “font” are deprecated arguments.<br>
+If old (deprecated) arguments are used, new ones are totally ignored and we try to keep the old theme behavior.</p>
+</section>
+<section id="mapping-points" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-points">Mapping points</h3>
+<p>When plotting a base layer of points with <code>pch</code> set to a value between 21 and 25, we now use <code>col</code> for fill color and <code>border</code> for contour color whereas previous versions used <code>bg</code> for fill color and <code>col</code> for contour color.</p>
+<hr>
+<p><strong>See the <a href="https://riatelab.github.io/mapsf/#/NEWS">NEWS file</a> for the complete list of changes.</strong></p>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>mapsf</category>
+  <guid>https://rcarto.github.io/posts/mapsf_v1.0.0/</guid>
+  <pubDate>Mon, 30 Jun 2025 22:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/mapsf_v1.0.0/front.png" medium="image" type="image/png" height="102" width="144"/>
+</item>
 <item>
   <title>New release of mapsf</title>
   <dc:creator>Timothée Giraud</dc:creator>
