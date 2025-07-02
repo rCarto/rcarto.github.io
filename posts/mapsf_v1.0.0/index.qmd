@@ -145,7 +145,7 @@ mf_title("Diverging color palette with a neutral color", cex = 1)
 
 ## Breaking changes {#breaking}
 
-### Withdrawn of deprecated functions and arguments
+### Withdrawal of deprecated functions and arguments
 All previously deprecated functions and arguments have been withdrawn from the package. The complete list of removed functions and arguments is available in the [changelog](https://riatelab.github.io/mapsf/#/NEWS?id=breaking-changes). 
 
 ### New theme
