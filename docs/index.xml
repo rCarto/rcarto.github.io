@@ -9,8 +9,944 @@
 <link>https://rcarto.github.io/</link>
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
-<generator>quarto-1.7.31</generator>
-<lastBuildDate>Mon, 30 Jun 2025 22:00:00 GMT</lastBuildDate>
+<generator>quarto-1.8.25</generator>
+<lastBuildDate>Thu, 04 Dec 2025 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>New release of maplegend: version 0.4.0</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <link>https://rcarto.github.io/posts/maplegend_v0.4.0/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><code>maplegend</code> is a low/no dependency package for creating legends for maps and other graphics.<br>
+It is the backend used by <code>mapsf</code> for legend-related tasks.</p>
+<p>The main improvement introduced by this release is the support for legends on plots of any aspect ratio.</p>
+<p>The release introduces two new features: a new ‘histo’ legend type to create histogram legends, and new arguments to set decimal and big value separators.</p>
+<section id="asp" class="level2">
+<h2 class="anchored" data-anchor-id="asp">Support for legends on plots of any aspect ratio</h2>
+<p>The functions of the package have been refactored to make them more robust and suitable for plots with asp != 1. This update is particularly beneficial for creating maps with unprojected layers (e.g.&nbsp;using EPSG:4326) in <code>mapsf</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Previous version (v0.3.0)</figcaption>
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.4.0/before.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Current version (v0.4.0)</figcaption>
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.4.0/after.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code for the figures</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">png</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"legend.png"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">800</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">400</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">res =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maplegend)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mfrow =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mar =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>))</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">asp =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">box</span>()</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>)</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"symb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>)</span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aspect ratio: 1"</span>)</span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb1-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">asp =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>)</span>
+<span id="cb1-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">box</span>()</span>
+<span id="cb1-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>)</span>
+<span id="cb1-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>)</span>
+<span id="cb1-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"symb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>)</span>
+<span id="cb1-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aspect ratio: 0.5"</span>)</span>
+<span id="cb1-18"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb1-19"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">asp =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb1-20"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">box</span>()</span>
+<span id="cb1-21"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>)</span>
+<span id="cb1-22"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>)</span>
+<span id="cb1-23"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"symb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>)</span>
+<span id="cb1-24"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aspect ratio: 2"</span>)</span>
+<span id="cb1-25"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dev.off</span>()</span></code></pre></div></div>
+</details>
+</div>
+</section>
+<section id="histo" class="level2">
+<h2 class="anchored" data-anchor-id="histo">New “histo” legend type</h2>
+<p>This new type uses an object of type <code>histogram</code> as input.</p>
+<div class="cell" data-par="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maplegend)</span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set dummy variables</span></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">75</span>)</span>
+<span id="cb2-4">x <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>) </span>
+<span id="cb2-5">y <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rbeta</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb2-6">z <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rbeta</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000</span></span>
+<span id="cb2-7">xh <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">quantile</span>(x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">probs =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb2-8">yh <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">quantile</span>(y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">probs =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb2-9">zh <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">hist</span>(z, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb2-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Display and empty plot</span></span>
+<span id="cb2-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb2-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb2-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">box</span>()</span>
+<span id="cb2-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Add 3 histogram legends</span></span>
+<span id="cb2-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> xh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>)</span>
+<span id="cb2-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> yh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"left"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">box_cex =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>))</span>
+<span id="cb2-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> zh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.4.0/index_files/figure-html/xx-1.png" class="img-fluid figure-img" width="432"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>I’ll probably add a parameter in <code>mapsf</code> to build these legends for choropleth maps:</p>
+<div class="cell" data-par="true">
+<details class="code-fold">
+<summary>Code for the figure</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> xh<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>breaks, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Burg"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">horiz =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> xh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Burg"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">box_cex =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_draw</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>)</span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> yh<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>breaks, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Greens"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">horiz =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> yh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Greens"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">box_cex =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_draw</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>)</span>
+<span id="cb3-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> zh<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>breaks, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Turku"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">horiz =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">box_cex =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(.<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_comp</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"histo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> zh, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Turku"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb3-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg_draw</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottom"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.4.0/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="624"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sep" class="level2">
+<h2 class="anchored" data-anchor-id="sep">Decimal and big value separators</h2>
+<p>New argumentss <code>val_big</code> and <code>val_dec</code> have been added for legend types already using <code>val_rnd</code>, to select decimal and big values separators.<br>
+These two arguments will soon also be accessible through <code>mapsf</code>.</p>
+<div class="cell" data-par="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maplegend)</span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Display and empty plot</span></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.new</span>()</span>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot.window</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xlim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ylim =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Display legends</span></span>
+<span id="cb4-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2.60</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12.89</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">25.43</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">45.71</span>),</span>
+<span id="cb4-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_cex =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, </span>
+<span id="cb4-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Decimal separator: ","'</span>,</span>
+<span id="cb4-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_dec =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">","</span>)</span>
+<span id="cb4-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1526</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">12620</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1000000</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10456000</span>), </span>
+<span id="cb4-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_cex =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span>, </span>
+<span id="cb4-12">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Big values separator: " "'</span>,</span>
+<span id="cb4-13">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_big =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">" "</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.4.0/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>See the <a href="https://cran.r-project.org/web/packages/maplegend/news/news.html">NEWS file</a> for the complete list of changes.</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>maplegend</category>
+  <category>mapsf</category>
+  <guid>https://rcarto.github.io/posts/maplegend_v0.4.0/</guid>
+  <pubDate>Thu, 04 Dec 2025 23:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/maplegend_v0.4.0/front.png" medium="image" type="image/png" height="72" width="144"/>
+</item>
 <item>
   <title>New release of mapsf: version 1.0.0</title>
   <dc:creator>Timothée Giraud</dc:creator>
@@ -42,7 +978,7 @@ Themes are persistent across maps produced by <code>mapsf</code> (e.g.&nbsp;they
 <h3 class="anchored" data-anchor-id="the-default-theme">The default theme</h3>
 <p>The default theme is called “base”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb1-2">com <span class="ot" style="color: #003B4F;
@@ -79,7 +1015,7 @@ background-color: null;
 font-style: inherit;">mf_credits</span>()</span>
 <span id="cb1-8"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_arrow</span>()</span></code></pre></div>
+font-style: inherit;">mf_arrow</span>()</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -92,7 +1028,7 @@ font-style: inherit;">mf_arrow</span>()</span></code></pre></div>
 <section id="builtin-themes" class="level3">
 <h3 class="anchored" data-anchor-id="builtin-themes">Builtin themes</h3>
 <p><code>mapsf</code> has some themes already included. You can modify an existing theme or start a new one. If you want to have a look at the 8 builtin themes you can go to the <a href="https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes">vignette about themes on <code>mapsf</code> website</a>.</p>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -153,7 +1089,7 @@ font-style: inherit;">4</span>)</span>
 background-color: null;
 font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'Modified sol_light theme'</span>)</span></code></pre></div>
+font-style: inherit;">'Modified sol_light theme'</span>)</span></code></pre></div></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -201,7 +1137,7 @@ The default driver for building SVG files, <code>grDevices::svg()</code>, has li
 <h3 class="anchored" data-anchor-id="use-a-class-boundary">Use a class boundary</h3>
 <p>The first step is to create the vector of break values. We use <code>central = FALSE</code> to have the mean as a break value. Then we use <code>mf_get_pal()</code> with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">bks_1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">bks_1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -259,7 +1195,7 @@ font-style: inherit;">"Diverging color palette"</span>, <span class="at" style="
 background-color: null;
 font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -273,7 +1209,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="use-a-class-center-or-any-value">Use a class center (or any value)</h3>
 <p>In this second example, we use the same method, but we use a central class (<code>central = TRUE</code>). The resulting palette includes a neutral color for the central class that contains the mean value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">bks_2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">bks_2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -331,7 +1267,7 @@ font-style: inherit;">"Diverging color palette with a neutral color"</span>, <sp
 background-color: null;
 font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1</span>)</span></code></pre></div>
+font-style: inherit;">1</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -353,7 +1289,7 @@ font-style: inherit;">1</span>)</span></code></pre></div>
 <p>The new theme system uses new default values for colors, margins and other graphical parameters, so the default map produced with <code>mapsf</code> will not look the same.<br>
 If you need to use the old (pre v1.0.0) default theme, use the “default” theme:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -376,7 +1312,7 @@ background-color: null;
 font-style: inherit;">mf_credits</span>()</span>
 <span id="cb5-6"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mf_arrow</span>()</span></code></pre></div>
+font-style: inherit;">mf_arrow</span>()</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -426,7 +1362,7 @@ Other changes are bug fixes and minor improvements.</p>
 <p>The first step to building these maps is to extract borders between units. The second step is to compute a discontinuity measure (either a ratio or an absolute difference). The third step is to display it on a map using a variations in line width. Combining these discontinuities with a choropleth representation helps to understand the discontinuity direction (which one of two regions has the higher value).</p>
 <p><code>mf_get_borders()</code> is used to build the spatial object of borders between units. Each resulting border is described by the datasets of its two neighboring units in order to compute the discontinuity measures.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(sf)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -772,7 +1708,7 @@ font-style: inherit;">"topright"</span>)</span>
 background-color: null;
 font-style: inherit;">mf_scale</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -786,7 +1722,7 @@ font-style: inherit;">5</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="colored-pencil-maps-with-mf_get_pencil">Colored pencil maps with <code>mf_get_pencil()</code></h3>
 <p><code>mf_get_pencil()</code> transforms POLYGONS or MULTIPOLYGONS geometries in MULTILINESTRINGS geometries. This function creates a layer that mimicks a pencil drawing pattern. The following code details how to use the function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># transform the POLYGON layer in a MULTILINESTRING layer</span></span>
 <span id="cb2-2">comx <span class="ot" style="color: #003B4F;
@@ -923,7 +1859,7 @@ font-style: inherit;">"Rental price levels in Paris"</span>)</span>
 background-color: null;
 font-style: inherit;">mf_scale</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -940,7 +1876,7 @@ font-style: inherit;">5</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="lines-titles">2 lines titles</h3>
 <p>A fix has made it easier to create titles on two lines.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># set a suitable cartographic thme</span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -997,7 +1933,7 @@ font-style: inherit;">"This title is easlily</span><span class="sc" style="color
 background-color: null;
 font-style: inherit;">\n</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">displayed on 2 lines"</span>)</span></code></pre></div>
+font-style: inherit;">displayed on 2 lines"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1011,7 +1947,7 @@ font-style: inherit;">displayed on 2 lines"</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="a-better-north-arrow">A better north arrow</h3>
 <p>The north arrow has been redesigned. It is now possible to change its size (cex), fine-tune its position (adj) or use a true north azimuth (align).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -1063,7 +1999,7 @@ font-style: inherit;">mf_title</span>(<span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">txt =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"A better north arrow"</span>)</span></code></pre></div>
+font-style: inherit;">"A better north arrow"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1087,12 +2023,12 @@ font-style: inherit;">"A better north arrow"</span>)</span></code></pre></div>
 <p>The relative speeds of these three methods may vary depending on the number of data points and the number of classes.</p></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled" title="&quot;fisher&quot; vs. &quot;ckmeans&quot;">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-“fisher” vs.&nbsp;“ckmeans”
+<span class="screen-reader-only">Tip</span>“fisher” vs.&nbsp;“ckmeans”
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1100,7 +2036,7 @@ font-style: inherit;">"A better north arrow"</span>)</span></code></pre></div>
 <div class="callout-body-container callout-body">
 <p>Jenks isn’t even included due to the prohibitive amount of time it would take.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">x <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">x <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1133,14 +2069,14 @@ font-style: inherit;">mf_get_breaks</span>(x, <span class="dv" style="color: #AD
 background-color: null;
 font-style: inherit;">8</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ckmeans"</span>))</span></code></pre></div>
+font-style: inherit;">"ckmeans"</span>))</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
     expr       min       lq      mean    median        uq       max neval
   fisher 68.162320 69.48564 71.004707 70.333813 71.618909 89.183144   100
  ckmeans  2.706476  2.81163  2.946925  2.902102  3.023941  5.651169   100</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">identical</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1159,7 +2095,7 @@ font-style: inherit;">mf_get_breaks</span>(x, <span class="dv" style="color: #AD
 background-color: null;
 font-style: inherit;">8</span>, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"ckmeans"</span>))</span></code></pre></div>
+font-style: inherit;">"ckmeans"</span>))</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -1201,7 +2137,7 @@ Raster maps benefit from all map layout elements (title, scale bar, north arrow,
 <p>This type of map is suitable for qualitative data (categories, typologies).<br>
 In this example we display a map of Corine Land Cover classes over the Lot region in France.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb1-2"></span>
@@ -1412,7 +2348,7 @@ font-style: inherit;">adjust =</span> clc)</span>
 background-color: null;
 font-style: inherit;">mf_scale</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">10</span>)</span></code></pre></div>
+font-style: inherit;">10</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1427,7 +2363,7 @@ font-style: inherit;">10</span>)</span></code></pre></div>
 <p>This type of map is appropriate for quantitative data such as DEM, surface temperature or vegetation index.<br>
 In the following examples we display elevation maps of the Lot region.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># import raster</span></span>
 <span id="cb2-2">elev <span class="ot" style="color: #003B4F;
@@ -1477,7 +2413,7 @@ font-style: inherit;">adjust =</span> elev)</span>
 background-color: null;
 font-style: inherit;">mf_scale</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1488,7 +2424,7 @@ font-style: inherit;">5</span>)</span></code></pre></div>
 </div>
 <p>The colors are set using a palette name or a vector of colors to map the continuous values.<br>
 See <code>?hcl.colors()</code> examples to check palette names and colors.</p>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># select a palette with a palette name</span></span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -1545,7 +2481,7 @@ font-style: inherit;">3</span>))</span>
 background-color: null;
 font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'Continuous palette from "#fe5234" to "#000000"'</span>)</span></code></pre></div>
+font-style: inherit;">'Continuous palette from "#fe5234" to "#000000"'</span>)</span></code></pre></div></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1558,7 +2494,7 @@ font-style: inherit;">'Continuous palette from "#fe5234" to "#000000"'</span>)</
 </div>
 <p>It is also possible to give break values and corresponding colors. Breaks are inflection points of the color scale. In this example the color palette varies from white to khaki between 67 and 150, then from khaki to darkgreen between 150 and 550, and finally from darkgreen to black between 550 and 776.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># set a cartographic theme</span></span>
 <span id="cb4-2"><span class="fu" style="color: #4758AB;
@@ -1756,7 +2692,7 @@ font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">cex =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1.2</span>)</span></code></pre></div>
+font-style: inherit;">1.2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1771,7 +2707,7 @@ font-style: inherit;">1.2</span>)</span></code></pre></div>
 <p>This type of map is also appropriate for quantitative data.<br>
 Numerical values are classified using one the methods provided by <code>mf_get_breaks()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># set a cartographic theme</span></span>
 <span id="cb5-2"><span class="fu" style="color: #4758AB;
@@ -1858,7 +2794,7 @@ font-style: inherit;">5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"bottomleft"</span>)</span></code></pre></div>
+font-style: inherit;">"bottomleft"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1873,7 +2809,7 @@ font-style: inherit;">"bottomleft"</span>)</span></code></pre></div>
 <p>The last kind of map that <code>mf_raster()</code> can take care of is RGB composite maps using three bands.</p>
 <p>In the following example we download an image from Open Street Map and display it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(maptiles)</span>
 <span id="cb6-2">dep <span class="ot" style="color: #003B4F;
@@ -1907,7 +2843,7 @@ font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">zoom =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">9</span>))</span></code></pre></div>
+font-style: inherit;">9</span>))</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
 dimensions  : 433, 448, 3  (nrow, ncol, nlyr)
@@ -1920,7 +2856,7 @@ names       : lyr.1, lyr.2, lyr.3
 min values  :     3,    54,     3 
 max values  :   251,   249,   244 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># set them margins</span></span>
 <span id="cb8-2"><span class="fu" style="color: #4758AB;
@@ -1974,7 +2910,7 @@ font-style: inherit;">mf_credits</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">get_credit</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"OpenStreetMap"</span>))</span></code></pre></div>
+font-style: inherit;">"OpenStreetMap"</span>))</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2007,7 +2943,7 @@ font-style: inherit;">"OpenStreetMap"</span>))</span></code></pre></div>
 The main change introduced by this release is the ability to use a raster as input (a<code>SpatRaster</code> from <code>terra</code>).</p>
 <p>In this example we use the sample dataset shipped with the package. <strong>elevation.tif</strong> is an elevation raster of Grenoble and the surrounding area (from SRTM).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(linemap)</span>
 <span id="cb1-2">r <span class="ot" style="color: #003B4F;
@@ -2051,7 +2987,7 @@ background-color: null;
 font-style: inherit;">linemap</span>(r)</span>
 <span id="cb1-5"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">par</span>(opar)</span></code></pre></div>
+font-style: inherit;">par</span>(opar)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2064,7 +3000,7 @@ font-style: inherit;">par</span>(opar)</span></code></pre></div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># data preparation</span></span>
 <span id="cb2-2"><span class="fu" style="color: #4758AB;
@@ -2211,11 +3147,11 @@ font-style: inherit;">"sum"</span>)</span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">mask</span>(ras_res, center)</span></code></pre></div>
+font-style: inherit;">mask</span>(ras_res, center)</span></code></pre></div></div>
 </details>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb3-2"><span class="fu" style="color: #4758AB;
@@ -2318,7 +3254,7 @@ background-color: null;
 font-style: inherit;">"Columbia University, CIESIN (2015): GHS population grid, "</span>, </span>
 <span id="cb3-10">                  <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"derived from GPW4."</span>))</span></code></pre></div>
+font-style: inherit;">"derived from GPW4."</span>))</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2367,7 +3303,7 @@ Giraud, Timothée. 2023. <em><span class="nocase">linemap: Line Maps</span></em>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(maplegend)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -2760,7 +3696,7 @@ font-style: inherit;">10</span>), </span>
 background-color: null;
 font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"type = 'grad_line'"</span>)</span></code></pre></div>
+font-style: inherit;">"type = 'grad_line'"</span>)</span></code></pre></div></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -2772,7 +3708,7 @@ font-style: inherit;">"type = 'grad_line'"</span>)</span></code></pre></div>
 </div>
 <p>Compound or stacked legends can be created with <code>leg_comp()</code> and <code>leg_draw()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_map</span>(m)</span>
 <span id="cb2-2"><span class="fu" style="color: #4758AB;
@@ -2847,7 +3783,7 @@ font-style: inherit;">"mapsf.mar"</span>), <span class="at" style="color: #65742
 background-color: null;
 font-style: inherit;">size =</span> .<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">9</span>)</span></code></pre></div>
+font-style: inherit;">9</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -2862,7 +3798,7 @@ font-style: inherit;">9</span>)</span></code></pre></div>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<code>maplegend</code> and <code>mapsf</code>
+<span class="screen-reader-only">Warning</span><code>maplegend</code> and <code>mapsf</code>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2877,7 +3813,7 @@ font-style: inherit;">9</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="legends-in-mapsf">Legends in <code>mapsf</code></h3>
 <p>A consequence of using <code>maplegend</code> in <code>mapsf</code> is the addition of several legend-related arguments in <code>mf_map()</code> to refine the legend display : <code>leg_frame_border</code>, <code>leg_horiz</code>, <code>leg_adj</code>, <code>leg_bg</code>, <code>leg_fg</code>, <code>leg_size</code>, <code>leg_border</code>, <code>leg_box_border</code>, <code>leg_box_cex</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_map</span>(m, <span class="st" style="color: #20794D;
 background-color: null;
@@ -2989,7 +3925,7 @@ font-style: inherit;">mapsf v0.8.0"</span>)</span>
 background-color: null;
 font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"mf_map(..., leg_*) demo"</span>)</span></code></pre></div>
+font-style: inherit;">"mf_map(..., leg_*) demo"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3000,7 +3936,7 @@ font-style: inherit;">"mf_map(..., leg_*) demo"</span>)</span></code></pre></div
 </div>
 <p>Legends for continuous rasters have been introduced.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">r <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">r <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> terra<span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -3022,7 +3958,7 @@ font-style: inherit;">mf_raster</span>(r)</span>
 background-color: null;
 font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"Legends for continuous rasters"</span>)</span></code></pre></div>
+font-style: inherit;">"Legends for continuous rasters"</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3054,7 +3990,7 @@ Warning
 <p><code>mf_distr()</code> is a function that displays a statistical distribution using a histogram, a box plot, a strip chart and a density curve on the same plot.<br>
 This function was introduced to help users choose a method for creating class intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb5-2"><span class="fu" style="color: #4758AB;
@@ -3063,7 +3999,7 @@ font-style: inherit;">mf_distr</span>(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rnorm</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">1000</span>))</span></code></pre></div>
+font-style: inherit;">1000</span>))</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3077,7 +4013,7 @@ font-style: inherit;">1000</span>))</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="rev-argument"><code>rev</code> argument</h3>
 <p>A <code>rev</code> argument has been added in <code>mf_map()</code>.<br>
 <code>rev = TRUE</code> reverses the color order of the named palettes specified with the <code>pal</code> argument.</p>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -3152,7 +4088,7 @@ font-style: inherit;">7</span>,<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Inferno"</span>), <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">rev =</span> T)</span></code></pre></div>
+font-style: inherit;">rev =</span> T)</span></code></pre></div></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -3194,9 +4130,9 @@ Giraud, Timothée. 2023. <em><span class="nocase">maplegend: Legends for Maps</s
 <p><a href="https://github.com/Project-OSRM/osrm-backend">Open Source Routing Machine</a>, or OSRM <span class="citation" data-cites="luxen-vetter-2011">(Luxen and Vetter 2011)</span>, is a routing software based on OpenStreetMap (OSM) data. OSRM can be used to find the fastest route between points, to compute time or distance matrices between set of points or to solve the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling salesman problem</a>.</p>
 <p>As maintainer of the <code>osrm</code> R package <span class="citation" data-cites="giraud2022">(Giraud 2022)</span> I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project’s <a href="https://github.com/Project-OSRM/osrm-backend#using-docker">README</a> file. These instructions may not be detailed enough to build an OSRM instance on a large area.<br>
 OSRM needs <strong>a lot</strong> of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">[warn]</span> Please provide more memory or consider using a larger swapfile</span></code></pre></div>
+font-style: inherit;">[warn]</span> Please provide more memory or consider using a larger swapfile</span></code></pre></div></div>
 <p>This problem is addressed in <a href="https://github.com/Project-OSRM/osrm-backend/issues/6146">this issue</a> on the OSRM GitHub repository. The suggested solution is to rent a temporary server. This is not the only solution, a modern computer with a rather classical hardware configuration can actually do the job.</p>
 <p>In this post I’ll explain how to build a European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -3224,7 +4160,7 @@ Note
 <section id="add-some-extra-memory" class="level2">
 <h2 class="anchored" data-anchor-id="add-some-extra-memory">Add some extra memory</h2>
 <p>The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The <a href="https://en.wikipedia.org/wiki/Memory_paging">swap memory</a> is used when a program consume the totality of the available RAM memory. Consequently we need to <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract">extend the swap memory</a> of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># preallocate space to a file named swap.swap</span></span>
 <span id="cb2-2"><span class="fu" style="color: #4758AB;
@@ -3255,7 +4191,7 @@ background-color: null;
 font-style: inherit;"># modify the swapiness</span></span>
 <span id="cb2-10"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">sudo</span> sysctl vm.swappiness=20</span></code></pre></div>
+font-style: inherit;">sudo</span> sysctl vm.swappiness=20</span></code></pre></div></div>
 </section>
 <section id="download-the-osm-road-network" class="level2">
 <h2 class="anchored" data-anchor-id="download-the-osm-road-network">Download the OSM road network</h2>
@@ -3267,7 +4203,7 @@ font-style: inherit;">sudo</span> sysctl vm.swappiness=20</span></code></pre></d
 <ol type="1">
 <li>Extract (~5h30)</li>
 </ol>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
@@ -3283,11 +4219,11 @@ font-style: inherit;">${PWD}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">-p</span> /opt/car.lua /data/europe-latest.osm.pbf</span></code></pre></div>
+font-style: inherit;">-p</span> /opt/car.lua /data/europe-latest.osm.pbf</span></code></pre></div></div>
 <ol start="2" type="1">
 <li>Partition (~1h20)</li>
 </ol>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
@@ -3301,11 +4237,11 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${PWD}</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm</span></code></pre></div>
+font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm</span></code></pre></div></div>
 <ol start="3" type="1">
 <li>Customize (~0h10)</li>
 </ol>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
@@ -3319,12 +4255,12 @@ font-style: inherit;">"</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${PWD}</span><span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm</span></code></pre></div>
+font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm</span></code></pre></div></div>
 </section>
 <section id="run-the-instance" class="level2">
 <h2 class="anchored" data-anchor-id="run-the-instance">Run the instance</h2>
 <p>This is the command I use to run this freshly built OSRM instance:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
 background-color: null;
@@ -3344,7 +4280,7 @@ font-style: inherit;">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 o
 background-color: null;
 font-style: inherit;">--algorithm</span> mld <span class="at" style="color: #657422;
 background-color: null;
-font-style: inherit;">--max-table-size</span> 50000000 /data/europe-latest.osrm</span></code></pre></div>
+font-style: inherit;">--max-table-size</span> 50000000 /data/europe-latest.osrm</span></code></pre></div></div>
 </section>
 <section id="other-experiments" class="level2">
 <h2 class="anchored" data-anchor-id="other-experiments">Other experiments</h2>
@@ -3381,7 +4317,7 @@ font-style: inherit;">--max-table-size</span> 50000000 /data/europe-latest.osrm<
 I’ve built a small R package relying on <code>osrm</code> to send queries in a parallel fashion and create “All roads lead to…” maps. The <a href="https://github.com/rcarto/cobweb"><code>cobweb</code> package</a> is not bulletproof and it is not on CRAN.</p>
 <p>Here is a small demo:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># remotes::install_github("rCarto/cobweb")</span></span>
 <span id="cb7-2"><span class="fu" style="color: #4758AB;
@@ -3407,7 +4343,7 @@ font-style: inherit;">8</span>, </span>
 background-color: null;
 font-style: inherit;">url =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"http://0.0.0.0:5000/"</span>)</span></code></pre></div>
+font-style: inherit;">"http://0.0.0.0:5000/"</span>)</span></code></pre></div></div>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -3450,7 +4386,7 @@ Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenS
 <p>An <code>expandBB</code> argument has been introduced in <code>mf_map()</code>. This argument allows to add some space around a map.</p>
 <p>The following code displays a map with some extra space on the right side of the figure. This can be useful to add legends or annotations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -3521,7 +4457,7 @@ font-style: inherit;">3</span>), <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">3.5</span>)</span></code></pre></div>
+font-style: inherit;">3.5</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3529,13 +4465,13 @@ font-style: inherit;">3.5</span>)</span></code></pre></div>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># mf_get_ratio(nc[1,], expandBB = c(0,0.5,0,0), width = 3.5)</span></span></code></pre></div>
+font-style: inherit;"># mf_get_ratio(nc[1,], expandBB = c(0,0.5,0,0), width = 3.5)</span></span></code></pre></div></div>
 </div>
 <p>This addition makes the <code>mf_init()</code> function virtually useless. These two script produce the same output.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">par</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3633,7 +4569,7 @@ font-style: inherit;">"red"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3648,7 +4584,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="mf_graticule"><code>mf_graticule()</code></h3>
 <p>A new <code>mf_graticule()</code> function has been added to the package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_map</span>(nc, <span class="at" style="color: #657422;
 background-color: null;
@@ -3669,7 +4605,7 @@ font-style: inherit;">mf_graticule</span>(nc, <span class="at" style="color: #65
 background-color: null;
 font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3680,7 +4616,7 @@ font-style: inherit;">TRUE</span>)</span></code></pre></div>
 </div>
 <p>Graticules labels can be added on the four sides of the map.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_map</span>(nc, <span class="at" style="color: #657422;
 background-color: null;
@@ -3725,7 +4661,7 @@ font-style: inherit;">2</span>, </span>
 background-color: null;
 font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
+font-style: inherit;">TRUE</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3756,7 +4692,7 @@ In cartographic visualization, the use of graticules is not advised, unless the 
 <h3 class="anchored" data-anchor-id="pipe">Pipe</h3>
 <p>The pipe compatibility of <code>mapsf</code> has been enhanced and it now works on most use cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_get_mtq</span>() <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -3789,7 +4725,7 @@ font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">lwd =</span> .<span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">2</span>)</span></code></pre></div>
+font-style: inherit;">2</span>)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3803,11 +4739,11 @@ font-style: inherit;">2</span>)</span></code></pre></div>
 <h3 class="anchored" data-anchor-id="themes">Themes</h3>
 <p>The graphic theme feature has been refactored. The current theme parameters are now accessible via R options (with the <strong>mapsf.</strong> prefix).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">(<span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">(<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"green"</span>))</span></code></pre></div>
+font-style: inherit;">"green"</span>))</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$bg
 [1] "#1B1D16"
@@ -3836,33 +4772,33 @@ $cex
 $font
 [1] 2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">getOption</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"mapsf.bg"</span>)</span></code></pre></div>
+font-style: inherit;">"mapsf.bg"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "#1B1D16"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">getOption</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"mapsf.fg"</span>)</span></code></pre></div>
+font-style: inherit;">"mapsf.fg"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "#D7FF68"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">getOption</span>(<span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"mapsf.pos"</span>)</span></code></pre></div>
+font-style: inherit;">"mapsf.pos"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "center"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;"># etc</span></span></code></pre></div>
+font-style: inherit;"># etc</span></span></code></pre></div></div>
 </div>
 <p>The current theme is applied to all maps and there is no need to use the <code>theme</code> argument in <code>mf_export()</code> or <code>mf_init()</code> anymore.</p>
 </section>
@@ -3902,7 +4838,7 @@ Fortunately, the <a href="https://github.com/riatelab/maptiles"><code>maptiles</
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Key messages for <code>cartography</code> users
+<span class="screen-reader-only">Tip</span>Key messages for <code>cartography</code> users
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3944,7 +4880,7 @@ Key messages for <code>cartography</code> users
 It uses the width / height ratio of a spatial object bounding box to find a matching ratio for the map.<br>
 The following quarto example uses the default figure output settings (7 x 5 inches):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -3965,7 +4901,7 @@ background-color: null;
 font-style: inherit;">mf_map</span>(mtq)</span>
 <span id="cb1-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -3977,7 +4913,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>The width / height ratio of this figure is not optimal, it produces a lot of unused space on the sides of the map. It is not easy to find a correct ratio without manually fiddling with the <strong>fig-width</strong> and <strong>fig-height</strong> values and this can be exhausting.<br>
 <code>mf_get_ratio()</code> helps with this task:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_get_ratio</span>(<span class="at" style="color: #657422;
 background-color: null;
@@ -3989,14 +4925,14 @@ font-style: inherit;">5</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">theme =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"darkula"</span>)</span></code></pre></div>
+font-style: inherit;">"darkula"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.3 5.0</code></pre>
 </div>
 </div>
 <p>We can use these values to obtain a much more satisfactory figure:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb4-2"><span class="co" style="color: #5E5E5E;
@@ -4015,7 +4951,7 @@ background-color: null;
 font-style: inherit;">mf_map</span>(mtq)</span>
 <span id="cb4-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4027,7 +4963,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>The <code>mf_init()</code> function can be used to expand the map space in any direction thanks to its <strong>expandBB</strong> argument.<br>
 Lets say we want to produce a figure that uses the <strong>ink</strong> theme, with a height of 5 inches and some space left on the right of the map.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_get_ratio</span>(</span>
 <span id="cb5-2">  <span class="at" style="color: #657422;
@@ -4056,13 +4992,13 @@ background-color: null;
 font-style: inherit;">0</span>, .<span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">5</span>)</span>
-<span id="cb5-6">)</span></code></pre></div>
+<span id="cb5-6">)</span></code></pre></div></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.95 5.00</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb7-2"><span class="co" style="color: #5E5E5E;
@@ -4106,7 +5042,7 @@ background-color: null;
 font-style: inherit;">"Martinique"</span>)</span>
 <span id="cb7-7"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4120,7 +5056,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <h3 class="anchored" data-anchor-id="maps-of-proportional-and-colored-lines">Maps of proportional and colored lines</h3>
 <p>It is now possible to create maps that combine proportional lines and colors using the <strong>prop_typo</strong> map type.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mf_theme</span>(<span class="st" style="color: #20794D;
 background-color: null;
@@ -4276,7 +5212,7 @@ background-color: null;
 font-style: inherit;">arrow =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span></span>
-<span id="cb8-29">)</span></code></pre></div>
+<span id="cb8-29">)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -4293,7 +5229,7 @@ font-style: inherit;">FALSE</span></span>
 <li>Messages are now displayed when users map proportional symbols based on a variable that contained either <code>NA</code>, <code>0</code>, <code>Inf</code> or negative values.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(mapsf)</span>
 <span id="cb9-2"><span class="co" style="color: #5E5E5E;
@@ -4360,7 +5296,7 @@ font-style: inherit;">"POP"</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">"prop"</span>)</span></code></pre></div>
+font-style: inherit;">"prop"</span>)</span></code></pre></div></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>2 'NA' values are not plotted on the map.</code></pre>
 </div>
@@ -4386,7 +5322,7 @@ font-style: inherit;">"prop"</span>)</span></code></pre></div>
 <li><p>It is now possible to create maps with only one proportional symbol. This can be useful when maps are generated iterating over multiple territories: some of them may have only one point to plot (see <a href="https://github.com/riatelab/mapsf/issues/45">issue #45</a>).</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">opar <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1">opar <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -4468,7 +5404,7 @@ background-color: null;
 font-style: inherit;">85000</span>)</span>
 <span id="cb14-9"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">par</span>(opar)</span></code></pre></div>
+font-style: inherit;">par</span>(opar)</span></code></pre></div></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

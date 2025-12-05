@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,14 +71,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../avatar.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4e39d669830789bd291470710faec164.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-81178db765bd3067b38b05e2b5c35080.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="../../site_libs/quarto-contrib/videojs/video.min.js"></script>
 <link href="../../site_libs/quarto-contrib/videojs/video-js.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
@@ -121,6 +122,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">R Geomatic</span>
     </a>
@@ -220,14 +223,14 @@ Themes are persistent across maps produced by <code>mapsf</code> (e.g.&nbsp;they
 <h3 class="anchored" data-anchor-id="the-default-theme">The default theme</h3>
 <p>The default theme is called “base”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_read</span>(<span class="st">"com.gpkg"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="st">"base"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"New default theme"</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>()</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_credits</span>()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_arrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_arrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -240,12 +243,12 @@ Themes are persistent across maps produced by <code>mapsf</code> (e.g.&nbsp;they
 <section id="builtin-themes" class="level3">
 <h3 class="anchored" data-anchor-id="builtin-themes">Builtin themes</h3>
 <p><code>mapsf</code> has some themes already included. You can modify an existing theme or start a new one. If you want to have a look at the 8 builtin themes you can go to the <a href="https://riatelab.github.io/mapsf/#/vignettes/how_to_use_themes">vignette about themes on <code>mapsf</code> website</a>.</p>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="st">"sol_light"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="st">"sol_light"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com, <span class="st">'loypredm2'</span>, <span class="st">'choro'</span>, <span class="at">breaks =</span> <span class="st">"ckmeans"</span>, <span class="at">nbreaks =</span> <span class="dv">4</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">'sol_light theme'</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="st">"sol_light"</span>, <span class="at">highlight =</span> <span class="st">"brown"</span>, <span class="at">title_banner =</span> <span class="cn">TRUE</span>, <span class="at">pal_seq =</span> <span class="st">"Teal"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com, <span class="st">'loypredm2'</span>, <span class="st">'choro'</span>, <span class="at">breaks =</span> <span class="st">"ckmeans"</span>, <span class="at">nbreaks =</span> <span class="dv">4</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">'Modified sol_light theme'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">'Modified sol_light theme'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -293,11 +296,11 @@ The default driver for building SVG files, <code>grDevices::svg()</code>, has li
 <h3 class="anchored" data-anchor-id="use-a-class-boundary">Use a class boundary</h3>
 <p>The first step is to create the vector of break values. We use <code>central = FALSE</code> to have the mean as a break value. Then we use <code>mf_get_pal()</code> with the breaks vector, the mean value and 2 color palette names to create the corresponding diverging color palette.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bks_1 <span class="ot">&lt;-</span> <span class="fu">mf_get_breaks</span>(<span class="at">x =</span> com<span class="sc">$</span>loypredm2, <span class="at">breaks =</span> <span class="st">"msd"</span>, <span class="at">central =</span> <span class="cn">FALSE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bks_1 <span class="ot">&lt;-</span> <span class="fu">mf_get_breaks</span>(<span class="at">x =</span> com<span class="sc">$</span>loypredm2, <span class="at">breaks =</span> <span class="st">"msd"</span>, <span class="at">central =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pal_1 <span class="ot">&lt;-</span> <span class="fu">mf_get_pal</span>(<span class="at">breaks =</span> bks_1, <span class="at">mid =</span> <span class="fu">mean</span>(com<span class="sc">$</span>loypredm2), </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"Burg"</span>, <span class="st">"Teal"</span>))</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com, <span class="st">"loypredm2"</span>, <span class="st">"choro"</span>, <span class="at">breaks =</span> bks_1, <span class="at">pal =</span> pal_1)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Diverging color palette"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Diverging color palette"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -311,11 +314,11 @@ The default driver for building SVG files, <code>grDevices::svg()</code>, has li
 <h3 class="anchored" data-anchor-id="use-a-class-center-or-any-value">Use a class center (or any value)</h3>
 <p>In this second example, we use the same method, but we use a central class (<code>central = TRUE</code>). The resulting palette includes a neutral color for the central class that contains the mean value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bks_2 <span class="ot">&lt;-</span> <span class="fu">mf_get_breaks</span>(<span class="at">x =</span> com<span class="sc">$</span>loypredm2, <span class="at">breaks =</span> <span class="st">"msd"</span>, <span class="at">central =</span> <span class="cn">TRUE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bks_2 <span class="ot">&lt;-</span> <span class="fu">mf_get_breaks</span>(<span class="at">x =</span> com<span class="sc">$</span>loypredm2, <span class="at">breaks =</span> <span class="st">"msd"</span>, <span class="at">central =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pal_2 <span class="ot">&lt;-</span> <span class="fu">mf_get_pal</span>(<span class="at">breaks =</span> bks_2, <span class="at">mid =</span> <span class="fu">mean</span>(com<span class="sc">$</span>loypredm2), </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"Burg"</span>, <span class="st">"Teal"</span>))</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com, <span class="st">"loypredm2"</span>, <span class="st">"choro"</span>, <span class="at">breaks =</span> bks_2, <span class="at">pal =</span> pal_2)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Diverging color palette with a neutral color"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Diverging color palette with a neutral color"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -337,12 +340,12 @@ The default driver for building SVG files, <code>grDevices::svg()</code>, has li
 <p>The new theme system uses new default values for colors, margins and other graphical parameters, so the default map produced with <code>mapsf</code> will not look the same.<br>
 If you need to use the old (pre v1.0.0) default theme, use the “default” theme:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="at">x =</span> <span class="st">"default"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="at">x =</span> <span class="st">"default"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(com)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="st">"Former default theme"</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_scale</span>()</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_credits</span>()</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_arrow</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_arrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -416,13 +419,14 @@ If old (deprecated) arguments are used, new ones are totally ignored and we try 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

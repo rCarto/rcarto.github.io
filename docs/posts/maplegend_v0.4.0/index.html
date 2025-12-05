@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Timothée Giraud">
-<meta name="dcterms.date" content="2023-11-29">
+<meta name="dcterms.date" content="2025-12-05">
 
-<title>linemap update – R Geomatic</title>
+<title>New release of maplegend: version 0.4.0 – R Geomatic</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,27 +58,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -187,9 +167,10 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><code>linemap</code> update</h1>
+<h1 class="title">New release of <code>maplegend</code>: version 0.4.0</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">linemap</div>
+    <div class="quarto-category">maplegend</div>
+    <div class="quarto-category">mapsf</div>
   </div>
   </div>
 
@@ -207,7 +188,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 29, 2023</p>
+      <p class="date">December 5, 2025</p>
     </div>
   </div>
   
@@ -219,85 +200,143 @@ div.csl-indent {
 </header>
 
 
-<p><img src="logo.png" align="right" width="140">The <code>linemap</code> package <span class="citation" data-cites="linemap">(<a href="#ref-linemap" role="doc-biblioref">Giraud 2023</a>)</span> contains just one function: <code>linemap()</code>. <code>linemap()</code> displays a map made of lines using raster or gridded data.</p>
-<p>In the previous version of the package, <code>linemap()</code> only accepted as input a <code>data.frame</code> of gridded data (in its long form: lon, lat, value). That was highly impractical.<br>
-The main change introduced by this release is the ability to use a raster as input (a<code>SpatRaster</code> from <code>terra</code>).</p>
-<p>In this example we use the sample dataset shipped with the package. <strong>elevation.tif</strong> is an elevation raster of Grenoble and the surrounding area (from SRTM).</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(linemap)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"tif/elevation.tif"</span>, <span class="at">package =</span> <span class="st">"linemap"</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>opar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">bg =</span> <span class="st">"grey10"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">linemap</span>(r)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(opar)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
+<p><code>maplegend</code> is a low/no dependency package for creating legends for maps and other graphics.<br>
+It is the backend used by <code>mapsf</code> for legend-related tasks.</p>
+<p>The main improvement introduced by this release is the support for <a href="#asp">legends on plots of any aspect ratio</a>.</p>
+<p>The release introduces two new features: a new <a href="#hist">‘histo’ legend type</a> to create histogram legends, and new arguments to set <a href="#sep">decimal and big value separators</a>.</p>
+<section id="asp" class="level2">
+<h2 class="anchored" data-anchor-id="asp">Support for legends on plots of any aspect ratio</h2>
+<p>The functions of the package have been refactored to make them more robust and suitable for plots with asp != 1. This update is particularly beneficial for creating maps with unprojected layers (e.g.&nbsp;using EPSG:4326) in <code>mapsf</code>.</p>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption>Previous version (v0.3.0)</figcaption>
+<p><img src="before.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Current version (v0.4.0)</figcaption>
+<p><img src="after.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-</div>
-<p>We can use any kind of raster data. The following example uses gridded population data.</p>
 <div class="cell">
 <details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data preparation</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Download</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>tempzip <span class="ot">&lt;-</span> <span class="fu">tempfile</span>()</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tempfolder <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>data_url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"http://cidportal.jrc.ec.europa.eu/ftp/jrc-opendata/GHSL/"</span>, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"GHS_POP_GPW4_GLOBE_R2015A/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k/"</span>, </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"V1-0/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0.zip"</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(data_url, tempzip)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span>(tempzip, <span class="at">exdir =</span> tempfolder)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Import</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>pop2015 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">paste0</span>(tempfolder, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"/GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0/"</span>,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"GHS_POP_GPW42015_GLOBE_R2015A_54009_1k_v1_0.tif"</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Mask raster</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>center <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">data.frame</span>(<span class="at">x=</span><span class="fl">425483.8</span>, <span class="at">y=</span><span class="dv">5608290</span>), </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">coords=</span>(<span class="fu">c</span>(<span class="st">"x"</span>,<span class="st">"y"</span>)), </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">crs =</span> <span class="fu">st_crs</span>(pop2015))</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>center <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(center, <span class="at">dist =</span> <span class="dv">800000</span>)</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>ras <span class="ot">&lt;-</span> <span class="fu">crop</span>(pop2015, <span class="fu">st_bbox</span>(center)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>)])</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Smooth values</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>model_r <span class="ot">&lt;-</span> ras</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">res</span>(model_r) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5000</span>, <span class="dv">10000</span>)</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>ras_res <span class="ot">&lt;-</span> <span class="fu">resample</span>(ras, model_r, <span class="at">method =</span> <span class="st">"sum"</span>)</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">mask</span>(ras_res, center)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<summary>Code for the figures</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">png</span>(<span class="st">"legend.png"</span>, <span class="at">width =</span> <span class="dv">800</span>, <span class="at">height =</span> <span class="dv">400</span>, <span class="at">res =</span> <span class="dv">110</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maplegend)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="fl">1.5</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"prop"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">pos =</span> <span class="st">"topleft"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>), <span class="at">pos =</span> <span class="st">"left"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"symb"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">pos =</span> <span class="st">"bottomleft"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Aspect ratio: 1"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">asp =</span> .<span class="dv">5</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"prop"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">pos =</span> <span class="st">"topleft"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>), <span class="at">pos =</span> <span class="st">"left"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"symb"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">pos =</span> <span class="st">"bottomleft"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Aspect ratio: 0.5"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">asp =</span> <span class="dv">2</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"prop"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>), <span class="at">pos =</span> <span class="st">"topleft"</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>), <span class="at">pos =</span> <span class="st">"left"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"symb"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">pos =</span> <span class="st">"bottomleft"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">"Aspect ratio: 2"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapsf)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_theme</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_map</span>(center, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">4</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">linemap</span>(r, <span class="at">k =</span> .<span class="dv">5</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">border =</span> <span class="st">"white"</span>, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">add=</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_title</span>(<span class="at">txt =</span> <span class="st">"Population"</span>, <span class="at">inner =</span> <span class="cn">TRUE</span>, <span class="at">bg =</span> <span class="st">"#f7f7f7"</span>, </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">fg =</span> <span class="st">"#333333"</span>, <span class="at">line =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mf_credits</span>(<span class="fu">paste0</span>(<span class="st">"T. Giraud, 2023</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Data : European Commission, Joint Research Centre (JRC); "</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Columbia University, CIESIN (2015): GHS population grid, "</span>, </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"derived from GPW4."</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="histo" class="level2">
+<h2 class="anchored" data-anchor-id="histo">New “histo” legend type</h2>
+<p>This new type uses an object of type <code>histogram</code> as input.</p>
+<div class="cell" data-par="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maplegend)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Set dummy variables</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">75</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>) </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1000</span>, .<span class="dv">6</span>, <span class="dv">7</span>) <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rbeta</span>(<span class="dv">1000</span>, <span class="dv">5</span>, .<span class="dv">6</span>) <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>xh <span class="ot">&lt;-</span> <span class="fu">hist</span>(x, <span class="at">breaks =</span> <span class="fu">quantile</span>(x, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="dv">10</span>), <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>yh <span class="ot">&lt;-</span> <span class="fu">hist</span>(y, <span class="at">breaks =</span> <span class="fu">quantile</span>(y, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>) <span class="sc">/</span> <span class="dv">10</span>), <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>zh <span class="ot">&lt;-</span> <span class="fu">hist</span>(z, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Display and empty plot</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Add 3 histogram legends</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> xh, <span class="at">pos =</span> <span class="st">"topleft"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> yh, <span class="at">pos =</span> <span class="st">"left"</span>, <span class="at">box_cex =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> zh, <span class="at">pos =</span> <span class="st">"bottomleft"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/xx-1.png" class="img-fluid figure-img" width="432"></p>
 </figure>
 </div>
 </div>
 </div>
-<p><code>linemap</code> repository on GitHub: <a href="https://github.com/riatelab/linemap">github.com/riatelab/linemap</a></p>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-linemap" class="csl-entry" role="listitem">
-Giraud, Timothée. 2023. <em><span class="nocase">linemap: Line Maps</span></em>. <a href="https://CRAN.R-project.org/package=linemap">https://CRAN.R-project.org/package=linemap</a>.
+<p>I’ll probably add a parameter in <code>mapsf</code> to build these legends for choropleth maps:</p>
+<div class="cell" data-par="true">
+<details class="code-fold">
+<summary>Code for the figure</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> xh<span class="sc">$</span>breaks, <span class="at">pal =</span> <span class="st">"Burg"</span>, <span class="at">val_rnd =</span> <span class="dv">1</span>, <span class="at">horiz =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> xh, <span class="at">pal =</span> <span class="st">"Burg"</span>, <span class="at">title =</span> <span class="st">""</span>, <span class="at">val_rnd =</span> <span class="dv">1</span>, <span class="at">box_cex =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_draw</span>(<span class="at">pos =</span> <span class="st">"topleft"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> yh<span class="sc">$</span>breaks, <span class="at">pal =</span> <span class="st">"Greens"</span>, <span class="at">horiz =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> yh, <span class="at">pal =</span> <span class="st">"Greens"</span>, <span class="at">title =</span> <span class="st">""</span>, <span class="at">box_cex =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_draw</span>(<span class="at">pos =</span> <span class="st">"topright"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> zh<span class="sc">$</span>breaks, <span class="at">pal =</span> <span class="st">"Turku"</span>, <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">box_cex =</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_comp</span>(<span class="at">type =</span> <span class="st">"histo"</span>, <span class="at">val =</span> zh, <span class="at">pal =</span> <span class="st">"Turku"</span>, <span class="at">title =</span> <span class="st">""</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">leg_draw</span>(<span class="at">pos =</span> <span class="st">"bottom"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="624"></p>
+</figure>
 </div>
-</div></section></div></main> <!-- /main -->
+</div>
+</div>
+</section>
+<section id="sep" class="level2">
+<h2 class="anchored" data-anchor-id="sep">Decimal and big value separators</h2>
+<p>New argumentss <code>val_big</code> and <code>val_dec</code> have been added for legend types already using <code>val_rnd</code>, to select decimal and big values separators.<br>
+These two arguments will soon also be accessible through <code>mapsf</code>.</p>
+<div class="cell" data-par="true">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(maplegend)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Display and empty plot</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.window</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display legends</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"prop"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="fl">2.60</span>, <span class="fl">12.89</span>, <span class="fl">25.43</span>, <span class="fl">45.71</span>),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos =</span> <span class="st">"topleft"</span>, <span class="at">val_rnd =</span> <span class="dv">2</span>, <span class="at">val_cex =</span> .<span class="dv">8</span>, </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Decimal separator: ","'</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">val_dec =</span> <span class="st">","</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">leg</span>(<span class="at">type =</span> <span class="st">"choro"</span>, <span class="at">val =</span> <span class="fu">c</span>(<span class="dv">1526</span>, <span class="dv">12620</span>, <span class="dv">100000</span>, <span class="dv">1000000</span>, <span class="dv">10456000</span>), </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">pos =</span> <span class="st">"topright"</span>, <span class="at">val_cex =</span> .<span class="dv">7</span>, </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">'Big values separator: " "'</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">val_big =</span> <span class="st">" "</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>See the <a href="https://cran.r-project.org/web/packages/maplegend/news/news.html">NEWS file</a> for the complete list of changes.</strong></p>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

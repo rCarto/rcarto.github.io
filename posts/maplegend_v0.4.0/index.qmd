@@ -1,0 +1,147 @@
+---
+title: "New release of `maplegend`: version 0.4.0"
+author: "Timothée Giraud"
+date: "2025-12-05"
+categories: [maplegend, mapsf]
+image: "front.png"
+draft: false
+freeze: false
+fig-cap-location: top
+---
+
+
+`maplegend` is a low/no dependency package for creating legends for maps and other graphics.  
+It is the backend used by `mapsf` for legend-related tasks. 
+
+The main improvement introduced by this release is the support for [legends on plots of any aspect ratio](#asp).   
+
+The release introduces two new features: a new ['histo' legend type](#hist) to create histogram legends, 
+and new arguments to set [decimal and big value separators](#sep). 
+
+## Support for legends on plots of any aspect ratio{#asp}
+
+The functions of the package have been refactored to make them more robust and suitable for plots with asp != 1. This update is particularly beneficial for creating maps with unprojected layers (e.g. using EPSG:4326) in `mapsf`.
+
+![Previous version (v0.3.0)](before.png)  
+
+![Current version (v0.4.0)](after.png)
+
+```{r}
+#| eval: false
+#| code-fold: true
+#| code-summary: "Code for the figures"
+png("legend.png", width = 800, height = 400, res = 110)
+library(maplegend)
+par(mfrow = c(1,3), mar = c(1,1.5,2,1.5))
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1), asp = 1)
+box()
+leg(type = "prop", val = c(10, 50, 100), pos = "topleft")
+leg(type = "choro", val = c(10, 20, 30, 40, 50), pos = "left")
+leg(type = "symb", val = c("A", "B", "C"), pos = "bottomleft")
+title("Aspect ratio: 1")
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1), asp = .5)
+box()
+leg(type = "prop", val = c(10, 50, 100), pos = "topleft")
+leg(type = "choro", val = c(10, 20, 30, 40, 50), pos = "left")
+leg(type = "symb", val = c("A", "B", "C"), pos = "bottomleft")
+title("Aspect ratio: 0.5")
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1), asp = 2)
+box()
+leg(type = "prop", val = c(10, 50, 100), pos = "topleft")
+leg(type = "choro", val = c(10, 20, 30, 40, 50), pos = "left")
+leg(type = "symb", val = c("A", "B", "C"), pos = "bottomleft")
+title("Aspect ratio: 2")
+dev.off()
+```
+
+
+
+## New "histo" legend type{#histo}
+
+This new type uses an object of type `histogram` as input.
+
+
+```{r}
+#| include: false
+library(knitr)
+knit_hooks$set(par = function(before, options, envir) {
+  if (before && options$fig.show != "none") par(mar = c(1, 1, 1, 1))
+})
+```
+
+
+```{r xx}
+#| fig-width: 4.5
+#| fig-height: 5
+#| par: true
+library(maplegend)
+# Set dummy variables
+set.seed(75)
+x <- rnorm(1000) 
+y <- rbeta(1000, .6, 7) * 1000
+z <- rbeta(1000, 5, .6) * 1000
+xh <- hist(x, breaks = quantile(x, probs = seq(0, 10, by = 2) / 10), plot = FALSE)
+yh <- hist(y, breaks = quantile(y, probs = seq(0, 10, by = 2) / 10), plot = FALSE)
+zh <- hist(z, plot = FALSE)
+# Display and empty plot
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1))
+box()
+# Add 3 histogram legends
+leg(type = "histo", val = xh, pos = "topleft")
+leg(type = "histo", val = yh, pos = "left", box_cex = c(2, 2))
+leg(type = "histo", val = zh, pos = "bottomleft")
+```
+
+I'll probably add a parameter in `mapsf` to build these legends for choropleth maps:
+```{r}
+#| fig-width: 6.5
+#| fig-height: 3.2
+#| code-fold: true
+#| code-summary: "Code for the figure"
+#| par: true
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1))
+leg_comp(type = "choro", val = xh$breaks, pal = "Burg", val_rnd = 1, horiz = TRUE) |>
+  leg_comp(type = "histo", val = xh, pal = "Burg", title = "", val_rnd = 1, box_cex = c(2, 1)) |>
+  leg_draw(pos = "topleft")
+leg_comp(type = "choro", val = yh$breaks, pal = "Greens", horiz = TRUE) |>
+  leg_comp(type = "histo", val = yh, pal = "Greens", title = "", box_cex = c(2, 1)) |>
+  leg_draw(pos = "topright")
+leg_comp(type = "choro", val = zh$breaks, pal = "Turku", horiz = TRUE, box_cex = c(.5, 1)) |>
+  leg_comp(type = "histo", val = zh, pal = "Turku", title = "") |>
+  leg_draw(pos = "bottom")
+```
+
+
+## Decimal and big value separators{#sep}
+New argumentss `val_big` and `val_dec` have been added for legend types already using `val_rnd`, 
+to select decimal and big values separators.  
+These two arguments will soon also be accessible through `mapsf`. 
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2
+#| par: true
+library(maplegend)
+# Display and empty plot
+plot.new()
+plot.window(xlim = c(0, 1), ylim = c(0, 1))
+# Display legends
+leg(type = "prop", val = c(2.60, 12.89, 25.43, 45.71),
+    pos = "topleft", val_rnd = 2, val_cex = .8, 
+    title = 'Decimal separator: ","',
+    val_dec = ",")
+leg(type = "choro", val = c(1526, 12620, 100000, 1000000, 10456000), 
+    pos = "topright", val_cex = .7, 
+    title = 'Big values separator: " "',
+    val_big = " ")
+```
+
+
+-------
+
+**See the [NEWS file](https://cran.r-project.org/web/packages/maplegend/news/news.html) for the complete list of changes.**

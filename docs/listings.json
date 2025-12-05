@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/maplegend_v0.4.0/index.html",
       "/posts/mapsf_v1.0.0/index.html",
       "/posts/mapsf_v0.12.0/index.html",
       "/posts/mapsf_raster_v0.9.0/index.html",
