@@ -109,7 +109,7 @@
     "href": "posts/build_osrm_server/index.html#add-some-extra-memory",
     "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Add some extra memory",
-    "text": "Add some extra memory\nThe preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The swap memory is used when a program consume the totality of the available RAM memory. Consequently we need to extend the swap memory of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.\n# preallocate space to a file named swap.swap\nsudo fallocate -l 200G swap.swap\n# change file access permissions\nsudo chmod 600 swap.swap\n# set the file as a swap area\nsudo mkswap swap.swap\n# start swapping to the file\nsudo swapon swap.swap\n# modify the swapiness\nsudo sysctl vm.swappiness=20"
+    "text": "Add some extra memory\nThe preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The swap memory is used when a program consume the totality of the available RAM memory. Consequently we need to extend the swap memory of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.\nNote that this step is not necessary when working on smaller areas.\n# preallocate space to a file named swap.swap\nsudo fallocate -l 200G swap.swap\n# change file access permissions\nsudo chmod 600 swap.swap\n# set the file as a swap area\nsudo mkswap swap.swap\n# start swapping to the file\nsudo swapon swap.swap\n# modify the swapiness\nsudo sysctl vm.swappiness=20"
   },
   {
     "objectID": "posts/build_osrm_server/index.html#download-the-osm-road-network",
@@ -123,7 +123,7 @@
     "href": "posts/build_osrm_server/index.html#build-the-dataset-for-osrm",
     "title": "How to Build a European-Wide OSRM Server on a Desktop Computer",
     "section": "Build the dataset for OSRM",
-    "text": "Build the dataset for OSRM\nThe europe-latest.osm.pbf file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.\n\nExtract (~5h30)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf\n\nPartition (~1h20)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm\n\nCustomize (~0h10)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm"
+    "text": "Build the dataset for OSRM\nThe europe-latest.osm.pbf file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.\n\nExtract (~5h30)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract -p /opt/car.lua /data/europe-latest.osm.pbf\n\nPartition (~1h20)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm\n\nCustomize (~0h10)\n\ndocker run --rm -t -v \"${PWD}:/data\" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm\nNote that you can update the osrm-backend version in these commands, by replacing v5.27.1 by v6.0.0 for example."
   },
   {
     "objectID": "posts/build_osrm_server/index.html#run-the-instance",

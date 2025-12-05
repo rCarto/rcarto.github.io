@@ -39,7 +39,8 @@ I use my personal laptop computer which has a 1 TB SSD hard drive and the follow
 
 ## Add some extra memory
 
-The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The [swap memory](https://en.wikipedia.org/wiki/Memory_paging) is used when a program consume the totality of the available RAM memory. Consequently we need to [extend the swap memory](https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract) of our computer. I use a very large file (a 200 GB file named "swap.swap") to be sure to not exceed the limit.  
+The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The [swap memory](https://en.wikipedia.org/wiki/Memory_paging) is used when a program consume the totality of the available RAM memory. Consequently we need to [extend the swap memory](https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract) of our computer. I use a very large file (a 200 GB file named "swap.swap") to be sure to not exceed the limit.   
+Note that this step is not necessary when working on smaller areas.
 
 ```sh
 # preallocate space to a file named swap.swap
@@ -77,7 +78,7 @@ docker run --rm -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 o
 ```sh
 docker run --rm -t -v "${PWD}:/data" ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm
 ```
-
+Note that you can update the osrm-backend version in these commands, by replacing v5.27.1 by v6.0.0 for example.
 
 ## Run the instance
 

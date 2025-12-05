@@ -249,7 +249,8 @@ Note
 </section>
 <section id="add-some-extra-memory" class="level2">
 <h2 class="anchored" data-anchor-id="add-some-extra-memory">Add some extra memory</h2>
-<p>The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The <a href="https://en.wikipedia.org/wiki/Memory_paging">swap memory</a> is used when a program consume the totality of the available RAM memory. Consequently we need to <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract">extend the swap memory</a> of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.</p>
+<p>The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The <a href="https://en.wikipedia.org/wiki/Memory_paging">swap memory</a> is used when a program consume the totality of the available RAM memory. Consequently we need to <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract">extend the swap memory</a> of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.<br>
+Note that this step is not necessary when working on smaller areas.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preallocate space to a file named swap.swap</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fallocate <span class="at">-l</span> 200G swap.swap</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># change file access permissions</span></span>
@@ -280,6 +281,7 @@ Note
 <li>Customize (~0h10)</li>
 </ol>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-t</span> <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Note that you can update the osrm-backend version in these commands, by replacing v5.27.1 by v6.0.0 for example.</p>
 </section>
 <section id="run-the-instance" class="level2">
 <h2 class="anchored" data-anchor-id="run-the-instance">Run the instance</h2>
