@@ -9,8 +9,468 @@
 <link>https://rcarto.github.io/</link>
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
-<generator>quarto-1.8.25</generator>
-<lastBuildDate>Thu, 04 Dec 2025 23:00:00 GMT</lastBuildDate>
+<generator>quarto-1.9.37</generator>
+<lastBuildDate>Tue, 12 May 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>New release of maplegend: version 0.6.3</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <link>https://rcarto.github.io/posts/maplegend_v0.6.3/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><code>maplegend</code> is a package for creating legends for maps and other graphics.</p>
+<p>This release introduces several changes. The main ones are the improvement of the proportionnal symbols display and the addition of four new legend types:</p>
+<ul>
+<li>choropleth legend on circles or squares</li>
+<li>choropleth legend on lines</li>
+<li>choropleth legend on symbols</li>
+<li>typology legend on lines.</li>
+</ul>
+<p>Other changes are bug fixes and minor improvements.</p>
+<section id="proportionnal-symbols" class="level2">
+<h2 class="anchored" data-anchor-id="proportionnal-symbols">Proportionnal symbols</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code for the figure</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">png</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"legend.png"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">150</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">res =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maplegend)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mar =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ann =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axes =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">inches =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">35</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"top"</span>, </span>
+<span id="cb1-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"v0.6.3"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#940000"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">border =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey90"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fg =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"black"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dev.off</span>()</span></code></pre></div></div>
+</details>
+</div>
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.6.3/legend_old.png" class="img-fluid"> <img src="https://rcarto.github.io/posts/maplegend_v0.6.3/legend.png" class="img-fluid"></p>
+</section>
+<section id="new-legend-types" class="level2">
+<h2 class="anchored" data-anchor-id="new-legend-types">New legend types</h2>
+<div class="cell" data-par="true">
+<details class="code-fold">
+<summary>Code for the figure</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(maplegend)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ann =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">axes =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>)</span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># choropleth legends on circles or square</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro_point"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Burg'</span>, </span>
+<span id="cb2-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">symbol =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"circle"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro_point'"</span>)</span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro_point"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">seq</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Burg'</span>, </span>
+<span id="cb2-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">symbol =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"square"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"       "</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">adj =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">15</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># choropleth legend on lines</span></span>
+<span id="cb2-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro_line"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, </span>
+<span id="cb2-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'Teal'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">no_data =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">no_data_txt =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"No data"</span>,</span>
+<span id="cb2-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro_line'"</span>)</span>
+<span id="cb2-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># choropleth legend on symbols</span></span>
+<span id="cb2-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro_symb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">30</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">40</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rocket"</span>, </span>
+<span id="cb2-14">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">cex =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val_rnd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,  </span>
+<span id="cb2-15">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro_symb'"</span>)</span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># typology legend on lines</span></span>
+<span id="cb2-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">leg</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">type =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"typo_line"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">val =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomright"</span>, </span>
+<span id="cb2-18">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#da131a"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#ffb915"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#007847"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">no_data =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col_na =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,  </span>
+<span id="cb2-19">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">frame =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bg =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#292421"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fg =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">frame_border =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NA</span>, </span>
+<span id="cb2-20">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">box_cex =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'typo_line'"</span>)</span>
+<span id="cb2-21"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"New legend types"</span>)</span></code></pre></div></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/maplegend_v0.6.3/index_files/figure-html/new_types-1.png" class="img-fluid figure-img" width="432"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>See the <a href="https://cran.r-project.org/web/packages/maplegend/news/news.html">NEWS file</a> for the complete list of changes.</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>maplegend</category>
+  <category>mapsf</category>
+  <guid>https://rcarto.github.io/posts/maplegend_v0.6.3/</guid>
+  <pubDate>Tue, 12 May 2026 22:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/maplegend_v0.6.3/front.png" medium="image" type="image/png" height="102" width="144"/>
+</item>
 <item>
   <title>New release of maplegend: version 0.4.0</title>
   <dc:creator>Timothée Giraud</dc:creator>
@@ -1107,11 +1567,11 @@ font-style: inherit;">'Modified sol_light theme'</span>)</span></code></pre></di
 <p>In this new version, map elements are redrawn when the graphic device is resized. This behavior is a great improvement for interactive map displays, especially when using RStudio or Positron.</p>
 <section id="previous-release" class="level3">
 <h3 class="anchored" data-anchor-id="previous-release">Previous release</h3>
-<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v0.12.0"><source src="previous.mp4"></video></div>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v0.12.0"><source src="previous.mp4"></video></div>
 </section>
 <section id="current-release" class="level3">
 <h3 class="anchored" data-anchor-id="current-release">Current release</h3>
-<div class="quarto-video"><video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v1.0.0"><source src="current.mp4"></video></div>
+<div class="quarto-video"><video id="video_shortcode_videojs_video2" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls="" preload="auto" data-setup="{}" title="mapsf v1.0.0"><source src="current.mp4"></video></div>
 </section>
 </section>
 <section id="cheat-sheet" class="level2">
@@ -2109,7 +2569,7 @@ font-style: inherit;">"ckmeans"</span>))</span></code></pre></div></div>
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Wang2011Ckmeans" class="csl-entry">
 Wang, Haizhou, and Mingzhou Song. 2011. <span>“Ckmeans.1d.dp: Optimal <img src="https://latex.codecogs.com/png.latex?k">-Means Clustering in One Dimension by Dynamic Programming.”</span> <em>The R Journal</em> 3 (2): 29–33. <a href="https://doi.org/10.32614/RJ-2011-015">https://doi.org/10.32614/RJ-2011-015</a>.
 </div>
@@ -3268,7 +3728,7 @@ font-style: inherit;">"derived from GPW4."</span>))</span></code></pre></div></d
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-linemap" class="csl-entry">
 Giraud, Timothée. 2023. <em><span class="nocase">linemap: Line Maps</span></em>. <a href="https://CRAN.R-project.org/package=linemap">https://CRAN.R-project.org/package=linemap</a>.
 </div>
@@ -4107,7 +4567,7 @@ font-style: inherit;">rev =</span> T)</span></code></pre></div></div>
 </section>
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-maplegend" class="csl-entry">
 Giraud, Timothée. 2023. <em><span class="nocase">maplegend: Legends for Maps</span></em>. <a href="https://CRAN.R-project.org/package=maplegend">https://CRAN.R-project.org/package=maplegend</a>.
 </div>
@@ -4358,12 +4818,12 @@ font-style: inherit;">"http://0.0.0.0:5000/"</span>)</span></code></pre></div></
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-giraud2022" class="csl-entry">
 Giraud, Timothée. 2022. <span>“<span class="nocase">osrm: Interface Between R and the OpenStreetMap-Based Routing Service OSRM</span>.”</span> <em>Journal of Open Source Software</em> 7 (78): 4574. <a href="https://doi.org/10.21105/joss.04574">https://doi.org/10.21105/joss.04574</a>.
 </div>
 <div id="ref-luxen-vetter-2011" class="csl-entry">
-Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenStreetMap Data.”</span> In <em>Proceedings of the 19th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</em>, 513–16. GIS ’11. New York, NY, USA: ACM. <a href="https://doi.org/10.1145/2093973.2094062">https://doi.org/10.1145/2093973.2094062</a>.
+Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenStreetMap Data.”</span> <em>Proceedings of the 19th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</em> (New York, NY, USA), GIS ’11, 513–16. <a href="https://doi.org/10.1145/2093973.2094062">https://doi.org/10.1145/2093973.2094062</a>.
 </div>
 </div></section></div> ]]></description>
   <category>osrm</category>
@@ -5421,7 +5881,7 @@ font-style: inherit;">par</span>(opar)</span></code></pre></div></div>
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-classInt" class="csl-entry">
 Bivand, Roger. 2022. <em>classInt: Choose Univariate Class Intervals</em>. <a href="https://CRAN.R-project.org/package=classInt">https://CRAN.R-project.org/package=classInt</a>.
 </div>
@@ -5480,15 +5940,15 @@ Submitting a paper to JOSS assure you to have your software inspected by a set o
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-giraud2022" class="csl-entry">
 Giraud, Timothée. 2022. <span>“<span class="nocase">osrm: Interface Between R and the OpenStreetMap-Based Routing Service OSRM</span>.”</span> <em>Journal of Open Source Software</em> 7 (78): 4574. <a href="https://doi.org/10.21105/joss.04574">https://doi.org/10.21105/joss.04574</a>.
 </div>
 <div id="ref-luxen-vetter-2011" class="csl-entry">
-Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenStreetMap Data.”</span> In <em>Proceedings of the 19th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</em>, 513–16. GIS ’11. New York, NY, USA: ACM. <a href="https://doi.org/10.1145/2093973.2094062">https://doi.org/10.1145/2093973.2094062</a>.
+Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenStreetMap Data.”</span> <em>Proceedings of the 19th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</em> (New York, NY, USA), GIS ’11, 513–16. <a href="https://doi.org/10.1145/2093973.2094062">https://doi.org/10.1145/2093973.2094062</a>.
 </div>
 <div id="ref-smith2018" class="csl-entry">
-Smith, Arfon M., Kyle E. Niemeyer, Daniel S. Katz, Lorena A. Barba, George Githinji, Melissa Gymrek, Kathryn D. Huff, et al. 2018. <span>“<span>Journal of Open Source Software (JOSS): Design and First-Year Review</span>.”</span> <em>PeerJ Computer Science</em> 4 (February): e147. <a href="https://doi.org/10.7717/peerj-cs.147">https://doi.org/10.7717/peerj-cs.147</a>.
+Smith, Arfon M., Kyle E. Niemeyer, Daniel S. Katz, et al. 2018. <span>“<span class="nocase">Journal of Open Source Software (JOSS): design and first-year review</span>.”</span> <em>PeerJ Computer Science</em> 4 (February): e147. <a href="https://doi.org/10.7717/peerj-cs.147">https://doi.org/10.7717/peerj-cs.147</a>.
 </div>
 </div></section></div> ]]></description>
   <category>osrm</category>
