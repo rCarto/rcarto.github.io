@@ -10,7 +10,877 @@
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Tue, 12 May 2026 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 17 May 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>New release of mapsf: version 1.2.0</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <link>https://rcarto.github.io/posts/mapsf_v1.2.0/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><code>mapsf</code> is a thematic cartography package for R that helps to design different kinds of maps, such as proportional symbols, choropleths, or typology maps.</p>
+<p>This post shows some of the new features introduced by the last release of the package:</p>
+<ul>
+<li>A new function to add a logo on a map</li>
+<li>A new function to add a text on a map</li>
+<li>New arguments in <code>mf_map()</code> to use an extent and a background color</li>
+<li>Improved legends for various map types</li>
+<li>Display of class boundaries in the statistical distribution plot</li>
+<li>More fine-grained documentation for <code>mf_map()</code></li>
+<li>Deprecated functions and arguments</li>
+</ul>
+<p>The dataset used in this post is about apartment rental prices in 2023 in Paris and the surrounding municipalities (<small><a href="https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2023/#/resources/43618998-3b37-4a69-bb25-f321f1a93ed1">source</a></small>).<br>
+<small>Download the dataset:</small> <a href="com.gpkg"><i class="fa-solid fa-download" aria-label="download"></i></a></p>
+<section id="mf_logo" class="level2">
+<h2 class="anchored" data-anchor-id="mf_logo">A new function to add a logo on a map</h2>
+<p><code>mf_logo()</code> can be used to display an image on a map. It supports PNG and JPG/JPEG file formats.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mapsf)</span>
+<span id="cb1-2">com <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> sf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_read</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"com.gpkg"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quiet =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_scale</span>()</span>
+<span id="cb1-5">filepath <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rlogo.png"</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_logo</span>(filepath, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">adj =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_credits</span>()</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Paris and the surrounding municipalities"</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="432"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mf_text" class="level2">
+<h2 class="anchored" data-anchor-id="mf_text">A new function to add a text on a map</h2>
+<p>The following figure provides an overview of the various options available for displaying text on a map using the <code>mf_text()</code> function. The code for the figure can be found in the <a href="https://riatelab.github.io/mapsf/reference/mf_text.html">documentation</a>.</p>
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/front.png" class="img-fluid"></p>
+<p><code>mf_text()</code> replaces the now deprecated function <code>mf_annotation()</code>. <code>mf_label()</code> will probably use <code>mf_text()</code> internally in a future version of <code>mapsf</code>.</p>
+</section>
+<section id="mf_map" class="level2">
+<h2 class="anchored" data-anchor-id="mf_map">New arguments in <code>mf_map()</code> to use an extent and a background color</h2>
+<p>The <code>extent</code> argument allows a spatial object to be passed to <code>mf_map()</code> in order to define the map extent. The <code>bg</code> argument allows a background color to be passed to the map.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># define a target</span></span>
+<span id="cb2-2">target <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">subset</span>(com, NOM <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Vaucresson"</span>)</span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># define map background</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bg =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey10"</span>)</span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(target, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb2-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">txt =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"background color: 'grey10'"</span>)</span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># define map extent </span></span>
+<span id="cb2-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(com, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extent =</span> target, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bg =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey10"</span>)</span>
+<span id="cb2-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(target, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb2-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">txt =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"extent: target"</span>)</span></code></pre></div></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="384"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/index_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="384"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="leg" class="level2">
+<h2 class="anchored" data-anchor-id="leg">Improved legends for various map types</h2>
+<p>Benefiting from the <a href="https://rcarto.github.io/posts/maplegend_v0.6.3/">last update of <code>maplegend</code></a>, various legends have been improved. These legends now more closely reflect what is displayed on the map in terms of symbols shapes and colors.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Previous version (v1.1.0)</figcaption>
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/legend_old.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Current version (v1.2.0)</figcaption>
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/legend_new.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code for the figures</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("maplegend_0.5.0.tar.gz", repos = NULL, type = "source")</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("mapsf_1.1.0.tar.gz", repos = NULL, type = "source")</span></span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mapsf)</span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">png</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"legend_old.png"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">798</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">249</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">res =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>)</span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mfrow =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb3-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>( <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mar =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-7">m <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_mtq</span>()</span>
+<span id="cb3-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>, ], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> T)</span>
+<span id="cb3-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"POP"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MED"</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop_choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">inches =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>)</span>
+<span id="cb3-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'prop_choro'"</span>)</span>
+<span id="cb3-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>,], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>))</span>
+<span id="cb3-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> T)</span>
+<span id="cb3-14"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"POP"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"STATUS"</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop_typo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">inches =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>)</span>
+<span id="cb3-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'prop_typo'"</span>)</span>
+<span id="cb3-16"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>,], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> T)</span>
+<span id="cb3-18"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(sf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_centroid</span>(m), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MED"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rocket"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb3-19"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro', on points"</span>)</span>
+<span id="cb3-20">mob <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">system.file</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"csv/mob.csv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">package =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mapsf"</span>))</span>
+<span id="cb3-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Select links from Fort-de-France (97209))</span></span>
+<span id="cb3-22">mob_97209 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> mob[mob<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>i <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">97209</span>, ]</span>
+<span id="cb3-23"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create a link layer</span></span>
+<span id="cb3-24">mob_links <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_links</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">df =</span> mob_97209)</span>
+<span id="cb3-25"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, ])</span>
+<span id="cb3-26"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb3-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(mob_links, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fij"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb3-28"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro', on lines"</span>)</span>
+<span id="cb3-29"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dev.off</span>()</span>
+<span id="cb3-30"></span>
+<span id="cb3-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># install.packages("mapsf")</span></span>
+<span id="cb3-32"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(mapsf)</span>
+<span id="cb3-33"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">png</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"legend_new.png"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">798</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">249</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">res =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">110</span>)</span>
+<span id="cb3-34"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">par</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mfrow =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span>))</span>
+<span id="cb3-35"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_theme</span>( <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mar =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-36">m <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_mtq</span>()</span>
+<span id="cb3-37"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extent =</span> m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>, ], <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span>
+<span id="cb3-38"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"POP"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MED"</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop_choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">inches =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>)</span>
+<span id="cb3-39"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'prop_choro'"</span>)</span>
+<span id="cb3-40"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extent =</span> m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>, ])</span>
+<span id="cb3-41"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"POP"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"STATUS"</span>), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"prop_typo"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">inches =</span> .<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>)</span>
+<span id="cb3-42"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'prop_typo'"</span>)</span>
+<span id="cb3-43"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extent =</span> m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">17</span>, ])</span>
+<span id="cb3-44"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(sf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_centroid</span>(m), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"MED"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"topright"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rocket"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb3-45"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro', on points"</span>)</span>
+<span id="cb3-46">mob <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">system.file</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"csv/mob.csv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">package =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mapsf"</span>))</span>
+<span id="cb3-47"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Select links from Fort-de-France (97209))</span></span>
+<span id="cb3-48">mob_97209 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> mob[mob<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>i <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">97209</span>, ]</span>
+<span id="cb3-49"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create a link layer</span></span>
+<span id="cb3-50">mob_links <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_links</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">df =</span> mob_97209)</span>
+<span id="cb3-51"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(m, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expandBB =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">extent =</span> m[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">9</span>, ])</span>
+<span id="cb3-52"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_map</span>(mob_links, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"fij"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"choro"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">leg_pos =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bottomleft"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">add =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lwd =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>)</span>
+<span id="cb3-53"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_title</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"type = 'choro', on lines"</span>)</span>
+<span id="cb3-54"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">dev.off</span>()</span></code></pre></div></div>
+</details>
+</div>
+</section>
+<section id="mf_distr" class="level2">
+<h2 class="anchored" data-anchor-id="mf_distr">Display of class boundaries in the statistical distribution plot</h2>
+<p><code>mf_distr()</code> displays the statistical distribution of a variable with a histogram, a box plot, a strip chart and a density curve on the same plot. This graphic can be useful for selecting an appropriate classification method for choropleth maps.<br>
+With this release, user-defined class boundaries can also be displayed on the plot. Some arguments have been added to allow changes to the title, y-label and y-axis.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_distr</span>(com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Appartment rental prices in 2023 (€/m²)"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">yaxt =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># compute class intervals</span></span>
+<span id="cb5-2">bks <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_breaks</span>(com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nbreaks =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ckmeans"</span>)</span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># display class boundaries on the plot</span></span>
+<span id="cb5-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_distr</span>(com<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>loypredm2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Appartment rental prices in 2023 (€/m²)"</span>, </span>
+<span id="cb5-5">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">yaxt =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pal =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Teal"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">breaks =</span> bks)</span></code></pre></div></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/mapsf_v1.2.0/index_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="doc" class="level2">
+<h2 class="anchored" data-anchor-id="doc">More fine-grained documentation for <code>mf_map()</code></h2>
+<p>The relevant arguments and default values differ for each map type. The documentation has been updated, with each map type now described in a dedicated help page. These pages provide relevant arguments and examples for points, lines, and polygon objects.<br>
+See the help pages for <a href="https://riatelab.github.io/mapsf/reference/mf_map_base.html">base maps</a>, <a href="https://riatelab.github.io/mapsf/reference/mf_map_choro.html">choropleth maps</a>, <a href="https://riatelab.github.io/mapsf/reference/mf_map_typo.html">typology maps</a> or <a href="https://riatelab.github.io/mapsf/reference/mf_map_prop.html">proportional symbols maps</a> on the website.<br>
+Alternatively, you can access this documentation directly from R with e.g.&nbsp;<code>?mf_map_base</code>, <code>?mf_map_choro</code>, <code>?mf_map_typo</code> or <code>?mf_map_prop</code>.</p>
+</section>
+<section id="deprec" class="level2">
+<h2 class="anchored" data-anchor-id="deprec">Deprecations</h2>
+<p>A new <code>?mapsf-deprecated</code> help page has been added in order to explicitly inform users about the deprecations going on in the package.</p>
+<p>The following functions and features are currently deprecated, they still work but they will be removed in the next <a href="https://semver.org/#summary">major version</a> of the package.</p>
+<ul>
+<li><code>mf_map</code> sub-functions (<code>mf_base()</code>, <code>mf_choro()</code>, <code>mf_prop()</code>…) are deprecated. Instead of using these functions, one must use <code>mf_map()</code> with the corresponding type.</li>
+<li><code>mf_init()</code> is deprecated. It is possible to use <code>mf_map()</code> (<code>mf_map(x, type = "base", col = NA, border = NA)</code>) or the <code>extent</code> argument of <code>mf_map()</code> instead.</li>
+<li><code>mf_export()</code> is deprecated, use <code>mf_png()</code> or <code>mf_svg()</code> instead.</li>
+<li><code>mf_annotation</code> is deprecated, use <code>mf_text()</code> instead.</li>
+<li>The use of separated legends for map types <strong>prop_choro</strong>, <strong>prop_typo</strong> and <strong>symb_choro</strong> is deprecated. Use <code>leg_pos = NA</code> and <code>mf_legend()</code> if separated legends are needed.</li>
+<li>In <code>mf_theme()</code>, the following themes are deprecated: “default”, “brutal”, “ink”, “dark”, “agolalight”, “candy”, “darkula”, “iceberg”, “green”, “nevermind”, “jsk” and “barcelona”.<br>
+The following arguments are also deprecated: “bg”, “fg”, “tab”, “pos”, “inner”, “line”, “cex” and “font”. See <code>?mf_theme()</code> for details.</li>
+</ul>
+<hr>
+<p><strong>See the <a href="https://cloud.r-project.org/web/packages/mapsf/news/news.html">NEWS file</a> for the complete list of changes.</strong></p>
+
+
+</section>
+
+ ]]></description>
+  <category>mapsf</category>
+  <guid>https://rcarto.github.io/posts/mapsf_v1.2.0/</guid>
+  <pubDate>Sun, 17 May 2026 22:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/mapsf_v1.2.0/front.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>New release of maplegend: version 0.6.3</title>
   <dc:creator>Timothée Giraud</dc:creator>

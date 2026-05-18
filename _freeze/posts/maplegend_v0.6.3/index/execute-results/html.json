@@ -1,0 +1,17 @@
+{
+  "hash": "840edc01052363673896ed41f2c8c0ee",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"New release of `maplegend`: version 0.6.3\"\nauthor: \"Timothée Giraud\"\ndate: \"2026-05-13\"\ncategories: [maplegend, mapsf]\nimage: \"front.png\"\ndraft: false\nfig-cap-location: top\n---\n\n`maplegend` is a package for creating legends for maps and other graphics.  \n\nThis release introduces several changes. The main ones are the improvement of \nthe proportionnal symbols display and the addition of four new legend types:\n\n- choropleth legend on circles or squares\n- choropleth legend on lines\n- choropleth legend on symbols\n- typology legend on lines.\n\nOther changes are bug fixes and minor improvements.\n\n\n\n## Proportionnal symbols\n\n\n::: {.cell}\n\n```{.r .cell-code  code-fold=\"true\" code-summary=\"Code for the figure\"}\npng(\"legend.png\", width = 150, height = 150, res = 110)\nlibrary(maplegend)\npar(mar = c(1,1,1,1))\nplot(0, ann = FALSE, axes = FALSE, pch = NA)\nleg(type = \"prop\", val = c(10, 50, 100), inches = .35, pos = \"top\", \n    title = \"v0.6.3\", col = \"#940000\", border = \"grey90\", fg = \"black\", lwd = 1)\ndev.off()\n```\n:::\n\n![](legend_old.png)  ![](legend.png)\n\n\n\n## New legend types\n\n\n::: {.cell par='true'}\n\n```{.r .cell-code  code-fold=\"true\" code-summary=\"Code for the figure\"}\nlibrary(maplegend)\nplot(0, ann = FALSE, axes = FALSE, pch = NA)\n# choropleth legends on circles or square\nleg(type = \"choro_point\", val = seq(0, 100, 20), pos = \"topleft\", pal = 'Burg', \n    cex = 1, val_rnd = 0, symbol = \"circle\", title = \"type = 'choro_point'\")\nleg(type = \"choro_point\", val = seq(0, 100, 20), pos = \"topleft\", pal = 'Burg', \n    cex = 1, val_rnd = 0, symbol = \"square\", title = \"       \", adj = c(15, 0))\n# choropleth legend on lines\nleg(type = \"choro_line\", val = c(10, 20, 30, 40, 50), pos = \"topright\", \n    pal = 'Teal', lwd = 5, val_rnd = 0, no_data = TRUE, no_data_txt = \"No data\",\n    title = \"type = 'choro_line'\")\n# choropleth legend on symbols\nleg(type = \"choro_symb\", val = c(10, 20, 30, 40, 50), pch = 24, pal = \"Rocket\", \n    pos = \"bottomleft\", cex = 2, val_rnd = 1, lwd = 1,  \n    title = \"type = 'choro_symb'\")\n# typology legend on lines\nleg(type = \"typo_line\", val = c(\"A\", \"B\", \"C\"), lwd = 4, pos = \"bottomright\", \n    pal = c(\"#da131a\", \"#ffb915\", \"#007847\"), no_data = TRUE, col_na = \"white\",  \n    frame = TRUE, bg = \"#292421\", fg = \"white\", frame_border = NA, \n    box_cex = c(2, 1), title = \"type = 'typo_line'\")\ntitle(\"New legend types\")\n```\n\n::: {.cell-output-display}\n![](index_files/figure-html/new_types-1.png){width=432}\n:::\n:::\n\n\n-------\n\n**See the [NEWS file](https://cran.r-project.org/web/packages/maplegend/news/news.html) for the complete list of changes.**\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

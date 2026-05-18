@@ -18,7 +18,7 @@
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/maplegend_v0.6.3/index.html</loc>
-    <lastmod>2026-05-13T08:19:37.335Z</lastmod>
+    <lastmod>2026-05-18T07:49:29.854Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/mapsf_v1.0.0/index.html</loc>
@@ -31,6 +31,10 @@
   <url>
     <loc>https://rcarto.github.io/posts/linemap_0.3.0/index.html</loc>
     <lastmod>2023-11-29T14:54:16.000Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rcarto.github.io/posts/mapsf_v1.2.0/index.html</loc>
+    <lastmod>2026-05-18T09:31:40.052Z</lastmod>
   </url>
   <url>
     <loc>https://rcarto.github.io/posts/build_osrm_server/index.html</loc>
