@@ -113,7 +113,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<meta name="quarto:status" content="draft">
 
 
 </head>
@@ -121,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -172,6 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title">
 <h1 class="title">mapsf.gui: a shiny app to make maps with R</h1>
   <div class="quarto-categories">
+    <div class="quarto-category">mapsf.gui</div>
     <div class="quarto-category">mapsf</div>
     <div class="quarto-category">shiny</div>
   </div>
@@ -220,21 +220,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Copy the R code for reproducibility of the maps created.</li>
 <li>Download maps as images (PNG or SVG).</li>
 </ul>
-</section>
-<section id="demo" class="level2">
-<h2 class="anchored" data-anchor-id="demo">Demo</h2>
-<iframe width="560" height="315" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen="">
+<iframe width="760" height="430" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen="">
 </iframe>
 </section>
-<section id="installation" class="level2">
-<h2 class="anchored" data-anchor-id="installation">Installation</h2>
-<p>You can install the stable version of mapsf.gui from CRAN:</p>
+<section id="an-educational-app" class="level2">
+<h2 class="anchored" data-anchor-id="an-educational-app">An educational app</h2>
+<p>We chose to develop <code>mapsf.gui</code> for educational purposes. The application is designed to help users familiarise themselves with the production of thematic maps in R, by allowing them to visualise the effects of their parameter choices both on the final map and the generated code.</p>
+<p>At a time when many people are turning to the code-generation capabilities offered by LLMs (which generally result in little control over the code produced, and thus a poor understanding of that code), we have chosen to take an opposite approach and have opted for a diametrically opposed solution: offering users the ability to carry out the various steps involved in creating a thematic map with a few clicks, whilst allowing them to view, in real time, the code corresponding to the different actions performed within the interface.</p>
+<p>To this end, we have chosen to include several features that enable the user to fully understand what they are doing.</p>
+<p>The most important of these elements is probably the panel displaying the R code generated in real time. This panel (which requires a certain amount of screen space) can be moved manually within the interface, so that the user can position it as they wish in the most convenient place to follow the changes being made to it in real time.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<figcaption>Code panel integration in the UI</figcaption>
+<p><img src="./ui-dark.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>The second important feature is the presence of dedicated help blocks for each settings panel (theme, export dimensions, north arrow, etc.). These help blocks, which can be displayed optionally, clearly set out several key details: the name of the mapsf function used (for example, <code>mf_arrow</code>, <code>mf_title</code>, etc.), what the function does, and the main arguments it can take. A link to the official documentation page is also provided here.</p>
+<p><img src="./mf_arrow_help.png" class="img-fluid"></p>
+<p>The third important feature is more subtle and appears when you hover over the various options in the application: a tooltip displays the exact name of the argument used, its value and (where applicable) whether it is the argument’s default value (see below in the section on code generation).</p>
+<p><img src="./arrow_tooltip.png" class="img-fluid"></p>
+<p><img src="./arrow_tooltip_default.png" class="img-fluid"></p>
+<p>We believe that these various elements help to establish a cognitive link between the graphical parameters and the code statements used to generate them. As such, the <code>mapsf.gui</code> interface is not designed to avoid code, but rather to serve as a springboard to help you get to grips with it!</p>
+</section>
+<section id="code-generation-as-close-as-possible-to-what-a-human-would-have-written" class="level2">
+<h2 class="anchored" data-anchor-id="code-generation-as-close-as-possible-to-what-a-human-would-have-written">Code generation as close as possible to what a human would have written</h2>
+<p>We have taken care to ensure that the code generated is as close as possible to what a human would have written.</p>
+<p>Firstly, the structure is consistent thanks to line breaks (for example, between library imports and the first <code>mapsf</code> instructions, between the steps specific to displaying map representations and those specific to displaying layout elements, etc.) and the addition of comments where necessary.</p>
+<p>Secondly, we use idiomatic code formatting (the order of arguments for each function, line breaks when there are many arguments, maximum line length, etc.) to make the code easier to read and understand.</p>
+<p><img src="./code.png" class="img-fluid"></p>
+<p>Finally, an important feature is the removal of arguments whose values are equal to their default values.</p>
+<p>To do this, we check, for each argument, whether there is a default value in the signature of the corresponding function. But that’s not all: some arguments do not have a default value in the function signature, but rather a value defined in the current <code>mapsf</code> theme. We also check for this in order to remove these arguments. We made this choice because we believe this is how <code>mapsf</code> users tend to write code.</p>
+</section>
+<section id="installation-and-quick-start-up" class="level2">
+<h2 class="anchored" data-anchor-id="installation-and-quick-start-up">Installation and quick start-up</h2>
+<p>You can install the stable version of <code>mapsf.gui</code> from CRAN:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'mapsf.gui'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Alternatively, you can install the development version of <code>mapsf.gui</code> from <a href="https://riatelab.r-universe.dev/mapsf.gui">r-universe</a> with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"mapsf.gui"</span>, <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">'https://riatelab.r-universe.dev'</span>, <span class="st">'https://cloud.r-project.org'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="quick-start-up" class="level2">
-<h2 class="anchored" data-anchor-id="quick-start-up">Quick start-up</h2>
 <p>To get started quickly, you can use the bundled <code>mapsf</code> dataset with the following example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>com <span class="ot">&lt;-</span> mapsf<span class="sc">::</span><span class="fu">mf_get_mtq</span>(<span class="st">'polygons'</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pts <span class="ot">&lt;-</span> mapsf<span class="sc">::</span><span class="fu">mf_get_mtq</span>(<span class="st">'points'</span>)</span>

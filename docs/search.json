@@ -4,7 +4,49 @@
     "href": "index.html",
     "title": "Blog posts",
     "section": "",
-    "text": "mapsf.gui: a shiny app to make maps with R\n\n\n\nmapsf\n\nshiny\n\n\n\n\n\n\n\n\n\nJun 30, 2026\n\n\nTimothée Giraud, Matthieu Viry, Hugues Pecout\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf: version 1.2.0\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nMay 18, 2026\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of maplegend: version 0.6.3\n\n\n\nmaplegend\n\nmapsf\n\n\n\n\n\n\n\n\n\nMay 13, 2026\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of maplegend: version 0.4.0\n\n\n\nmaplegend\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 5, 2025\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf: version 1.0.0\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 1, 2025\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nNov 5, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nRaster maps with mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJan 31, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nlinemap update\n\n\n\nlinemap\n\n\n\n\n\n\n\n\n\nNov 29, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nmapsf update and maplegend introduction\n\n\n\nmapsf\n\nmaplegend\n\n\n\n\n\n\n\n\n\nNov 24, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nHow to Build a European-Wide OSRM Server on a Desktop Computer\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nOct 9, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 11, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of cartography\n\n\n\ncartography\n\n\n\n\n\n\n\n\n\nJan 20, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of osrm\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\nNo matching items"
+    "text": "mapsf.gui: a shiny app to make maps with R\n\n\n\nmapsf.gui\n\nmapsf\n\nshiny\n\n\n\n\n\n\n\n\n\nJun 30, 2026\n\n\nTimothée Giraud, Matthieu Viry, Hugues Pecout\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf: version 1.2.0\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nMay 18, 2026\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of maplegend: version 0.6.3\n\n\n\nmaplegend\n\nmapsf\n\n\n\n\n\n\n\n\n\nMay 13, 2026\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of maplegend: version 0.4.0\n\n\n\nmaplegend\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 5, 2025\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf: version 1.0.0\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 1, 2025\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nNov 5, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nRaster maps with mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJan 31, 2024\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nlinemap update\n\n\n\nlinemap\n\n\n\n\n\n\n\n\n\nNov 29, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nmapsf update and maplegend introduction\n\n\n\nmapsf\n\nmaplegend\n\n\n\n\n\n\n\n\n\nNov 24, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nHow to Build a European-Wide OSRM Server on a Desktop Computer\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nOct 9, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nJul 11, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of cartography\n\n\n\ncartography\n\n\n\n\n\n\n\n\n\nJan 20, 2023\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of mapsf\n\n\n\nmapsf\n\n\n\n\n\n\n\n\n\nDec 13, 2022\n\n\nTimothée Giraud\n\n\n\n\n\n\n\n\n\n\n\n\nNew release of osrm\n\n\n\nosrm\n\n\n\n\n\n\n\n\n\nNov 4, 2022\n\n\nTimothée Giraud\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html",
+    "href": "posts/mapsf.gui_v0.1.0/index.html",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "",
+    "text": "mapsf.gui is a shiny application that provides an interactive interface for creating thematic maps using the mapsf package. It automatically generates the corresponding R code to reproduce the map identically.\nmapsf.gui is useful for familiarizing yourself with mapsf and learning about its main features.\nmapsf.gui was presented for the first time at the main French R-related event, les Rencontres R, in June 2026. See the abstract and the slides (in French)."
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html#features",
+    "href": "posts/mapsf.gui_v0.1.0/index.html#features",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "Features",
+    "text": "Features\n\nLoad and manage multiple spatial datasets.\nSelect different types of thematic maps.\nCustomize classification methods, color palettes etc.\nManage various map elements such as legends, title, scale and north arrow.\nDiscover the corresponding code in real-time as you construct maps.\nCopy the R code for reproducibility of the maps created.\nDownload maps as images (PNG or SVG)."
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html#an-educational-app",
+    "href": "posts/mapsf.gui_v0.1.0/index.html#an-educational-app",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "An educational app",
+    "text": "An educational app\nWe chose to develop mapsf.gui for educational purposes. The application is designed to help users familiarise themselves with the production of thematic maps in R, by allowing them to visualise the effects of their parameter choices both on the final map and the generated code.\nAt a time when many people are turning to the code-generation capabilities offered by LLMs (which generally result in little control over the code produced, and thus a poor understanding of that code), we have chosen to take an opposite approach and have opted for a diametrically opposed solution: offering users the ability to carry out the various steps involved in creating a thematic map with a few clicks, whilst allowing them to view, in real time, the code corresponding to the different actions performed within the interface.\nTo this end, we have chosen to include several features that enable the user to fully understand what they are doing.\nThe most important of these elements is probably the panel displaying the R code generated in real time. This panel (which requires a certain amount of screen space) can be moved manually within the interface, so that the user can position it as they wish in the most convenient place to follow the changes being made to it in real time.\n\n\nCode panel integration in the UI\n\n\n\nThe second important feature is the presence of dedicated help blocks for each settings panel (theme, export dimensions, north arrow, etc.). These help blocks, which can be displayed optionally, clearly set out several key details: the name of the mapsf function used (for example, mf_arrow, mf_title, etc.), what the function does, and the main arguments it can take. A link to the official documentation page is also provided here.\n\nThe third important feature is more subtle and appears when you hover over the various options in the application: a tooltip displays the exact name of the argument used, its value and (where applicable) whether it is the argument’s default value (see below in the section on code generation).\n\n\nWe believe that these various elements help to establish a cognitive link between the graphical parameters and the code statements used to generate them. As such, the mapsf.gui interface is not designed to avoid code, but rather to serve as a springboard to help you get to grips with it!"
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html#code-generation-as-close-as-possible-to-what-a-human-would-have-written",
+    "href": "posts/mapsf.gui_v0.1.0/index.html#code-generation-as-close-as-possible-to-what-a-human-would-have-written",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "Code generation as close as possible to what a human would have written",
+    "text": "Code generation as close as possible to what a human would have written\nWe have taken care to ensure that the code generated is as close as possible to what a human would have written.\nFirstly, the structure is consistent thanks to line breaks (for example, between library imports and the first mapsf instructions, between the steps specific to displaying map representations and those specific to displaying layout elements, etc.) and the addition of comments where necessary.\nSecondly, we use idiomatic code formatting (the order of arguments for each function, line breaks when there are many arguments, maximum line length, etc.) to make the code easier to read and understand.\n\nFinally, an important feature is the removal of arguments whose values are equal to their default values.\nTo do this, we check, for each argument, whether there is a default value in the signature of the corresponding function. But that’s not all: some arguments do not have a default value in the function signature, but rather a value defined in the current mapsf theme. We also check for this in order to remove these arguments. We made this choice because we believe this is how mapsf users tend to write code."
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html#installation-and-quick-start-up",
+    "href": "posts/mapsf.gui_v0.1.0/index.html#installation-and-quick-start-up",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "Installation and quick start-up",
+    "text": "Installation and quick start-up\nYou can install the stable version of mapsf.gui from CRAN:\ninstall.packages('mapsf.gui')\nAlternatively, you can install the development version of mapsf.gui from r-universe with:\ninstall.packages(\"mapsf.gui\", repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))\nTo get started quickly, you can use the bundled mapsf dataset with the following example:\ncom &lt;- mapsf::mf_get_mtq('polygons')\npts &lt;- mapsf::mf_get_mtq('points')\nmapsf.gui::run_app(data = list(communes = com, points = pts))"
+  },
+  {
+    "objectID": "posts/mapsf.gui_v0.1.0/index.html#limitations-and-alternatives",
+    "href": "posts/mapsf.gui_v0.1.0/index.html#limitations-and-alternatives",
+    "title": "mapsf.gui: a shiny app to make maps with R",
+    "section": "Limitations and alternatives",
+    "text": "Limitations and alternatives\nPlease note that not all of mapsf’s features are available through the GUI. You can check out mapsf documentation (as well as the various help panels in mapsf.gui) to learn more about this.\nMoreover, mapsf.gui is not intended to replace dedicated thematic cartography software. If you’re not interested in learning R / mapsf code or in reproducibility, we also develop Magrit: a Web-based thematic cartography app that offers a comprehensive experience for learning or teaching cartography itself."
   },
   {
     "objectID": "posts/maplegend_v0.4.0/index.html",
@@ -383,47 +425,5 @@
     "title": "About",
     "section": "",
     "text": "Information on R spatial packages maintained by Timothée Giraud."
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html",
-    "href": "posts/mapsf.gui_v0.1.0/index.html",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "",
-    "text": "mapsf.gui is a shiny application that provides an interactive interface for creating thematic maps using the mapsf package. It automatically generates the corresponding R code to reproduce the map identically.\nmapsf.gui is useful for familiarizing yourself with mapsf and learning about its main features.\nmapsf.gui was presented for the first time at the main French R-related event, les Rencontres R, in June 2026. See the abstract and the slides (in French)."
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html#features",
-    "href": "posts/mapsf.gui_v0.1.0/index.html#features",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "Features",
-    "text": "Features\n\nLoad and manage multiple spatial datasets.\nSelect different types of thematic maps.\nCustomize classification methods, color palettes etc.\nManage various map elements such as legends, title, scale and north arrow.\nDiscover the corresponding code in real-time as you construct maps.\nCopy the R code for reproducibility of the maps created.\nDownload maps as images (PNG or SVG)."
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html#demo",
-    "href": "posts/mapsf.gui_v0.1.0/index.html#demo",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "Demo",
-    "text": "Demo"
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html#installation",
-    "href": "posts/mapsf.gui_v0.1.0/index.html#installation",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "Installation",
-    "text": "Installation\nYou can install the stable version of mapsf.gui from CRAN:\ninstall.packages('mapsf.gui')\nAlternatively, you can install the development version of mapsf.gui from r-universe with:\ninstall.packages(\"mapsf.gui\", repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))"
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html#quick-start-up",
-    "href": "posts/mapsf.gui_v0.1.0/index.html#quick-start-up",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "Quick start-up",
-    "text": "Quick start-up\nTo get started quickly, you can use the bundled mapsf dataset with the following example:\ncom &lt;- mapsf::mf_get_mtq('polygons')\npts &lt;- mapsf::mf_get_mtq('points')\nmapsf.gui::run_app(data = list(communes = com, points = pts))"
-  },
-  {
-    "objectID": "posts/mapsf.gui_v0.1.0/index.html#limitations-and-alternatives",
-    "href": "posts/mapsf.gui_v0.1.0/index.html#limitations-and-alternatives",
-    "title": "mapsf.gui: a shiny app to make maps with R",
-    "section": "Limitations and alternatives",
-    "text": "Limitations and alternatives\nPlease note that not all of mapsf’s features are available through the GUI. You can check out mapsf documentation (as well as the various help panels in mapsf.gui) to learn more about this.\nMoreover, mapsf.gui is not intended to replace dedicated thematic cartography software. If you’re not interested in learning R / mapsf code or in reproducibility, we also develop Magrit: a Web-based thematic cartography app that offers a comprehensive experience for learning or teaching cartography itself."
   }
 ]

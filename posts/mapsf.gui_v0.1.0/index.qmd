@@ -32,6 +32,10 @@ fig-cap-location: top
 * Copy the R code for reproducibility of the maps created.
 * Download maps as images (PNG or SVG).
 
+
+<iframe width="760" height="430" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen></iframe>
+
+
 ## An educational app
 
 We chose to develop `mapsf.gui` for educational purposes. The application is designed to help users familiarise themselves with the production of thematic maps in R, by allowing them to visualise the effects of their parameter choices both on the final map and the generated code.
@@ -46,41 +50,35 @@ The most important of these elements is probably the panel displaying the R code
   
 The second important feature is the presence of dedicated help blocks for each settings panel (theme, export dimensions, north arrow, etc.). These help blocks, which can be displayed optionally, clearly set out several key details: the name of the mapsf function used (for example, `mf_arrow`, `mf_title`, etc.), what the function does, and the main arguments it can take. A link to the official documentation page is also provided here.
 
-![Help panel for the mf_arrow function](./mf_arrow_help.png)
+![](./mf_arrow_help.png)
 
 The third important feature is more subtle and appears when you hover over the various options in the application: a tooltip displays the exact name of the argument used, its value and (where applicable) whether it is the argument’s default value (see below in the section on code generation).
 
-![Tooltip displaying argument details](./arrow_tooltip.png)
+![](./arrow_tooltip.png)
 
-
-![Tooltip displaying argument details (default values)](./arrow_tooltip_default.png)
+![](./arrow_tooltip_default.png)
 
 We believe that these various elements help to establish a cognitive link between the graphical parameters and the code statements used to generate them.
-As such, the mapsf.gui interface is not designed to avoid code, but rather to serve as a springboard to help you get to grips with it!
+As such, the `mapsf.gui` interface is not designed to avoid code, but rather to serve as a springboard to help you get to grips with it!
 
 
 ## Code generation as close as possible to what a human would have written
 
 We have taken care to ensure that the code generated is as close as possible to what a human would have written.
 
-Firstly, the structure is consistent thanks to line breaks (for example, between library imports and the first mapsf instructions, between the steps specific to displaying map representations and those specific to displaying layout elements, etc.) and the addition of comments where necessary.
+Firstly, the structure is consistent thanks to line breaks (for example, between library imports and the first `mapsf` instructions, between the steps specific to displaying map representations and those specific to displaying layout elements, etc.) and the addition of comments where necessary.
 
 Secondly, we use idiomatic code formatting (the order of arguments for each function, line breaks when there are many arguments, maximum line length, etc.) to make the code easier to read and understand.
 
-![Screenshot of the code panel](./code.png)
+![](./code.png)
 
 Finally, an important feature is the removal of arguments whose values are equal to their default values.
 
-To do this, we check, for each argument, whether there is a default value in the signature of the corresponding function. But that’s not all: some arguments do not have a default value in the function signature, but rather a value defined in the current mapsf theme. We also check for this in order to remove these arguments. We made this choice because we believe this is how mapsf users tend to write code.
+To do this, we check, for each argument, whether there is a default value in the signature of the corresponding function. But that’s not all: some arguments do not have a default value in the function signature, but rather a value defined in the current `mapsf` theme. We also check for this in order to remove these arguments. We made this choice because we believe this is how `mapsf` users tend to write code.
 
+## Installation and quick start-up 
 
-## Demo
-
-<iframe width="560" height="315" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen></iframe>
-
-## Installation
-
-You can install the stable version of mapsf.gui from CRAN:
+You can install the stable version of `mapsf.gui` from CRAN:
 ```r
 install.packages('mapsf.gui')
 ```
@@ -88,8 +86,6 @@ Alternatively, you can install the development version of `mapsf.gui` from [r-un
 ```r
 install.packages("mapsf.gui", repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))
 ```
-
-## Quick start-up 
 
 To get started quickly, you can use the bundled `mapsf` dataset with the following example: 
 
