@@ -10,7 +10,112 @@
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Sun, 17 May 2026 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 29 Jun 2026 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>mapsf.gui: a shiny app to make maps with R</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <dc:creator>Matthieu Viry</dc:creator>
+  <dc:creator>Hugues Pecout</dc:creator>
+  <link>https://rcarto.github.io/posts/mapsf.gui_v0.1.0/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><code>mapsf.gui</code> is a <code>shiny</code> application that provides an interactive interface for creating thematic maps using the <code>mapsf</code> package. It automatically generates the corresponding R code to reproduce the map identically.<br>
+<code>mapsf.gui</code> is useful for familiarizing yourself with <code>mapsf</code> and learning about its main features.</p>
+<p><img src="https://rcarto.github.io/posts/mapsf.gui_v0.1.0/screenshot.png" class="img-fluid"></p>
+<p><code>mapsf.gui</code> was presented for the first time at the main French R-related event, <em>les Rencontres R</em>, in June 2026. See the <a href="https://rr2026.sciencesconf.org/712364">abstract</a> and the <a href="RR2026_mapsf.gui.pdf">slides</a> (in French).</p>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<ul>
+<li>Load and manage multiple spatial datasets.</li>
+<li>Select different types of thematic maps.</li>
+<li>Customize classification methods, color palettes etc.</li>
+<li>Manage various map elements such as legends, title, scale and north arrow.</li>
+<li>Discover the corresponding code in real-time as you construct maps.</li>
+<li>Copy the R code for reproducibility of the maps created.</li>
+<li>Download maps as images (PNG or SVG).</li>
+</ul>
+</section>
+<section id="demo" class="level2">
+<h2 class="anchored" data-anchor-id="demo">Demo</h2>
+<iframe width="560" height="315" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen="">
+</iframe>
+</section>
+<section id="installation" class="level2">
+<h2 class="anchored" data-anchor-id="installation">Installation</h2>
+<p>You can install the stable version of mapsf.gui from CRAN:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'mapsf.gui'</span>)</span></code></pre></div></div>
+<p>Alternatively, you can install the development version of <code>mapsf.gui</code> from <a href="https://riatelab.r-universe.dev/mapsf.gui">r-universe</a> with:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mapsf.gui"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">repos =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'https://riatelab.r-universe.dev'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'https://cloud.r-project.org'</span>))</span></code></pre></div></div>
+</section>
+<section id="quick-start-up" class="level2">
+<h2 class="anchored" data-anchor-id="quick-start-up">Quick start-up</h2>
+<p>To get started quickly, you can use the bundled <code>mapsf</code> dataset with the following example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">com <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> mapsf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_mtq</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'polygons'</span>)</span>
+<span id="cb3-2">pts <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> mapsf<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mf_get_mtq</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'points'</span>)</span>
+<span id="cb3-3">mapsf.gui<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">run_app</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">communes =</span> com, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">points =</span> pts))</span></code></pre></div></div>
+</section>
+<section id="limitations-and-alternatives" class="level2">
+<h2 class="anchored" data-anchor-id="limitations-and-alternatives">Limitations and alternatives</h2>
+<p>Please note that not all of <code>mapsf</code>’s features are available through the GUI. You can check out <a href="https://riatelab.github.io/mapsf/"><code>mapsf</code> documentation</a> (as well as the various help panels in <code>mapsf.gui</code>) to learn more about this.</p>
+<p>Moreover, <code>mapsf.gui</code> is not intended to replace dedicated thematic cartography software. If you’re not interested in learning R / <code>mapsf</code> code or in reproducibility, we also develop <a href="https://magrit.cnrs.fr">Magrit</a>: a Web-based thematic cartography app that offers a comprehensive experience for learning or teaching cartography itself.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>mapsf</category>
+  <category>shiny</category>
+  <guid>https://rcarto.github.io/posts/mapsf.gui_v0.1.0/</guid>
+  <pubDate>Mon, 29 Jun 2026 22:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/mapsf.gui_v0.1.0/mapsf_gui_logo.png" medium="image" type="image/png" height="166" width="144"/>
+</item>
 <item>
   <title>New release of mapsf: version 1.2.0</title>
   <dc:creator>Timothée Giraud</dc:creator>

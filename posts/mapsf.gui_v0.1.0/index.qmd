@@ -1,0 +1,70 @@
+---
+title: "mapsf.gui: a shiny app to make maps with R"
+author: 
+  - name: Timothée Giraud
+  - name: Matthieu Viry
+  - name: Hugues Pecout
+date: "2026-06-30"
+categories: [mapsf, shiny]
+image: "mapsf_gui_logo.png"
+freeze: true
+draft: true
+bibliography: references.bib
+fig-cap-location: top
+---
+
+
+`mapsf.gui` is a `shiny` application that provides an interactive interface for creating thematic maps using the `mapsf` package. It automatically generates the corresponding R code to reproduce the map identically.  
+`mapsf.gui` is useful for familiarizing yourself with `mapsf` and learning about its main features.
+
+
+![](screenshot.png)
+
+`mapsf.gui` was presented for the first time at the main French R-related event, *les Rencontres R*, in June 2026. See the [abstract](https://rr2026.sciencesconf.org/712364) and the [slides](RR2026_mapsf.gui.pdf) (in French). 
+
+
+
+## Features
+
+* Load and manage multiple spatial datasets.
+* Select different types of thematic maps.
+* Customize classification methods, color palettes etc.
+* Manage various map elements such as legends, title, scale and north arrow.
+* Discover the corresponding code in real-time as you construct maps.
+* Copy the R code for reproducibility of the maps created.
+* Download maps as images (PNG or SVG).
+
+## Demo
+
+<iframe width="560" height="315" src="https://www.canal-u.tv/chaines/riate/embed/178629?t=0" allowfullscreen></iframe>
+
+## Installation
+
+You can install the stable version of mapsf.gui from CRAN:
+```r
+install.packages('mapsf.gui')
+```
+Alternatively, you can install the development version of `mapsf.gui` from [r-universe](https://riatelab.r-universe.dev/mapsf.gui) with:
+```r
+install.packages("mapsf.gui", repos = c('https://riatelab.r-universe.dev', 'https://cloud.r-project.org'))
+```
+
+## Quick start-up 
+
+To get started quickly, you can use the bundled `mapsf` dataset with the following example: 
+
+```r
+com <- mapsf::mf_get_mtq('polygons')
+pts <- mapsf::mf_get_mtq('points')
+mapsf.gui::run_app(data = list(communes = com, points = pts))
+```
+
+
+
+## Limitations and alternatives
+
+Please note that not all of `mapsf`'s features are available through the GUI. 
+You can check out [`mapsf` documentation](https://riatelab.github.io/mapsf/) (as well as the various help panels in `mapsf.gui`) to learn more about this.
+
+Moreover, `mapsf.gui` is not intended to replace dedicated thematic cartography software. If you’re not interested in learning R / `mapsf` code or in reproducibility, we also develop [Magrit](https://magrit.cnrs.fr): a Web-based thematic cartography app that offers a comprehensive experience for learning or teaching cartography itself.
+
