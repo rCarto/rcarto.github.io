@@ -139,6 +139,28 @@ font-style: inherit;">points =</span> pts))</span></code></pre></div></div>
   <media:content url="https://rcarto.github.io/posts/mapsf.gui_v0.1.0/mapsf_gui_logo.png" medium="image" type="image/png" height="166" width="144"/>
 </item>
 <item>
+  <title>Using OpenStreetMap with R :: CHEAT SHEET</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <dc:creator>Louis Laurian</dc:creator>
+  <link>https://rcarto.github.io/posts/osm_cheatsheet/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>This <a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf">new cheat sheet</a> guides users on how to use OpenStreetMap data and related tools with R for: geocoding, routing, downloading base maps and datasets.</p>
+<p><a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf"><img src="https://rcarto.github.io/posts/osm_cheatsheet/cheatsheet_osm_r_p1.png" class="img-fluid"></a></p>
+<p><a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf"><img src="https://rcarto.github.io/posts/osm_cheatsheet/cheatsheet_osm_r_p2.png" class="img-fluid"></a></p>
+
+
+
+ ]]></description>
+  <category>OpenStreetMap</category>
+  <guid>https://rcarto.github.io/posts/osm_cheatsheet/</guid>
+  <pubDate>Fri, 26 Jun 2026 22:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/osm_cheatsheet/cheatsheet_osm_r_p1.png" medium="image" type="image/png" height="102" width="144"/>
+</item>
+<item>
   <title>New release of mapsf: version 1.2.0</title>
   <dc:creator>Timothée Giraud</dc:creator>
   <link>https://rcarto.github.io/posts/mapsf_v1.2.0/</link>
@@ -5824,6 +5846,7 @@ Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenS
 </div>
 </div></section></div> ]]></description>
   <category>osrm</category>
+  <category>OpenStreetMap</category>
   <guid>https://rcarto.github.io/posts/build_osrm_server/</guid>
   <pubDate>Sun, 08 Oct 2023 22:00:00 GMT</pubDate>
   <media:content url="https://rcarto.github.io/posts/build_osrm_server/cob.png" medium="image" type="image/png" height="114" width="144"/>
@@ -6949,6 +6972,7 @@ Smith, Arfon M., Kyle E. Niemeyer, Daniel S. Katz, et al. 2018. <span>“<span c
 </div>
 </div></section></div> ]]></description>
   <category>osrm</category>
+  <category>OpenStreetMap</category>
   <guid>https://rcarto.github.io/posts/osrm_v4.0.0/</guid>
   <pubDate>Thu, 03 Nov 2022 23:00:00 GMT</pubDate>
   <media:content url="https://rcarto.github.io/posts/osrm_v4.0.0/osrm.png" medium="image" type="image/png" height="167" width="144"/>

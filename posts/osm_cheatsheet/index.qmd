@@ -1,0 +1,22 @@
+---
+title: "Using OpenStreetMap with R :: CHEAT SHEET"
+author: 
+  - name: Timothée Giraud
+  - name: Louis Laurian
+date: "2026-06-27"
+categories: [OpenStreetMap]
+image: "cheatsheet_osm_r_p1.png"
+freeze: true
+bibliography: references.bib
+fig-cap-location: top
+---
+
+This [new cheat sheet](https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf) guides users on how to use OpenStreetMap data and related tools with R for: geocoding, routing, downloading base maps and datasets.
+
+
+
+[![](cheatsheet_osm_r_p1.png)](https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf)
+
+
+[![](cheatsheet_osm_r_p2.png)](https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf)
+

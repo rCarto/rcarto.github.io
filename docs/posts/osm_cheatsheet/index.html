@@ -7,9 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Timothée Giraud">
-<meta name="dcterms.date" content="2023-10-09">
+<meta name="author" content="Louis Laurian">
+<meta name="dcterms.date" content="2026-06-27">
 
-<title>How to Build a European-Wide OSRM Server on a Desktop Computer – R Geomatic</title>
+<title>Using OpenStreetMap with R :: CHEAT SHEET – R Geomatic</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,61 +27,7 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -186,9 +133,8 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">How to Build a European-Wide OSRM Server on a Desktop Computer</h1>
+<h1 class="title">Using OpenStreetMap with R :: CHEAT SHEET</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">osrm</div>
     <div class="quarto-category">OpenStreetMap</div>
   </div>
   </div>
@@ -198,16 +144,17 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Authors</div>
     <div class="quarto-title-meta-contents">
              <p>Timothée Giraud </p>
+             <p>Louis Laurian </p>
           </div>
   </div>
     
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 9, 2023</p>
+      <p class="date">June 27, 2026</p>
     </div>
   </div>
   
@@ -219,135 +166,13 @@ div.csl-indent {
 </header>
 
 
-<p><a href="https://github.com/Project-OSRM/osrm-backend">Open Source Routing Machine</a>, or OSRM <span class="citation" data-cites="luxen-vetter-2011">(<a href="#ref-luxen-vetter-2011" role="doc-biblioref">Luxen and Vetter 2011</a>)</span>, is a routing software based on OpenStreetMap (OSM) data. OSRM can be used to find the fastest route between points, to compute time or distance matrices between set of points or to solve the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">traveling salesman problem</a>.</p>
-<p>As maintainer of the <code>osrm</code> R package <span class="citation" data-cites="giraud2022">(<a href="#ref-giraud2022" role="doc-biblioref">Giraud 2022</a>)</span> I often find myself advising users to use their own instance of OSRM to enable them to send a large number of requests and not overload the demo server. In these cases I simply point to the Docker installation instructions in the project’s <a href="https://github.com/Project-OSRM/osrm-backend#using-docker">README</a> file. These instructions may not be detailed enough to build an OSRM instance on a large area.<br>
-OSRM needs <strong>a lot</strong> of RAM to prepare the road network for requests and using only these instructions will probably result in message like this one:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[warn]</span> Please provide more memory or consider using a larger swapfile</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This problem is addressed in <a href="https://github.com/Project-OSRM/osrm-backend/issues/6146">this issue</a> on the OSRM GitHub repository. The suggested solution is to rent a temporary server. This is not the only solution, a modern computer with a rather classical hardware configuration can actually do the job.</p>
-<p>In this post I’ll explain how to build a European-wide OSRM instance on a desktop computer. These explanations are, to a certain extent, also valid when using a remote server.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This post implies some Linux/CLI/Docker knowledge from its reader.</p>
-</div>
-</div>
-<section id="hardware" class="level2">
-<h2 class="anchored" data-anchor-id="hardware">Hardware</h2>
-<p>I use my personal laptop computer which has a 1 TB SSD hard drive and the following config:</p>
-<pre><span style="color:#C01C28"><b>OS</b></span>: Debian GNU/Linux 12 (bookworm) x86_64 
-<span style="color:#C01C28"><b>Host</b></span>: HP EliteBook 840 G8 Notebook PC 
-<span style="color:#C01C28"><b>Kernel</b></span>: 6.1.0-10-amd64 
-<span style="color:#C01C28"><b>CPU</b></span>: 11th Gen Intel i7-1185G7 (8) @ 4.800GHz 
-<span style="color:#C01C28"><b>Memory</b></span>: 31.04GB </pre>
-</section>
-<section id="add-some-extra-memory" class="level2">
-<h2 class="anchored" data-anchor-id="add-some-extra-memory">Add some extra memory</h2>
-<p>The preparation of the OSM network for OSRM is memory intensive and will need more than the already available 32 GB of RAM. The <a href="https://en.wikipedia.org/wiki/Memory_paging">swap memory</a> is used when a program consume the totality of the available RAM memory. Consequently we need to <a href="https://github.com/Project-OSRM/osrm-backend/wiki/Running-OSRM#extracting-the-road-network-osrm-extract">extend the swap memory</a> of our computer. I use a very large file (a 200 GB file named “swap.swap”) to be sure to not exceed the limit.<br>
-Note that this step is not necessary when working on smaller areas.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># preallocate space to a file named swap.swap</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> fallocate <span class="at">-l</span> 200G swap.swap</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># change file access permissions</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> chmod 600 swap.swap</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set the file as a swap area</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> mkswap swap.swap</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># start swapping to the file</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> swapon swap.swap</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># modify the swapiness</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> sysctl vm.swappiness=20</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="download-the-osm-road-network" class="level2">
-<h2 class="anchored" data-anchor-id="download-the-osm-road-network">Download the OSM road network</h2>
-<p>The <a href="https://www.geofabrik.de/">Geofabrik website</a> provides <a href="https://download.geofabrik.de/">OSM database extracts</a> that can be used as input for OSRM. In our case we have downloaded the <strong>osm.pbf</strong> file for Europe (27.1 GB).</p>
-</section>
-<section id="build-the-dataset-for-osrm" class="level2">
-<h2 class="anchored" data-anchor-id="build-the-dataset-for-osrm">Build the dataset for OSRM</h2>
-<p>The <strong>europe-latest.osm.pbf</strong> file needs to be processed to be used by OSRM. This is done in three steps. You can change the transport mode in the first step, here we use the car profile.</p>
-<ol type="1">
-<li>Extract (~5h30)</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-t</span> <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-extract <span class="at">-p</span> /opt/car.lua /data/europe-latest.osm.pbf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="2" type="1">
-<li>Partition (~1h20)</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-t</span> <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-partition /data/europe-latest.osrm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<ol start="3" type="1">
-<li>Customize (~0h10)</li>
-</ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">--rm</span> <span class="at">-t</span> <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-customize /data/europe-latest.osrm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note that you can update the osrm-backend version in these commands, by replacing v5.27.1 by v6.0.0 for example.</p>
-</section>
-<section id="run-the-instance" class="level2">
-<h2 class="anchored" data-anchor-id="run-the-instance">Run the instance</h2>
-<p>This is the command I use to run this freshly built OSRM instance:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-t</span> <span class="at">-i</span> <span class="at">-p</span> 5000:5000 <span class="at">-v</span> <span class="st">"</span><span class="va">${PWD}</span><span class="st">:/data"</span> ghcr.io/project-osrm/osrm-backend:v5.27.1 osrm-routed <span class="at">--algorithm</span> mld <span class="at">--max-table-size</span> 50000000 /data/europe-latest.osrm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="other-experiments" class="level2">
-<h2 class="anchored" data-anchor-id="other-experiments">Other experiments</h2>
-<section id="a-laptop-with-lower-capacities" class="level3">
-<h3 class="anchored" data-anchor-id="a-laptop-with-lower-capacities">A laptop with lower capacities:</h3>
-<pre><span style="color:#C01C28"><b>OS</b></span>: Debian GNU/Linux 12 (bookworm) x86_64 
-<span style="color:#C01C28"><b>Host</b></span>: HP EliteBook Folio 1040 G3 
-<span style="color:#C01C28"><b>Kernel</b></span>: 6.1.0-12-amd64 
-<span style="color:#C01C28"><b>CPU</b></span>: Intel i7-6600U (4) @ 3.400GHz 
-<span style="color:#C01C28"><b>Memory</b></span>: 15.50GB </pre>
-<ol type="1">
-<li>Extract ~56h</li>
-<li>Partition ~2h40</li>
-<li>Customize ~1h</li>
-</ol>
-</section>
-<section id="a-server-with-higher-capacities" class="level3">
-<h3 class="anchored" data-anchor-id="a-server-with-higher-capacities">A server with higher capacities:</h3>
-<pre><span style="color:#C01C28"><b>OS</b></span>: Ubuntu 22.04.3 LTS (Jammy Jellyfish) x86_64 
-<span style="color:#C01C28"><b>Host</b></span>: ASUS 
-<span style="color:#C01C28"><b>Kernel</b></span>: Linux 5.15.0-91-generic 
-<span style="color:#C01C28"><b>CPU</b></span>: AMD Ryzen 7 7700 8-Core Processor (16) @ 5.388GHz 
-<span style="color:#C01C28"><b>Memory</b></span>: 62GB </pre>
-<ol type="1">
-<li>Extract 1h06</li>
-<li>Partition 0h34</li>
-<li>Customize 0h02</li>
-</ol>
-</section>
-</section>
-<section id="example-of-use" class="level2">
-<h2 class="anchored" data-anchor-id="example-of-use">Example of use</h2>
-<p>This OSRM instance will actually be used in the framework of a European research program (<a href="https://www.ruralgranular.eu/">Granular</a>). In this project we’ll need to request a very large number of distances and routes throughout Europe in order to create relevant accessibility indicators for rural areas.<br>
-I’ve built a small R package relying on <code>osrm</code> to send queries in a parallel fashion and create “All roads lead to…” maps. The <a href="https://github.com/rcarto/cobweb"><code>cobweb</code> package</a> is not bulletproof and it is not on CRAN.</p>
-<p>Here is a small demo:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("rCarto/cobweb")</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cobweb)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cobweb</span>(<span class="at">city =</span> <span class="st">"Mainz, Germany"</span>, </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">nroad =</span> <span class="dv">3000</span>, <span class="at">ncl =</span> <span class="dv">8</span>, </span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">url =</span> <span class="st">"http://0.0.0.0:5000/"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="map.png" class="img-fluid figure-img"></p>
-<figcaption>All Roads Lead to Mainz!</figcaption>
-</figure>
-</div>
+<p>This <a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf">new cheat sheet</a> guides users on how to use OpenStreetMap data and related tools with R for: geocoding, routing, downloading base maps and datasets.</p>
+<p><a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf"><img src="cheatsheet_osm_r_p1.png" class="img-fluid"></a></p>
+<p><a href="https://zenodo.org/records/20842874/files/cheatsheet_osm_r.pdf"><img src="cheatsheet_osm_r_p2.png" class="img-fluid"></a></p>
 
 
 
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-giraud2022" class="csl-entry" role="listitem">
-Giraud, Timothée. 2022. <span>“<span class="nocase">osrm: Interface Between R and the OpenStreetMap-Based Routing Service OSRM</span>.”</span> <em>Journal of Open Source Software</em> 7 (78): 4574. <a href="https://doi.org/10.21105/joss.04574">https://doi.org/10.21105/joss.04574</a>.
-</div>
-<div id="ref-luxen-vetter-2011" class="csl-entry" role="listitem">
-Luxen, Dennis, and Christian Vetter. 2011. <span>“Real-Time Routing with OpenStreetMap Data.”</span> <em>Proceedings of the 19th ACM SIGSPATIAL International Conference on Advances in Geographic Information Systems</em> (New York, NY, USA), GIS ’11, 513–16. <a href="https://doi.org/10.1145/2093973.2094062">https://doi.org/10.1145/2093973.2094062</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

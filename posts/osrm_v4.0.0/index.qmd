@@ -2,7 +2,7 @@
 title: "New release of `osrm`"
 author: "Timothée Giraud"
 date: "2022-11-04"
-categories: [osrm]
+categories: [osrm, OpenStreetMap]
 image: "osrm.png"
 draft: false
 bibliography: references.bib
