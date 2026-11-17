@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/flows_v2.0.0/index.html",
       "/posts/mapsf.gui_v0.1.0/index.html",
       "/posts/osm_cheatsheet/index.html",
       "/posts/mapsf_v1.2.0/index.html",

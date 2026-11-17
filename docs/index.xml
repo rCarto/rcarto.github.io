@@ -10,7 +10,41 @@
 <atom:link href="https://rcarto.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Information on R spatial packages maintained by Timothée Giraud.</description>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Mon, 29 Jun 2026 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 16 Nov 2026 23:00:00 GMT</lastBuildDate>
+<item>
+  <title>flows is back on CRAN</title>
+  <dc:creator>Timothée Giraud</dc:creator>
+  <link>https://rcarto.github.io/posts/flows_v2.0.0/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>The <code>flows</code> package has been created to select flows from flow matrices, to compute statistics on selected flows, and to create cartographic and graphical visualisations of these flows.</p>
+<p>The analysis and representation of flows often presupposes selection to facilitate interpretation. Various methods have been proposed for selecting flows; one of the most widely used is based on major flows, selecting only the most important flows on a local or global scale, whether absolute or relative. While these methods often highlight hierarchies between locations, the loss of information caused by selection is rarely considered.<br>
+We propose statistical indicators to assess this loss of information, as well as the characteristics of the selected flows. We provide functions that select flows (main, dominant, or major), compute statistics on the selected flows, and offer visualisations in the form of maps and graphs.</p>
+<p>A <a href="https://cran.r-project.org/web/packages/flows/vignettes/flows.html">vignette</a> explains how to use the package.</p>
+<p>The package was first published in 2015 alongside a paper by <span class="citation" data-cites="beauguitte15">Beauguitte et al. (2015)</span>. It was removed from CRAN in 2020. The <a href="https://CRAN.R-project.org/package=flows">version currently on CRAN</a> is a complete rewrite of the package and does not ensure backward compatibility. Development of the package is <a href="https://codeberg.org/riatelab/flows">hosted on Codeberg</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://rcarto.github.io/posts/flows_v2.0.0/map.png" class="img-fluid figure-img"></p>
+<figcaption>A dominant flows map</figcaption>
+</figure>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-beauguitte15" class="csl-entry">
+Beauguitte, Laurent, Timothée Giraud, and Marianne Guérois. 2015. <span>“<span class="nocase">Un outil pour la sélection et la visualisation de flux : le package flows</span>.”</span> <em>Netcom</em> 29 (3/4). <a href="https://doi.org/10.4000/netcom.2134">https://doi.org/10.4000/netcom.2134</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>flows</category>
+  <guid>https://rcarto.github.io/posts/flows_v2.0.0/</guid>
+  <pubDate>Mon, 16 Nov 2026 23:00:00 GMT</pubDate>
+  <media:content url="https://rcarto.github.io/posts/flows_v2.0.0/flows.png" medium="image" type="image/png" height="167" width="144"/>
+</item>
 <item>
   <title>mapsf.gui: a shiny app to make maps with R</title>
   <dc:creator>Timothée Giraud</dc:creator>
